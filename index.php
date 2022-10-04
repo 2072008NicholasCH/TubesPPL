@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+include_once 'utility/Connection.php';
+include_once 'controller/UserController.php';
+include_once 'dao/UserDao.php';
+include_once 'entity/User.php';
+
+if (!isset($_SESSION['user'])) {
+  $_SESSION['user'] = false;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +32,8 @@
 
   switch ($menu) {
     case 'login':
-      include_once 'view/login-view.php';
+      $userController = new UserController();
+      $userController->index();
       break;
     case 'home':
       include_once 'view/home-view.php';
@@ -27,6 +41,9 @@
     case 'about':
       include_once 'view/about-view.php';
       break;
+    case 'logout':
+      $userController = new UserController();
+      $userController->logout();
     default:
       include_once 'view/home-view.php';
   }
