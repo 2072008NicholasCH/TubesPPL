@@ -6,6 +6,7 @@ class User
     private $nama;
     private $password;
     private Role $role;
+    private $rememberToken;
 
     /**
      * @return mixed
@@ -71,5 +72,20 @@ class User
         $this->role = $role;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRememberToken()
+    {
+        return $this->rememberToken;
+    }
+
+    /**
+     * @param mixed $rememberToken
+     */
+    public function setRememberToken($rememberToken): void
+    {
+        $this->rememberToken = $rememberToken;
+    }
 
 }
