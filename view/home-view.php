@@ -26,17 +26,22 @@
 				      <li>
 				        <a href="#"><span class="fa fa-paper-plane mr-3"></span> Information</a>
 				      </li>
-				      <li>
-				        <a onclick="logOut()"><span class="fa fa-paper-plane mr-3"></span> Log Out</a>
-				        <script>
-				          function logOut() {
-				            const confirm = window.confirm("Are you sure want to sign out?");
-				            if (confirm) {
-				              window.location = "index.php?ahref=logout";
-				            }
-				          }
-				        </script>
-				      </li>
+					  <?php
+					  	if ($_SESSION['user']){
+							echo'<li>
+							<a onclick="logOut()"><span class="fa fa-paper-plane mr-3"></span> Log Out</a>
+							<script>
+							  function logOut() {
+								const confirm = window.confirm("Are you sure want to sign out?");
+								if (confirm) {
+								  window.location = "index.php?ahref=logout";
+								}
+							  }
+							</script>
+						  </li>';
+						}
+					  ?>
+				      
 				    </ul>
 
 				  </nav>
