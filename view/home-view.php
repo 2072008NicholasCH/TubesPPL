@@ -15,13 +15,7 @@
 				        <a href="#"><span class="fa fa-user mr-3"></span> Dashboard</a>
 				      </li>
 				      <li>
-				        <a href="#"><span class="fa fa-sticky-note mr-3"></span> Friends</a>
-				      </li>
-				      <li>
-				        <a href="#"><span class="fa fa-sticky-note mr-3"></span> Subcription</a>
-				      </li>
-				      <li>
-				        <a href="#"><span class="fa fa-paper-plane mr-3"></span> Settings</a>
+				        <a href="#"><span class="fa fa-duotone fa-gear mr-3"></span> Settings</a>
 				      </li>
 				      <li>
 				        <a href="#"><span class="fa fa-paper-plane mr-3"></span> Information</a>
@@ -29,7 +23,7 @@
 					  <?php
 					  	if ($_SESSION['user']){
 							echo'<li>
-							<a onclick="logOut()"><span class="fa fa-paper-plane mr-3"></span> Log Out</a>
+							<a onclick="logOut()"><span class="fa fa-regular fa-right-from-bracket mr-3"></span> Log Out</a>
 							<script>
 							  function logOut() {
 								const confirm = window.confirm("Are you sure want to sign out?");
