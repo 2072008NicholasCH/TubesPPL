@@ -10,7 +10,7 @@ class Connection
         return $conn;
     }
 
-    public function close($conn)
+    public static function close($conn)
     {
         if ($conn != null) {
             $conn = null;
