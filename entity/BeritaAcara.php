@@ -5,6 +5,7 @@ class BeritaAcara
     private $idBeritaAcara;
     private User $user;
     private MataKuliah $mataKuliah;
+    private Jadwal $jadwal;
     private $waktu_mulai;
     private $waktu_selesai;
     private $rangkuman;
@@ -189,6 +190,23 @@ class BeritaAcara
     {
         $this->tgl_berita_acara = $tgl_berita_acara;
     }
+
+    /**
+     * @return Jadwal
+     */
+    public function getJadwal(): Jadwal
+    {
+        return $this->jadwal;
+    }
+
+    /**
+     * @param Jadwal $jadwal
+     */
+    public function setJadwal(Jadwal $jadwal): void
+    {
+        $this->jadwal = $jadwal;
+    }
+
 
 
 }
