@@ -1,28 +1,52 @@
-				<div class="wrapper d-flex align-items-stretch">
-				  <nav id="sidebar">
-				    <div class="custom-menu">
-				      <button type="button" id="sidebarCollapse" class="btn btn-primary">
-				        <i class="fa fa-bars"></i>
-				        <span class="sr-only">Toggle Menu</span>
-				      </button>
-				    </div>
-				    <h1><a href="index.html" class="logo">Tubes PPL</a></h1>
-				    <ul class="list-unstyled components mb-5">
-				      <li class="active">
-				        <a href="#"><span class="fa fa-home mr-3"></span> Homepage</a>
-				      </li>
-				      <li>
-				        <a href="#"><span class="fa fa-user mr-3"></span> Dashboard</a>
-				      </li>
-				      <li>
-				        <a href="#"><span class="fa fa-duotone fa-gear mr-3"></span> Settings</a>
-				      </li>
-				      <li>
-				        <a href="#"><span class="fa fa-paper-plane mr-3"></span> Information</a>
-				      </li>
-					  <?php
-					  	if ($_SESSION['user']){
-							echo'<li>
+<div class="wrapper">
+	<!-- Sidebar -->
+	<nav id="sidebar">
+		<div class="sidebar-header">
+			<h3>Tubes PPL</h3>
+		</div>
+
+		<ul class="list-unstyled components">
+			<p>Dummy Heading</p>
+			<li class="active">
+				<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+				<ul class="collapse list-unstyled" id="homeSubmenu">
+					<li>
+						<a href="#">Home 1</a>
+					</li>
+					<li>
+						<a href="#">Home 2</a>
+					</li>
+					<li>
+						<a href="#">Home 3</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">About</a>
+			</li>
+			<li>
+				<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+				<ul class="collapse list-unstyled" id="pageSubmenu">
+					<li>
+						<a href="#">Page 1</a>
+					</li>
+					<li>
+						<a href="#">Page 2</a>
+					</li>
+					<li>
+						<a href="#">Page 3</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">Portfolio</a>
+			</li>
+			<li>
+				<a href="#">Contact</a>
+			</li>
+			<?php
+			if ($_SESSION['user']) {
+				echo '<li>
 							<a onclick="logOut()"><span class="fa fa-regular fa-right-from-bracket mr-3"></span> Log Out</a>
 							<script>
 							  function logOut() {
@@ -33,35 +57,58 @@
 							  }
 							</script>
 						  </li>';
-						}
-					  ?>
-				      
-				    </ul>
+			}
+			?>
+		</ul>
+	</nav>
 
-				  </nav>
+	<div class="container">
 
-				  <!-- Page Content  -->
-				  <div id="content" class="p-4 p-md-5 pt-5">
-				    <?php
-            if (!$_SESSION['user']) {
-            ?>
-				      <div class="row">
-				        <div class="col-md-12 text-right">
-				          <a href="?ahref=login"><button type="button" class="btn btn-primary">Login</button></a>
-				        </div>
-				      </div>
-				    <?php
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
 
-            }
-            ?>
+				<button type="button" id="sidebarCollapse" class="btn btn-info">
+					<i class="fas fa-align-left"></i>
+					<span>Toggle Sidebar</span>
+				</button>
 
-				    <h2 class="mb-4">Berita Acara PBM Ganjil 2022/2023</h2>
-				    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				  </div>
-				</div>
 
-				<script src="js/jquery.min.js"></script>
-				<script src="js/popper.js"></script>
-				<script src="js/bootstrap.min.js"></script>
-				<script src="js/main.js"></script>
+			</div>
+		</nav>
+		<h2>Berita Acara PBM Ganjil 2022/2023</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et tempor eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc mollis lectus vel massa fermentum accumsan. In hac habitasse platea dictumst. Maecenas vitae gravida sapien, et accumsan orci. Sed condimentum quam sed erat vehicula, ac lacinia ligula bibendum. Ut tristique, est sit amet porta sagittis, ante quam cursus neque, ut semper eros ligula vitae neque. Maecenas mollis sem ac nulla consequat congue non sit amet dui. In nec nulla dapibus enim varius blandit a et augue. Nunc non leo vel ex semper imperdiet. Pellentesque sit amet magna luctus orci lacinia maximus. Quisque pretium vulputate ante. Suspendisse feugiat velit a nunc varius interdum. Quisque sed pharetra nisl, semper porttitor augue. Cras ultrices arcu neque, eu sollicitudin velit suscipit non. Pellentesque in nisi vehicula, scelerisque ligula eget, tincidunt leo.</p>
+
+		<input type="text" class="form-control" />
+	</div>
+
+	<?php
+	if (!$_SESSION['user']) {
+	?>
+		<div class="row">
+			<div class="col-md-12 text-right m-3">
+				<a href="?ahref=login"><button type="button" class="btn btn-primary">Login</button></a>
+			</div>
+		</div>
+
+	<?php
+
+	}
+	?>
+</div>
+
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<script>
+	$(document).ready(function() {
+
+		$('#sidebarCollapse').on('click', function() {
+			$('#sidebar').toggleClass('active');
+		});
+
+	});
+</script>

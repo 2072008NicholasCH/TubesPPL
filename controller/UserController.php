@@ -18,8 +18,9 @@ class UserController
             $password = filter_input(INPUT_POST, 'txtPassword');
 
             $result = $this->userDao->read($username, $password);
-            var_dump($result);
-            if ($result->getIdUser() == $username) {
+            if ($result == false) {
+                echo '<div class="bg-danger">Invalid Username or Password</div>';
+            } else if ($result->getIdUser() == $username) {
                 $_SESSION['user'] = true;
                 $_SESSION['web_user_full_name'] = $result->getNama();
                 header('location:index.php');
