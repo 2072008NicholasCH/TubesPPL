@@ -3,6 +3,7 @@
 session_start();
 include_once 'utility/Connection.php';
 include_once 'controller/UserController.php';
+include_once 'controller/DosenController.php';
 include_once 'dao/UserDao.php';
 include_once 'entity/User.php';
 
@@ -156,6 +157,14 @@ if (!isset($_SESSION['user'])) {
       break;
     case 'home':
       include_once 'view/home-view.php';
+      break;
+    case 'dosen':
+      $dosenController = new DosenController();
+      $dosenController->index();
+      break;
+    case 'dosen-berita-acara':
+      $dosenController = new DosenController();
+      $dosenController->beritaAcara();
       break;
     case 'about':
       include_once 'view/about-view.php';
