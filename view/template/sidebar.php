@@ -20,11 +20,7 @@
                 </li>
             </ul> -->
         </li>
-        <li>
-            <a href="#">Dashboard</a>
-        </li>
-        <!-- <?php //  if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 3 || $_SESSION['user_role_id'] == 1)) { ?> -->
-        <?php if ($_SESSION['user']) { ?>
+        <?php if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 3 || $_SESSION['user_role_id'] == 1)) { ?>
         <li>
             <a href="#dosenSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dosen</a>
             <ul class="collapse list-unstyled" id="dosenSubmenu">
@@ -37,25 +33,31 @@
             </ul>
         </li>
         <?php } ?>
-        <?php // if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
-        <!-- <li>
+        <?php  if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
+        <li>
             <a href="#staffSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Staff</a>
             <ul class="collapse list-unstyled" id="staffSubmenu">
                 <li>
                     <a href="index.php?ahref=staff">Dashboard</a>
-                </li> -->
-                <!-- <li>
-                    <a href="index.php?ahref=dosen-berita-acara">Berita Acara</a>
-                </li> -->
-            <!-- </ul> -->
-        <!-- </li> -->
-        <?php // } ?>
-        <li>
-            <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="index.php?ahref=staff-berita-acara">Berita Acara</a>
+                </li>
+                <li>
+                    <a href="index.php?ahref=staff-jadwal">Jadwal</a>
+                </li>
+                <li>
+                    <a href="index.php?ahref=staff-mata-kuliah">Mata Kuliah</a>
+                </li>
+                <li>
+                    <a href="index.php?ahref=staff-ruangan">Ruangan</a>
+                </li>
+                <li>
+                    <a href="index.php?ahref=staff-semester">Semester</a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a href="#">Contact</a>
-        </li>
+        <?php  } ?>
         <?php
         if ($_SESSION['user']) {
             echo '<li>

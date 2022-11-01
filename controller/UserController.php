@@ -21,8 +21,9 @@ class UserController
             if ($result == false) {
                 echo '<div class="bg-danger">Invalid Username or Password</div>';
             } else if ($result->getIdUser() == $username) {
-                $_SESSION['user'] = true;
+                $_SESSION['user'] = $result;
                 $_SESSION['web_user_full_name'] = $result->getNama();
+                $_SESSION['user_role_id'] = $result->role_idRole;
                 header('location:index.php');
             } else {
                 echo '<div class="bg-danger">Invalid Username or Password</div>';

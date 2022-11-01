@@ -4,7 +4,13 @@ session_start();
 include_once 'utility/Connection.php';
 include_once 'controller/UserController.php';
 include_once 'controller/DosenController.php';
+include_once 'controller/StaffController.php';
 include_once 'dao/UserDao.php';
+include_once 'dao/JadwalDao.php';
+include_once 'dao/BeritaAcaraDao.php';
+include_once 'dao/MataKuliahDao.php';
+include_once 'dao/RuanganDao.php';
+include_once 'dao/SemesterDao.php';
 include_once 'entity/User.php';
 
 if (!isset($_SESSION['user'])) {
@@ -148,7 +154,7 @@ if (!isset($_SESSION['user'])) {
 
 
   <?php
-  $menu = filter_input(type: INPUT_GET, var_name: 'ahref');
+  $menu = filter_input(INPUT_GET, 'ahref');
 
   switch ($menu) {
     case 'login':
@@ -166,6 +172,29 @@ if (!isset($_SESSION['user'])) {
       $dosenController = new DosenController();
       $dosenController->beritaAcara();
       break;
+    case 'staff':
+      $staffController = new StaffController();
+      $staffController->index();
+      break;
+    case 'staff-berita-acara':
+      $staffController = new StaffController();
+      $staffController->beritaAcara();
+      break;
+    case 'staff-jadwal':
+      $staffController = new StaffController();
+      $staffController->jadwal();
+      break;
+    case 'staff-mata-kuliah':
+      $staffController = new StaffController();
+      $staffController->mataKuliah();
+      break;
+    case 'staff-ruangan':
+      $staffController = new StaffController();
+      $staffController->ruangan();
+      break;
+    case 'staff-semester':
+      $staffController = new StaffController();
+      $staffController->semester();
     case 'about':
       include_once 'view/about-view.php';
       break;
