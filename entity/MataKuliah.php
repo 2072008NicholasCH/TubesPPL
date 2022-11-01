@@ -5,7 +5,6 @@ class MataKuliah
     private $idMataKuliah;
     private $nama;
     private $sks;
-    private Asisten $asisten;
     private ProgramStudi $programStudi;
 
     /**
@@ -57,26 +56,13 @@ class MataKuliah
     }
 
     /**
-     * @return Asisten
-     */
-    public function getAsisten(): Asisten
-    {
-        return $this->asisten;
-    }
-
-    /**
-     * @param Asisten $asisten
-     */
-    public function setAsisten(Asisten $asisten): void
-    {
-        $this->asisten = $asisten;
-    }
-
-    /**
      * @return ProgramStudi
      */
     public function getProgramStudi(): ProgramStudi
     {
+        if (!isset($this->programStudi)) {
+            $this->programStudi = new ProgramStudi();
+        }
         return $this->programStudi;
     }
 
@@ -86,6 +72,20 @@ class MataKuliah
     public function setProgramStudi(ProgramStudi $programStudi): void
     {
         $this->programStudi = $programStudi;
+    }
+
+    public function __set($name, $value)
+    {
+        if(!isset($this->programStudi)) {
+            $this->programStudi = new ProgramStudi();
+        }
+        switch ($name) {
+            case 'idProgramStudi':
+                $this->programStudi->setIdProgramStudi($value);
+                break;
+            case 'nama_prodi':
+                $this->programStudi->setNama($value);
+        }
     }
 
 

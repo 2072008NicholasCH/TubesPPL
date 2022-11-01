@@ -11,6 +11,14 @@ include_once 'dao/BeritaAcaraDao.php';
 include_once 'dao/MataKuliahDao.php';
 include_once 'dao/RuanganDao.php';
 include_once 'dao/SemesterDao.php';
+include_once 'entity/Asisten.php';
+include_once 'entity/BeritaAcara.php';
+include_once 'entity/Jadwal.php';
+include_once 'entity/MataKuliah.php';
+include_once 'entity/ProgramStudi.php';
+include_once 'entity/Role.php';
+include_once 'entity/Ruangan.php';
+include_once 'entity/Semester.php';
 include_once 'entity/User.php';
 
 if (!isset($_SESSION['user'])) {
@@ -36,6 +44,11 @@ if (!isset($_SESSION['user'])) {
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
 
   <style>
     .wrapper {
@@ -210,8 +223,18 @@ if (!isset($_SESSION['user'])) {
   ?>
 
 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.css" />
 
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('#dataTable').DataTable();
+    });
+  </script>
 
 </body>
+
+
 
 </html>

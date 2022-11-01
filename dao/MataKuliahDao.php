@@ -26,7 +26,7 @@ class MataKuliahDao
     public function readAll()
     {
         $conn = Connection::createConnection();
-        $query = "SELECT * FROM mata_kuliah";
+        $query = "SELECT mata_kuliah.*, program_studi.idProgramStudi, program_studi.nama as 'nama_prodi' FROM mata_kuliah JOIN program_studi ON mata_kuliah.program_studi_idProgramStudi = program_studi.idProgramStudi";
         $stmt = $conn->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "MataKuliah");
         $stmt->execute();
