@@ -1,5 +1,6 @@
-# TubesPPL
+# Tugas Besar Proyek Perangkat Lunak kelompok C
 Tugas Besar Proyek Perangkat Lunak\
+Anggota Kelompok:\
 2072008 - Nicholas CH\
 2072023 - Arya Tri PM\
 2072030 - Kevin Laurence\
