@@ -139,5 +139,42 @@ class Jadwal
         $this->semester = $semester;
     }
 
+    public function __toString()
+    {
+        return $this->getMataKuliah()->getIdMataKuliah() . ' - ' . $this->getMataKuliah()->getNama() . ' - ' . $this->getTipeKelas();
+    }
+
+    public function __set($name, $value)
+    {
+        if(!isset($this->mataKuliah)) {
+            $this->mataKuliah = new MataKuliah();
+        }
+        if (!isset($this->user)) {
+            $this->user = new User();
+        }
+        if (!isset($this->ruangan)) {
+            $this->ruangan = new Ruangan();
+        }
+        if (!isset($this->semester)) {
+            $this->semester = new Semester();
+        }
+        switch ($name) {
+            case 'idMataKuliah':
+                $this->mataKuliah->setIdMataKuliah($value);
+                break;
+            case 'nama_mata_kuliah':
+                $this->mataKuliah->setNama($value);
+                break;
+            case 'nama_semester':
+                $this->semester->setNama($value);
+                break;
+            case 'nama_ruangan':
+                $this->ruangan->setNama($value);
+                break;
+            default:
+                $this->$name = $value;
+        }
+    }
+
 
 }

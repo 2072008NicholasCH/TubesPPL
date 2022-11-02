@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+
 include_once 'utility/Connection.php';
 include_once 'controller/UserController.php';
 include_once 'controller/DosenController.php';
@@ -20,6 +20,8 @@ include_once 'entity/Role.php';
 include_once 'entity/Ruangan.php';
 include_once 'entity/Semester.php';
 include_once 'entity/User.php';
+
+session_start();
 
 if (!isset($_SESSION['user'])) {
   $_SESSION['user'] = false;
