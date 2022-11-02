@@ -225,7 +225,7 @@ if (!isset($_SESSION['user'])) {
       include_once 'view/home-view.php';
   }
   ?>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.css" />
 
@@ -233,7 +233,16 @@ if (!isset($_SESSION['user'])) {
 
   <script>
     $(document).ready(function() {
-      $('#dataTable').DataTable();
+      $('#dataTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+      $('.dataTable').DataTable();
     });
   </script>
 

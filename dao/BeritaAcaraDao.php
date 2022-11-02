@@ -44,6 +44,22 @@ class BeritaAcaraDao
         $conn = Connection::close($conn);
         return $stmt->fetchAll();
     }
+    
+    public function readByUserJadwal(Jadwal $jadwal)
+    {
+        $conn = Connection::createConnection();
+        $query = 'SELECT * FROM beritaAcara WHERE jadwal_user_idUser = ? AND jadwal_mata_kuliah_idMataKuliah = ? AND jadwal_semester_idSemester = ? AND jadwal_kelas = ? AND jadwal_tipe_kelas = ?';
+        $stmt = $conn->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "BeritaAcara");
+        $stmt->bindValue(1, $jadwal->getUser()->getIdUser());
+        $stmt->bindValue(2, $jadwal->getMataKuliah()->getIdMataKuliah());
+        $stmt->bindValue(3, $jadwal->getSemester()->getIdSemester());
+        $stmt->bindValue(4, $jadwal->getKelas());
+        $stmt->bindValue(5, $jadwal->getTipeKelas());
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
 
     public function readOne($id) 
     {

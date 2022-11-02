@@ -11,7 +11,7 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Jadwal</label>
-            <select class="form-select" name="jadwal">
+            <select class="form-select" name="jadwal" required>
                 <?php foreach ($jadwalDosen as $jadwal) { ?>
                     <option value="<?= $jadwal->getMataKuliah()->getIdMataKuliah() . '-' . $jadwal->getKelas() . '-' . $jadwal->getTipeKelas() ?>"><?= $jadwal ?></option>
                 <?php } ?>
@@ -20,32 +20,32 @@
 
         <div class="mb-3 col-2">
             <label for="" class="form-label">Pertemuan</label>
-            <input type="number" min="1" max="16" class="form-control" id="" name="pertemuan">
+            <input type="number" min="1" max="16" class="form-control" id="" name="pertemuan" required>
         </div>
 
         <div class="mb-3 col-4">
             <label for="" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="" value="<?php echo date('Y-m-d'); ?>" name="tanggal">
+            <input type="date" class="form-control" id="" value="<?php echo date('Y-m-d'); ?>" name="tanggal" required>
         </div>
 
         <div class="mb-3 col-3">
             <label for="" class="form-label">Waktu Mulai</label>
-            <input type="time" class="form-control" id="" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="waktu-mulai">
+            <input type="time" class="form-control" id="" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="waktu-mulai" required>
         </div>
 
         <div class="mb-3 col-3">
             <label for="" class="form-label">Waktu Selesai</label>
-            <input type="time" class="form-control" id="" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="waktu-selesai">
+            <input type="time" class="form-control" id="" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="waktu-selesai" required>
         </div>
 
         <div class="mb-5 col-3">
             <label for="" class="form-label">Rangkuman Materi</label>
-            <textarea class="form-control" id="" rows="10" name="pembahasan-materi"></textarea>
+            <textarea class="form-control" id="" rows="10" name="pembahasan-materi" required></textarea>
         </div>
         
         <div class="mb-5 col-3">
             <label for="" class="form-label">Catatan</label>
-            <textarea class="form-control" id="" rows="3" name="rangkuman"></textarea>
+            <textarea class="form-control" id="" rows="3" name="rangkuman" required></textarea>
         </div>
 
         <div class="form-check mb-4">

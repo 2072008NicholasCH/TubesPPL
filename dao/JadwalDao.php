@@ -31,7 +31,7 @@ class JadwalDao
     public function read($id)
     {
         $conn = Connection::createConnection();
-        $query = "SELECT idMataKuliah, mata_kuliah.nama AS nama_mata_kuliah, kelas, tipe_kelas, waktu_mulai, waktu_selesai, semester.nama AS nama_semester, ruangan.nama AS nama_ruangan FROM jadwal JOIN mata_kuliah ON mata_kuliah_idMataKuliah = idMataKuliah JOIN semester ON semester_idSemester = idSemester JOIN ruangan ON ruangan_idRuangan = idRuangan WHERE user_idUser = ?";
+        $query = "SELECT idMataKuliah, idUser, idSemester, mata_kuliah.nama AS nama_mata_kuliah, kelas, tipe_kelas, waktu_mulai, waktu_selesai, semester.nama AS nama_semester, ruangan.nama AS nama_ruangan FROM jadwal JOIN mata_kuliah ON mata_kuliah_idMataKuliah = idMataKuliah JOIN semester ON semester_idSemester = idSemester JOIN ruangan ON ruangan_idRuangan = idRuangan JOIN user ON user_idUser = user.idUser WHERE user_idUser = ?";
         // $query = "SELECT * FROM jadwal WHERE user_idUser = ?";
         $stmt = $conn->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Jadwal");

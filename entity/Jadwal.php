@@ -179,6 +179,12 @@ class Jadwal
             case 'idMataKuliah':
                 $this->mataKuliah->setIdMataKuliah($value);
                 break;
+            case 'idUser':
+                $this->user->setIdUser($value);
+                break;
+            case 'idSemester':
+                $this->semester->setIdSemester($value);
+                break;
             case 'nama_mata_kuliah':
                 $this->mataKuliah->setNama($value);
                 break;
