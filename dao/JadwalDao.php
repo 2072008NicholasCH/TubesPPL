@@ -40,6 +40,19 @@ class JadwalDao
         return $stmt->fetchAll();
     }
 
+    public function readBySemester($id)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT idMataKuliah, mata_kuliah.nama AS nama_mata_kuliah, kelas, tipe_kelas, waktu_mulai, waktu_selesai, semester.nama AS nama_semester, ruangan.nama AS nama_ruangan FROM jadwal JOIN mata_kuliah ON mata_kuliah_idMataKuliah = idMataKuliah JOIN semester ON semester_idSemester = idSemester JOIN ruangan ON ruangan_idRuangan = idRuangan WHERE semester_idSemester = ?";
+        // $query = "SELECT * FROM jadwal WHERE user_idUser = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Jadwal");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
+
     public function update()
     {
 
