@@ -6,21 +6,22 @@ class BeritaAcaraDao
     {
         $result = false;
         $link = Connection::createConnection();
-        $query = "INSERT INTO beritaAcara VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO beritaAcara VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $link->prepare($query);
         $stmt->bindValue(1, $beritaAcara->getIdBeritaAcara());
         $stmt->bindValue(2, $beritaAcara->getWaktuMulai());
         $stmt->bindValue(3, $beritaAcara->getWaktuSelesai());
-        $stmt->bindValue(4, $beritaAcara->getRangkuman());
-        $stmt->bindValue(5, $beritaAcara->getPertemuan());
-        $stmt->bindValue(6, $beritaAcara->getFotoPresensi());
-        $stmt->bindValue(7, $beritaAcara->getIsAsisten());
-        $stmt->bindValue(8, $beritaAcara->getTglBeritaAcara());
-        $stmt->bindValue(9, $beritaAcara->getMataKuliah()->getIdMataKuliah());
-        $stmt->bindValue(10, $beritaAcara->getUser()->getIdUser());
-        $stmt->bindValue(11, $beritaAcara->getJadwal()->getSemester()->getIdSemester());
-        $stmt->bindValue(12, $beritaAcara->getJadwal()->getKelas());
-        $stmt->bindValue(13, $beritaAcara->getJadwal()->getTipeKelas());
+        $stmt->bindValue(4, $beritaAcara->getPembahasanMateri());
+        $stmt->bindValue(5, $beritaAcara->getRangkuman());
+        $stmt->bindValue(6, $beritaAcara->getPertemuan());
+        $stmt->bindValue(7, $beritaAcara->getFotoPresensi());
+        $stmt->bindValue(8, $beritaAcara->getIsAsisten());
+        $stmt->bindValue(9, $beritaAcara->getTglBeritaAcara());
+        $stmt->bindValue(10, $beritaAcara->getMataKuliah()->getIdMataKuliah());
+        $stmt->bindValue(11, $beritaAcara->getUser()->getIdUser());
+        $stmt->bindValue(12, $beritaAcara->getJadwal()->getSemester()->getIdSemester());
+        $stmt->bindValue(13, $beritaAcara->getJadwal()->getKelas());
+        $stmt->bindValue(14, $beritaAcara->getJadwal()->getTipeKelas());
         $link->beginTransaction();
         if ($stmt->execute()) {
             $link->commit();
