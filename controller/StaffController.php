@@ -9,6 +9,7 @@ class StaffController
     private RuanganDao $ruanganDao;
     private SemesterDao $semesterDao;
     private ProgramStudiDao $programStudiDao;
+    private UserDao $userDao;
 
     public function __construct()
     {
@@ -18,6 +19,7 @@ class StaffController
         $this->ruanganDao = new RuanganDao();
         $this->semesterDao = new SemesterDao();
         $this->programStudiDao = new ProgramStudiDao();
+        $this->userDao = new UserDao();
     }
 
     public function index()
@@ -33,8 +35,71 @@ class StaffController
 
     public function jadwal()
     {
-        $id = filter_input(INPUT_POST, 'id');
-        $dataJadwal = $this->jadwalDao->read($id);
+        $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        if (isset($btnSubmitted)) {
+            $mataKuliah = filter_input(INPUT_POST, 'optMataKuliah');
+            $dosen = filter_input(INPUT_POST, 'optDosen');
+            $kelas = filter_input(INPUT_POST, 'radioKelas');
+            $tipeKelas = filter_input(INPUT_POST, 'radioTipeKelas');
+            $hari = filter_input(INPUT_POST, 'optHari');
+            $waktu_mulai = filter_input(INPUT_POST, 'waktu-mulai');
+            $waktu_selesai = filter_input(INPUT_POST, 'waktu-selesai');
+            $ruangan = filter_input(INPUT_POST, 'optRuangan');
+            $trimMataKuliah = trim($mataKuliah);
+            $trimDosen = trim($dosen);
+            $trimKelas = trim($kelas);
+            $trimTipeKelas = trim($tipeKelas);
+            $trimHari = trim($hari);
+            $trimWaktuMulai = trim($waktu_mulai);
+            $trimWaktuSelesai = trim($waktu_selesai);
+            $trimRuangan = trim($ruangan);
+            if (empty($trimMataKuliah) || empty($trimDosen) || empty($trimKelas) || empty($trimTipeKelas) || empty($trimHari) || empty($trimWaktuMulai) || empty($trimWaktuSelesai) || empty($trimRuangan)) {
+                echo '<div class="bg-warning">Please fill the field properly</div>';
+            } else {
+                $jadwal = new Jadwal();
+                $jadwal->setKelas($trimKelas);
+                $jadwal->setTipeKelas($trimTipeKelas);
+                $jadwal->setHari($trimHari);
+                $jadwal->setWaktuMulai($trimWaktuMulai);
+                $jadwal->setWaktuSelesai($trimWaktuSelesai);
+
+                $mataKuliah = new MataKuliah();
+                $mataKuliah->setIdMataKuliah($trimMataKuliah);
+                $jadwal->setMataKuliah($mataKuliah);
+
+                $ruangan = new Ruangan();
+                $ruangan->setIdRuangan($trimRuangan);
+                $jadwal->setRuangan($ruangan);
+
+                $semester = new Semester();
+                $semester->setIdSemester($_SESSION['semester_aktif']);
+                $jadwal->setSemester($semester);
+
+                $dosen = new User();
+                $dosen->setIdUser($trimDosen);
+                
+                $jadwal->setUser($dosen);
+
+                $existsJadwal = $this->jadwalDao->readOne($jadwal);
+                if ($existsJadwal) {
+                    echo '<div class="bg-warning">Data exists!</div>';
+                } else {
+                    $result = $this->jadwalDao->create($jadwal);
+
+                    if ($result) {
+                        echo '<div class="bg-success">Jadwal successfully added </div>';
+                    } else {
+                        echo '<div class="bg-error">Error on add jadwal</div>';
+                    }
+                }
+
+            }
+        }
+        $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
+        $dataDosen = $this->userDao->readAllDosen("3");
+        $dataMataKuliah = $this->mataKuliahDao->readAll();
+        $dataRuangan = $this->ruanganDao->read();
+        $dataJadwal = $this->jadwalDao->readBySemester($_SESSION['semester_aktif']);
         include_once 'view/staff/jadwal-view.php';
     }
 
