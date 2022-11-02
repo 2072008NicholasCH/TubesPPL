@@ -141,7 +141,7 @@ class Jadwal
 
     public function __toString()
     {
-        return $this->getMataKuliah()->getIdMataKuliah() . ' - ' . $this->getMataKuliah()->getNama() . ' - ' . $this->getTipeKelas();
+        return $this->getMataKuliah()->getIdMataKuliah() . ' - ' . $this->getMataKuliah()->getNama() . ' - ' . $this->getKelas() . ' - ' . $this->getTipeKelas();
     }
 
     public function __set($name, $value)

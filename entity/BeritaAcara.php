@@ -9,6 +9,7 @@ class BeritaAcara
     private $waktu_mulai;
     private $waktu_selesai;
     private $rangkuman;
+    private $pembahasan_materi;
     private $pertemuan;
     private $foto_presensi;
     private $is_asisten;
@@ -109,6 +110,22 @@ class BeritaAcara
     public function setRangkuman($rangkuman): void
     {
         $this->rangkuman = $rangkuman;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getPembahasanMateri()
+    {
+        return $this->pembahasan_materi;
+    }
+
+    /**
+     * @param mixed $rangkuman
+     */
+    public function setPembahasanMateri($pembahasanMateri): void
+    {
+        $this->pembahasan_materi = $pembahasanMateri;
     }
 
     /**

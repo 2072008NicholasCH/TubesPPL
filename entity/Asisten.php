@@ -2,24 +2,24 @@
 
 class Asisten
 {
-    private $nrp;
+    private $idAsistenDosen;
     private $nama;
     private $no_telp;
 
     /**
      * @return mixed
      */
-    public function getNrp()
+    public function getidAsistenDosen()
     {
-        return $this->nrp;
+        return $this->idAsistenDosen;
     }
 
     /**
-     * @param mixed $nrp
+     * @param mixed $idAsistenDosen
      */
-    public function setNrp($nrp): void
+    public function setidAsistenDosen($idAsistenDosen): void
     {
-        $this->nrp = $nrp;
+        $this->idAsistenDosen = $idAsistenDosen;
     }
 
     /**
