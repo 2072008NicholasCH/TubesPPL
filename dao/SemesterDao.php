@@ -32,13 +32,14 @@ class SemesterDao
         return $stmt->fetchAll();
     }
 
-    public function readOne($id)
+    public function readOne($id, $name = null)
     {
         $conn = Connection::createConnection();
-        $query = "SELECT * FROM semester WHERE idSemester = ?";
+        $query = "SELECT * FROM semester WHERE idSemester = ? OR nama = ?";
         $stmt = $conn->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->bindParam(1, $id);
+        $stmt->bindParam(2, $name);
         $stmt->execute();
         $conn = Connection::close($conn);
         return $stmt->fetchObject('Semester');

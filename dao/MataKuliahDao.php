@@ -45,6 +45,19 @@ class MataKuliahDao
         $conn = Connection::close($conn);
         return $stmt->fetchAll();
     }
+
+    public function readOne(MataKuliah $mataKuliah)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT * FROM mata_kuliah WHERE idMataKuliah = ? or nama = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "MataKuliah");
+        $stmt->bindValue(1, $mataKuliah->getIdMataKuliah());
+        $stmt->bindValue(2, $mataKuliah->getNama());
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
     
     public function readByUser(User $user)
     {

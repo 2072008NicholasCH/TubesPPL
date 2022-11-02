@@ -11,6 +11,7 @@ include_once 'dao/BeritaAcaraDao.php';
 include_once 'dao/MataKuliahDao.php';
 include_once 'dao/RuanganDao.php';
 include_once 'dao/SemesterDao.php';
+include_once 'dao/ProgramStudiDao.php';
 include_once 'entity/Asisten.php';
 include_once 'entity/BeritaAcara.php';
 include_once 'entity/Jadwal.php';
