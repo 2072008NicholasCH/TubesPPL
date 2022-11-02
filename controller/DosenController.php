@@ -97,7 +97,7 @@ class DosenController
                 $asistenDosen = new Asisten();
                 $asistenDosen->setidAsistenDosen(filter_input(INPUT_POST, 'asisten'));
 
-                $existBeritaAcara = $this->beritaAcaraDao->readByUserJadwal($jadwal);
+                $existBeritaAcara = $this->beritaAcaraDao->readOne($jadwal, $newBeritaAcara->getPertemuan());
                 if ($existBeritaAcara) {
                     echo '<div class="bg-warning">Data exists!</div>';
                 } else {
