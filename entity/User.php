@@ -88,4 +88,9 @@ class User
         $this->rememberToken = $rememberToken;
     }
 
+    public function __toString()
+    {
+        return $this->getIdUser() . ' - ' . $this->getNama();
+    }
+
 }

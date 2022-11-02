@@ -3,6 +3,7 @@
 class Jadwal
 {
     private $kelas;
+    private $hari;
     private $waktu_mulai;
     private $waktu_selesai;
     private $tipe_kelas;
@@ -25,6 +26,22 @@ class Jadwal
     public function setKelas($kelas): void
     {
         $this->kelas = $kelas;
+    }
+
+        /**
+     * @return mixed
+     */
+    public function getHari()
+    {
+        return $this->hari;
+    }
+
+    /**
+     * @param mixed $hari
+     */
+    public function setHari($hari): void
+    {
+        $this->hari = $hari;
     }
 
     /**

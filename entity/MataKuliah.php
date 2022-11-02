@@ -88,5 +88,10 @@ class MataKuliah
         }
     }
 
+    public function __toString()
+    {
+        return $this->getIdMataKuliah() . ' - ' . $this->getNama();
+    }
+
 
 }
