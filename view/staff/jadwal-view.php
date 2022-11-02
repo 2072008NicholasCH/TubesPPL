@@ -12,7 +12,16 @@
                 <label for="mataKuliah" class="form-label">Mata Kuliah</label>
                 <select class="form-select" id="mataKuliah" name="optMataKuliah">
                     <?php foreach ($dataMataKuliah as $mataKuliah) { ?>
-                        <option value="<?= $mataKuliah->getIdMataKuliah() ?>"><?= $mataKuliah->getIdMataKuliah() . ' - ' . $mataKuliah->getNama() ?></option>
+                        <option value="<?= $mataKuliah->getIdMataKuliah() ?>"><?= $mataKuliah ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dosen" class="form-label">Dosen</label>
+                <select class="form-select" id="dosen" name="optDosen">
+                    <?php foreach ($dataDosen as $dosen) { ?>
+                        <option value="<?= $dosen->getIdUser() ?>"><?= $dosen ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -45,6 +54,18 @@
                         Praktikum
                     </label>
                 </div>
+            </div>
+
+            <div class ="mb-3 col-3">
+                <label for="hari" class="form-label">Hari</label>
+                <select name="optHari" id="hari" class="form-select">
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                </select>
             </div>
 
             <div class="mb-3 col-3">
