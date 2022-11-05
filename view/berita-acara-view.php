@@ -53,6 +53,8 @@
             <textarea class="form-control" id="" rows="3" name="rangkuman" required></textarea>
         </div>
 
+        <h5 class="my-4">Asistensi</h5>
+
         <div class="form-check mb-4">
             <input class="form-check-input" type="checkbox" value="true" id="isAsisten" name="isAsisten">
             <label class="form-check-label" for="isAsisten">
@@ -63,6 +65,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Asisten</label>
             <select class="form-select" aria-label="Default select example" id="select-asisten" disabled name="asisten">
+                <option value="" disabled selected>Select your option</option>
                 <?php foreach($dataAsisten as $asisten) { ?>    
                     <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
                 <?php } ?>
@@ -72,6 +75,50 @@
         <div class="mb-3 col-3">
             <label for="" class="form-label">Lama Asistensi</label>
             <input type="number" min="0" class="form-control" disabled id="lama-asisten" name="lama-asistensi">
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" value="true" id="isAsisten2" name="isAsisten2">
+            <label class="form-check-label" for="isAsisten2">
+                Dibantu Asisten 2
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Asisten 2</label>
+            <select class="form-select" aria-label="Default select example" id="select-asisten2" disabled name="asisten2">
+                <option value="" disabled selected>Select your option</option>
+                <?php foreach($dataAsisten as $asisten) { ?>    
+                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="mb-3 col-3">
+            <label for="" class="form-label">Lama Asistensi</label>
+            <input type="number" min="0" class="form-control" disabled id="lama-asisten2" name="lama-asistensi2">
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" value="true" id="isAsisten3" name="isAsisten3">
+            <label class="form-check-label" for="isAsisten3">
+                Dibantu Asisten 3
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Asisten 3</label>
+            <select class="form-select" aria-label="Default select example" id="select-asisten3" disabled name="asisten3">
+                <option value="" disabled selected>Select your option</option>
+                <?php foreach($dataAsisten as $asisten) { ?>    
+                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="mb-5 col-3">
+            <label for="" class="form-label">Lama Asistensi</label>
+            <input type="number" min="0" class="form-control" disabled id="lama-asisten3" name="lama-asistensi3">
         </div>
 
         <div class="mb-3">
@@ -90,9 +137,20 @@
 <script>
     $('#isAsisten').change((e) => {
         let state_select = $('#select-asisten').prop('disabled');
-        console.log($('#isAsisten').val());
         $('#isAsisten').val(state_select);
         $('#select-asisten').prop( "disabled", !state_select );
         $('#lama-asisten').prop( "disabled", !state_select );
+    });
+    $('#isAsisten2').change((e) => {
+        let state_select2 = $('#select-asisten2').prop('disabled');
+        $('#isAsisten2').val(state_select2);
+        $('#select-asisten2').prop( "disabled", !state_select2 );
+        $('#lama-asisten2').prop( "disabled", !state_select2 );
+    });
+    $('#isAsisten3').change((e) => {
+        let state_select3 = $('#select-asisten3').prop('disabled');
+        $('#isAsisten3').val(state_select3);
+        $('#select-asisten3').prop( "disabled", !state_select3 );
+        $('#lama-asisten3').prop( "disabled", !state_select3 );
     });
 </script>

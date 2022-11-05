@@ -99,6 +99,12 @@ class DosenController
                 $asistenDosen = new Asisten();
                 $asistenDosen->setidAsistenDosen(filter_input(INPUT_POST, 'asisten'));
 
+                $asistenDosen2 = new Asisten();
+                $asistenDosen2->setidAsistenDosen(filter_input(INPUT_POST, 'asisten2'));
+
+                $asistenDosen3 = new Asisten();
+                $asistenDosen3->setidAsistenDosen(filter_input(INPUT_POST, 'asisten3'));
+
                 $existBeritaAcara = $this->beritaAcaraDao->readOne($jadwal, $newBeritaAcara->getPertemuan());
                 if ($existBeritaAcara) {
                     echo '<div class="bg-warning">Data exists!</div>';
@@ -106,6 +112,12 @@ class DosenController
                     if ($this->beritaAcaraDao->create($newBeritaAcara)) {
                         if (filter_input(INPUT_POST, 'isAsisten')) {
                             $this->asistenDao->assignAsisten($asistenDosen, $jadwal, filter_input(INPUT_POST, 'lama-asistensi'), filter_input(INPUT_POST, 'pertemuan'));
+                        }
+                        if (filter_input(INPUT_POST, 'isAsisten2')) {
+                            $this->asistenDao->assignAsisten($asistenDosen2, $jadwal, filter_input(INPUT_POST, 'lama-asistensi2'), filter_input(INPUT_POST, 'pertemuan'));
+                        }
+                        if (filter_input(INPUT_POST, 'isAsisten3')) {
+                            $this->asistenDao->assignAsisten($asistenDosen3, $jadwal, filter_input(INPUT_POST, 'lama-asistensi3'), filter_input(INPUT_POST, 'pertemuan'));
                         }
                         header('Location: index.php?ahref=dosen');
                     } else {
