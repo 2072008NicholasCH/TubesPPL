@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class ="mb-3 col-3">
+            <div class="mb-3 col-3">
                 <label for="hari" class="form-label">Hari</label>
                 <select name="optHari" id="hari" class="form-select">
                     <option value="Senin">Senin</option>
@@ -90,5 +90,36 @@
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit" name="btnSubmit">Submit</button>
             </div>
+        </form>
+
+        <table id="dataTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Kode Mata Kuliah</th>
+                    <th>Mata Kuliah</th>
+                    <th>Kelas</th>
+                    <th>Tipe Kelas</th>
+                    <th>Ruangan</th>
+                    <th>Waktu</th>
+                    <th>Semester</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($dataJadwal as $index => $item) {
+                    echo "<tr>";
+                    echo "<td>" . $item->getMataKuliah()->getIdMataKuliah() . "</td>";
+                    echo "<td>" . $item->getMataKuliah()->getNama() . "</td>";
+                    echo "<td>" . $item->getKelas() . "</td>";
+                    echo "<td>" . $item->getTipeKelas() . "</td>";
+                    echo "<td>" . $item->getRuangan()->getNama() . "</td>";
+                    echo "<td>" . date('l', strtotime($item->getWaktuMulai())) . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
+                    echo "<td>" . $item->getSemester()->getNama() . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+
+            </tbody>
+        </table>
     </div>
 </div>
