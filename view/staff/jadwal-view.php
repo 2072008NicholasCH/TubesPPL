@@ -113,7 +113,7 @@
                     echo "<td>" . $item->getKelas() . "</td>";
                     echo "<td>" . $item->getTipeKelas() . "</td>";
                     echo "<td>" . $item->getRuangan()->getNama() . "</td>";
-                    echo "<td>" . date('l', strtotime($item->getWaktuMulai())) . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
+                    echo "<td>" . $item->getHari() . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
                     echo "<td>" . $item->getSemester()->getNama() . "</td>";
                     echo "</tr>";
                 }
