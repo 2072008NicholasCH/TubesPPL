@@ -11,6 +11,7 @@ class BeritaAcara
     private $rangkuman;
     private $pembahasan_materi;
     private $pertemuan;
+    private $jumlah_mahasiswa;
     private $foto_presensi;
     private $is_asisten;
     private $lama_asisten;
@@ -142,6 +143,22 @@ class BeritaAcara
     public function setPertemuan($pertemuan): void
     {
         $this->pertemuan = $pertemuan;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJumlahMahasiswa()
+    {
+        return $this->jumlah_mahasiswa;
+    }
+
+    /**
+     * @param mixed $jumlah_mahasiswa
+     */
+    public function setJumlahMahasiswa($jumlah_mahasiswa): void
+    {
+        $this->jumlah_mahasiswa = $jumlah_mahasiswa;
     }
 
     /**

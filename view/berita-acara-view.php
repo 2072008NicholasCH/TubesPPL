@@ -38,6 +38,11 @@
             <input type="time" class="form-control" id="" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="waktu-selesai" required>
         </div>
 
+        <div class="mb-3 col-2">
+            <label for="" class="form-label">Jumlah Mahasiswa</label>
+            <input type="number" min="0"  class="form-control" id="" name="jumlah-mahasiswa" required>
+        </div>
+
         <div class="mb-5 col-3">
             <label for="" class="form-label">Rangkuman Materi</label>
             <textarea class="form-control" id="" rows="10" name="pembahasan-materi" required></textarea>

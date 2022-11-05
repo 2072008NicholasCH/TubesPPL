@@ -30,7 +30,7 @@
                     echo "<td>" . $item->getKelas() . "</td>";
                     echo "<td>" . $item->getTipeKelas() . "</td>";
                     echo "<td>" . $item->getRuangan()->getNama() . "</td>";
-                    echo "<td>" . date('l', strtotime($item->getWaktuMulai())) . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
+                    echo "<td>" . $item->getHari() . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
                     echo "<td>" . $item->getSemester()->getNama() . "</td>";
                     echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#jadwal-$index'>Detail</button></td>";
                     echo "</tr>";
@@ -60,6 +60,7 @@
                                 <th>Waktu Selesai</th>
                                 <th>Pembahasan Materi</th>
                                 <th>Catatan</th>
+                                <th>Jumlah Mahasiswa</th>
                                 <th>Foto Presensi</th>
                                 <th>Waktu Submit</th>
                             </tr>
@@ -73,6 +74,7 @@
                                 echo "<td>" . date('h:i', strtotime($item->getWaktuSelesai())) . "</td>";
                                 echo "<td>" . $item->getPembahasanMateri() . "</td>";
                                 echo "<td>" . $item->getRangkuman() . "</td>";
+                                echo "<td>" . ($item->getJumlahMahasiswa() ? $item->getJumlahMahasiswa() : 0) . "</td>";
                                 echo "<td><img width='100px' src='" . $item->getFotoPresensi() . "'></td>";
                                 echo "<td>" . $item->getTglBeritaAcara() . "</td>";
                                 echo "</tr>";

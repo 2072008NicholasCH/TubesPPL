@@ -33,13 +33,14 @@ class DosenController
         if (isset($btnSubmit)) {
 
             $pertemuan = trim(filter_input(INPUT_POST, 'pertemuan'));
+            $jumlah_mahasiswa = trim(filter_input(INPUT_POST, 'jumlah-mahasiswa'));
             $tanggal = trim(filter_input(INPUT_POST, 'tanggal'));
             $waktu_mulai = trim(filter_input(INPUT_POST, 'waktu-mulai'));
             $waktu_selesai = trim(filter_input(INPUT_POST, 'waktu-selesai'));
             $rangkuman = trim(filter_input(INPUT_POST, 'rangkuman'));
             $pembahasan_materi = trim(filter_input(INPUT_POST, 'pembahasan-materi'));
 
-            if (empty($pertemuan) || empty($tanggal) || empty($waktu_mulai) || empty($waktu_selesai) || empty($rangkuman) || empty($pembahasan_materi)) {
+            if (empty($pertemuan) || empty($jumlah_mahasiswa) || empty($tanggal) || empty($waktu_mulai) || empty($waktu_selesai) || empty($rangkuman) || empty($pembahasan_materi)) {
                 echo '<div class="bg-warning">Please fill the field properly</div>';
             } else {
 
@@ -54,6 +55,7 @@ class DosenController
                 $newBeritaAcara->setRangkuman(filter_input(INPUT_POST, 'rangkuman'));
                 $newBeritaAcara->setPembahasanMateri(filter_input(INPUT_POST, 'pembahasan-materi'));
                 $newBeritaAcara->setPertemuan(filter_input(INPUT_POST, 'pertemuan'));
+                $newBeritaAcara->setJumlahMahasiswa(filter_input(INPUT_POST, 'jumlah-mahasiswa'));
 
                 $newBeritaAcara->setIsAsisten(filter_input(INPUT_POST, 'isAsisten') ? 1 : 0);
                 $newBeritaAcara->setTglBeritaAcara(date("Y/m/d h:i:s a"));

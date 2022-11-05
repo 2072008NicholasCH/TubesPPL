@@ -6,7 +6,7 @@ class BeritaAcaraDao
     {
         $result = false;
         $link = Connection::createConnection();
-        $query = "INSERT INTO beritaAcara VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO beritaAcara VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $link->prepare($query);
         $stmt->bindValue(1, $beritaAcara->getIdBeritaAcara());
         $stmt->bindValue(2, $beritaAcara->getWaktuMulai());
@@ -14,14 +14,15 @@ class BeritaAcaraDao
         $stmt->bindValue(4, $beritaAcara->getPembahasanMateri());
         $stmt->bindValue(5, $beritaAcara->getRangkuman());
         $stmt->bindValue(6, $beritaAcara->getPertemuan());
-        $stmt->bindValue(7, $beritaAcara->getFotoPresensi());
-        $stmt->bindValue(8, $beritaAcara->getIsAsisten());
-        $stmt->bindValue(9, $beritaAcara->getTglBeritaAcara());
-        $stmt->bindValue(10, $beritaAcara->getMataKuliah()->getIdMataKuliah());
-        $stmt->bindValue(11, $beritaAcara->getUser()->getIdUser());
-        $stmt->bindValue(12, $beritaAcara->getJadwal()->getSemester()->getIdSemester());
-        $stmt->bindValue(13, $beritaAcara->getJadwal()->getKelas());
-        $stmt->bindValue(14, $beritaAcara->getJadwal()->getTipeKelas());
+        $stmt->bindValue(7, $beritaAcara->getJumlahMahasiswa());
+        $stmt->bindValue(8, $beritaAcara->getFotoPresensi());
+        $stmt->bindValue(9, $beritaAcara->getIsAsisten());
+        $stmt->bindValue(10, $beritaAcara->getTglBeritaAcara());
+        $stmt->bindValue(11, $beritaAcara->getMataKuliah()->getIdMataKuliah());
+        $stmt->bindValue(12, $beritaAcara->getUser()->getIdUser());
+        $stmt->bindValue(13, $beritaAcara->getJadwal()->getSemester()->getIdSemester());
+        $stmt->bindValue(14, $beritaAcara->getJadwal()->getKelas());
+        $stmt->bindValue(15, $beritaAcara->getJadwal()->getTipeKelas());
         $link->beginTransaction();
         if ($stmt->execute()) {
             $link->commit();
