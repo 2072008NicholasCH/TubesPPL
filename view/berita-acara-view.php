@@ -76,7 +76,7 @@
 
         <div class="mb-3">
             <label for="formFile" class="form-label">Upload Bukti Foto</label>
-            <input class="form-control" type="file" id="foto-presensi" name="foto-presensi" accept="image/png, image/jpeg">
+            <input class="form-control" type="file" id="foto-presensi" name="foto-presensi" accept="image/png, image/jpeg, .pdf">
         </div>
 
         <div class="mb-3">

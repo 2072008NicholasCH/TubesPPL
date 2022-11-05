@@ -74,7 +74,7 @@ class DosenController
                     $extension = pathinfo($_FILES['foto-presensi']['name'], PATHINFO_EXTENSION);
                     $new_name = $_SESSION['user']->getIdUser() . '-' . $kodeMatkul . '-' . $kelas . '-' . $tipeKelas . '-' . filter_input(INPUT_POST, 'pertemuan') . '.' . $extension;
                     $foto_pertemuan = $directory . $new_name;
-                    if ($_FILES['photo']['size'] > 1024 * 2048) {
+                    if ($_FILES['foto-presensi']['size'] > 1024 * 25600) {
                         echo '<div class="bg-error">File size is too large.</div>';
                     } else {
                         var_dump(move_uploaded_file($_FILES['foto-presensi']['tmp_name'], $foto_pertemuan));

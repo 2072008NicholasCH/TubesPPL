@@ -75,7 +75,14 @@
                                 echo "<td>" . $item->getPembahasanMateri() . "</td>";
                                 echo "<td>" . $item->getRangkuman() . "</td>";
                                 echo "<td>" . ($item->getJumlahMahasiswa() ? $item->getJumlahMahasiswa() : 0) . "</td>";
-                                echo "<td><img width='100px' src='" . $item->getFotoPresensi() . "'></td>";
+                                if (substr($item->getFotoPresensi(), -3) == 'pdf') {
+                                    echo "<td><form method='post' action='view/pdf-view.php' target='_blank'>";
+                                        echo "<input type='hidden' value='" . $item->getFotoPresensi() . "' name='url'>";
+                                        echo "<button class='btn btn-success' type='submit'>Show</button>";
+                                    echo "</form></td>";
+                                } else {
+                                    echo "<td><img width='100px' src='" . $item->getFotoPresensi() . "'></td>";
+                                }
                                 echo "<td>" . $item->getTglBeritaAcara() . "</td>";
                                 echo "</tr>";
                             }
