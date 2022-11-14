@@ -61,7 +61,7 @@
         <?php
         if ($_SESSION['user']) {
             echo '<li>
-							<a onclick="logOut()"><span class="fa fa-regular fa-right-from-bracket mr-3"></span> Log Out</a>
+							<a onclick="logOut()"> Log Out</a>
 							<script>
 							  function logOut() {
 								const confirm = window.confirm("Are you sure want to sign out?");
