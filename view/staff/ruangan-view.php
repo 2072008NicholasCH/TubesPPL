@@ -9,7 +9,7 @@
 
             <div class="mb-3 col-2">
                 <label for="idRuangan" class="form-label">ID Ruangan</label>
-                <input type="text" class="form-control" id="idRuangan" name="txtIdRuangan">
+               <input type="text" class="form-control" id="idRuangan" name="txtIdRuangan">
             </div>
 
             <div class="mb-3 col-3">

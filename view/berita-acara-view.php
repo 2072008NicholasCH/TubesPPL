@@ -40,7 +40,7 @@
 
         <div class="mb-3 col-2">
             <label for="" class="form-label">Jumlah Mahasiswa</label>
-            <input type="number" min="0"  class="form-control" id="" name="jumlah-mahasiswa" required>
+            <input type="number" min="1"  class="form-control" id="" name="jumlah-mahasiswa" required>
         </div>
 
         <div class="mb-5 col-3">

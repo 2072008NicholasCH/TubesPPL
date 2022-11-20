@@ -25,7 +25,7 @@
 	if (!$_SESSION['user']) {
 	?>
 		<div class="row">
-			<div class="col-md-12 text-right m-3">
+			<div class="col-2 text-right m-3">
 				<a href="?ahref=login"><button type="button" class="btn btn-primary">Login</button></a>
 			</div>
 		</div>
