@@ -1,20 +1,77 @@
-<div class="container">
-  <h1>Login</h1>
-  <form method="post">
-    <!-- Email input -->
-    <div class="form-outline mb-4 ">
-      <label class="form-label" for="form2Example1">Username</label>
-      <input type="text" id="form2Example1" class="form-control" name="txtUsername"/>
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="assets/css/util.css">
+<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+<!--===============================================================================================-->
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('assets/images/bg-01.jpg');">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+            <form class="login100-form validate-form" method="post">
+                <span class="login100-form-title p-b-49">
+                    Login
+                </span>
+
+                <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
+                    <span class="label-input100">Username</span>
+                    <input class="input100" type="text" name="txtUsername" placeholder="Type your username">
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <span class="label-input100">Password</span>
+                    <input class="input100" type="password" name="txtPassword" placeholder="Type your password">
+                    <span class="focus-input100" data-symbol="&#xf190;"></span>
+                </div>
+
+                <div class="text-right p-t-8 p-b-31">
+                    <a href="#">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button type="submit" name="btnLogin" class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <!-- Password input -->
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form2Example2">Password</label>
-      <input type="password" id="form2Example2" class="form-control" name="txtPassword" />
-    </div>
-
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4" name="btnLogin">Sign in</button>
-  </form>
 </div>
+
+
+<!--===============================================================================================-->
+<script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/bootstrap/js/popper.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/daterangepicker/moment.min.js"></script>
+<script src="assets/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="assets/js/main.js"></script>
