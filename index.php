@@ -42,7 +42,9 @@ if (!isset($_SESSION['user'])) {
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
   <!-- Bootstrap CSS CDN -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://kit.fontawesome.com/3829a87171.js" crossorigin="anonymous"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <!-- Font Awesome JS -->
@@ -54,7 +56,16 @@ if (!isset($_SESSION['user'])) {
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
 
+  <!-- Toast Notification Assets -->
+  <link href="src/bootoast.css" rel="stylesheet" type="text/css">
+  <script src="dist/bootoast.min.js"></script>
+
   <style>
+
+    .col-2, .col-3 {
+      padding-left: 0;
+    }
+
     .wrapper {
       display: flex;
       align-items: stretch;
@@ -251,7 +262,7 @@ if (!isset($_SESSION['user'])) {
         lengthChange: false,
         buttons: ['copy', 'csv', 'pdf', 'colvis']
       });
-      table.buttons().container().appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+      table.buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
       $('.dataTable').DataTable();
     });
   </script>
