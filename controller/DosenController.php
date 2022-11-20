@@ -41,7 +41,12 @@ class DosenController
             $pembahasan_materi = trim(filter_input(INPUT_POST, 'pembahasan-materi'));
 
             if (empty($pertemuan) || empty($jumlah_mahasiswa) || empty($tanggal) || empty($waktu_mulai) || empty($waktu_selesai) || empty($rangkuman) || empty($pembahasan_materi)) {
-                echo '<div class="bg-warning">Please fill the field properly</div>';
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                    message: '" . $message . "',
+                    type: 'warning',
+                    position: 'rightTop'
+                }); </script>";
             } else {
 
                 $newBeritaAcara = new BeritaAcara();
@@ -75,7 +80,12 @@ class DosenController
                     $new_name = $_SESSION['user']->getIdUser() . '-' . $kodeMatkul . '-' . $kelas . '-' . $tipeKelas . '-' . filter_input(INPUT_POST, 'pertemuan') . '.' . $extension;
                     $foto_pertemuan = $directory . $new_name;
                     if ($_FILES['foto-presensi']['size'] > 1024 * 25600) {
-                        echo '<div class="bg-error">File size is too large.</div>';
+                        $message = '<i class="fa-solid fa-circle-exclamation"></i> File size is too large';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
                     } else {
                         var_dump(move_uploaded_file($_FILES['foto-presensi']['tmp_name'], $foto_pertemuan));
                     }
@@ -107,7 +117,12 @@ class DosenController
 
                 $existBeritaAcara = $this->beritaAcaraDao->readOne($jadwal, $newBeritaAcara->getPertemuan());
                 if ($existBeritaAcara) {
-                    echo '<div class="bg-warning">Data exists!</div>';
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Berita Acara exists';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'warning',
+                        position: 'rightTop'
+                    }); </script>";
                 } else {
                     if ($this->beritaAcaraDao->create($newBeritaAcara)) {
                         if (filter_input(INPUT_POST, 'isAsisten')) {
@@ -121,7 +136,12 @@ class DosenController
                         }
                         header('Location: index.php?ahref=dosen');
                     } else {
-                        echo '<div class="bg-error">Error on add berita acara</div>';
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add berita acara';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
                     }
                 }
             }

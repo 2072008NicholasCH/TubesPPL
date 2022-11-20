@@ -54,7 +54,12 @@ class StaffController
             $trimWaktuSelesai = trim($waktu_selesai);
             $trimRuangan = trim($ruangan);
             if (empty($trimMataKuliah) || empty($trimDosen) || empty($trimKelas) || empty($trimTipeKelas) || empty($trimHari) || empty($trimWaktuMulai) || empty($trimWaktuSelesai) || empty($trimRuangan)) {
-                echo '<div class="bg-warning">Please fill the field properly</div>';
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                    message: '" . $message . "',
+                    type: 'warning',
+                    position: 'rightTop'
+                }); </script>";
             } else {
                 $jadwal = new Jadwal();
                 $jadwal->setKelas($trimKelas);
@@ -77,22 +82,36 @@ class StaffController
 
                 $dosen = new User();
                 $dosen->setIdUser($trimDosen);
-                
+
                 $jadwal->setUser($dosen);
 
                 $existsJadwal = $this->jadwalDao->readOne($jadwal);
                 if ($existsJadwal) {
-                    echo '<div class="bg-warning">Data exists!</div>';
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Jadwal exists';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'warning',
+                        position: 'rightTop'
+                    }); </script>";
                 } else {
                     $result = $this->jadwalDao->create($jadwal);
 
                     if ($result) {
-                        echo '<div class="bg-success">Jadwal successfully added </div>';
+                        $message = '<i class="fa-solid fa-circle-check"></i> Jadwal successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
                     } else {
-                        echo '<div class="bg-error">Error on add jadwal</div>';
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add jadwal';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
                     }
                 }
-
             }
         }
         $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
@@ -116,7 +135,12 @@ class StaffController
             $trimSKS = trim($sks);
             $trimProgramStudi = trim($programStudi);
             if (empty($trimId) || empty($trimNama) || empty($trimSKS) || empty($trimProgramStudi)) {
-                echo '<div class="bg-warning">Please fill the field properly</div>';
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                    message: '" . $message . "',
+                    type: 'warning',
+                    position: 'rightTop'
+                }); </script>";
             } else {
                 $mataKuliah = new MataKuliah();
                 $mataKuliah->setIdMataKuliah($trimId);
@@ -125,15 +149,30 @@ class StaffController
                 $mataKuliah->getProgramStudi()->setIdProgramStudi($trimProgramStudi);
                 $existsMataKuliah = $this->mataKuliahDao->readOne($mataKuliah);
                 if ($existsMataKuliah) {
-                    echo '<div class="bg-warning">Data exists!</div>';
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Mata Kuliah exists';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
                 } else {
 
                     $result = $this->mataKuliahDao->create($mataKuliah);
 
                     if ($result) {
-                        echo '<div class="bg-success">Mata kuliah successfully added </div>';
+                        $message = '<i class="fa-solid fa-circle-check"></i> Mata kuliah successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
                     } else {
-                        echo '<div class="bg-error">Error on add mata kuliah</div>';
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add mata kuliah';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
                     }
                 }
             }
@@ -152,11 +191,21 @@ class StaffController
             $trimId = trim($id);
             $trimNama = trim($nama);
             if (empty($trimId) || empty($trimNama)) {
-                echo '<div class="bg-warning">Please fill the field properly</div>';
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
             } else {
                 $existsRuangan = $this->ruanganDao->readOne($trimId, $trimNama);
                 if ($existsRuangan) {
-                    echo '<div class="bg-warning">Data exists!</div>';
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Ruangan exists';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
                 } else {
                     $ruangan = new Ruangan();
                     $ruangan->setIdRuangan($trimId);
@@ -164,9 +213,19 @@ class StaffController
                     $result = $this->ruanganDao->create($ruangan);
 
                     if ($result) {
-                        echo '<div class="bg-success">Ruangan successfully added </div>';
+                        $message = '<i class="fa-solid fa-circle-check"></i> Ruangan successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
                     } else {
-                        echo '<div class="bg-error">Error on add ruangan</div>';
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add ruangan';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
                     }
                 }
             }
@@ -184,11 +243,21 @@ class StaffController
             $trimId = trim($id);
             $trimNama = trim($nama);
             if (empty($trimId) || empty($trimNama)) {
-                echo '<div class="bg-warning">Please fill the field properly</div>';
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
             } else {
                 $existsSemester = $this->semesterDao->readOne($trimId, $trimNama);
                 if ($existsSemester) {
-                    echo '<div class="bg-warning">Data exists!</div>';
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Semester exists';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'warning',
+                        position: 'rightTop'
+                    }); </script>";
                 } else {
                     $semester = new Semester();
                     $semester->setIdSemester($trimId);
@@ -196,9 +265,19 @@ class StaffController
                     $result = $this->semesterDao->create($semester);
 
                     if ($result) {
-                        echo '<div class="bg-success">Semester successfully added </div>';
+                        $message = '<i class="fa-solid fa-circle-check"></i> Semester successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
                     } else {
-                        echo '<div class="bg-error">Error on add semester</div>';
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add semester';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
                     }
                 }
             }
