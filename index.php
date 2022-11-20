@@ -223,6 +223,11 @@ if (!isset($_SESSION['user'])) {
     case 'staff-semester':
       $staffController = new StaffController();
       $staffController->semester();
+      break;
+    case 'staff-asisten':
+      $staffController = new StaffController();
+      $staffController->asisten();
+      break;
     case 'about':
       include_once 'view/about-view.php';
       break;

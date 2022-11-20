@@ -10,6 +10,7 @@ class StaffController
     private SemesterDao $semesterDao;
     private ProgramStudiDao $programStudiDao;
     private UserDao $userDao;
+    private AsistenDao $asistenDao;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class StaffController
         $this->semesterDao = new SemesterDao();
         $this->programStudiDao = new ProgramStudiDao();
         $this->userDao = new UserDao();
+        $this->asistenDao = new AsistenDao();
     }
 
     public function index()
@@ -284,5 +286,60 @@ class StaffController
         }
         $dataSemester = $this->semesterDao->read();
         include_once 'view/staff/semester-view.php';
+    }
+
+    public function asisten()
+    {
+        $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        if (isset($btnSubmitted)) {
+            $id = filter_input(INPUT_POST, 'txtIdAsisten');
+            $nama = filter_input(INPUT_POST, 'txtNamaAsisten');
+            $no_telp = filter_input(INPUT_POST, 'txtNoTelpAsisten');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            $trimNoTelp = trim($no_telp);
+            if (empty($trimId) || empty($trimNama) || empty($trimNoTelp)) {
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
+            } else {
+                $existsAsisten = $this->asistenDao->readOne($trimId);
+                if ($existsAsisten) {
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Asisten exists';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'warning',
+                        position: 'rightTop'
+                    }); </script>";
+                } else {
+                    $asisten = new Asisten();
+                    $asisten->setidAsistenDosen($trimId);
+                    $asisten->setNama($trimNama);
+                    $asisten->setNoTelp($trimNoTelp);
+                    $result = $this->asistenDao->create($asisten);
+
+                    if ($result) {
+                        $message = '<i class="fa-solid fa-circle-check"></i> Asisten Dosen successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
+                    } else {
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add Asisten Dosen';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
+                    }
+                }
+            }
+        }
+        $asisten = $this->asistenDao->readAll();
+        include_once 'view/staff/asisten-view.php';
     }
 }
