@@ -339,7 +339,12 @@ class StaffController
                 }
             }
         }
+
         $asisten = $this->asistenDao->readAll();
+        $detailAsisten = [];
+        foreach ($asisten as $index => $a) {
+            $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
+        }
         include_once 'view/staff/asisten-view.php';
     }
 }

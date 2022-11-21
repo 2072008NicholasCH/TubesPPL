@@ -33,15 +33,17 @@
                     <th>NRP</th>
                     <th>Nama</th>
                     <th>No Telp</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($asisten as $item) {
+                foreach ($asisten as $index => $item) {
                     echo "<tr>";
                     echo "<td>" . $item->getidAsistenDosen() . "</td>";
                     echo "<td>" . $item->getNama() . "</td>";
                     echo "<td>" . $item->getNoTelp() . "</td>";
+                    echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#asisten-$index'>Detail</button></td>";
                     echo "</tr>";
                 }
                 ?>
@@ -51,3 +53,46 @@
 
     </div>
 </div>
+
+<?php foreach ($detailAsisten as $index => $asisten) { ?>
+    <div class="modal fade" id="asisten-<?= $index ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Detail Asistensi</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="dataTable" class="table table-striped dataTable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Kode Mata Kuliah</th>
+                                <th>Mata Kuliah</th>
+                                <th>Kelas</th>
+                                <th>Tipe Kelas</th>
+                                <th>Total Jam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($asisten as $index => $item) {
+                                echo "<tr>";
+                                echo "<td>" . $item["kode_mata_kuliah"] . "</td>";
+                                echo "<td>" . $item["nama"] . "</td>";
+                                echo "<td>" . $item["kelas"] . "</td>";
+                                echo "<td>" . $item["tipe_kelas"] . "</td>";
+                                echo "<td>" . $item["total_jam"] . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>

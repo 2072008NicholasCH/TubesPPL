@@ -69,4 +69,15 @@ class AsistenDao
         $link = Connection::close($link);
         return $result;
     }
+
+    public function getAsistenDetail(Asisten $asisten)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT asistenDosen_idAsistenDosen AS nrp, jadwal_mata_kuliah_idMataKuliah AS kode_mata_kuliah, nama ,jadwal_kelas AS kelas, jadwal_tipe_kelas AS tipe_kelas, SUM(lama_asistensi) AS total_jam FROM asistendosen_has_jadwal JOIN mata_kuliah ON idMataKuliah = jadwal_mata_kuliah_idMataKuliah WHERE asistenDosen_idAsistenDosen = ? GROUP BY jadwal_mata_kuliah_idMataKuliah";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(1, $asisten->getidAsistenDosen());
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
 }
