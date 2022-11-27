@@ -61,8 +61,8 @@ if (!isset($_SESSION['user'])) {
   <script src="dist/bootoast.min.js"></script>
 
   <style>
-
-    .col-2, .col-3 {
+    .col-2,
+    .col-3 {
       padding-left: 0;
     }
 
@@ -227,6 +227,10 @@ if (!isset($_SESSION['user'])) {
     case 'staff-asisten':
       $staffController = new StaffController();
       $staffController->asisten();
+      break;
+    case 'staff-dosen':
+      $staffController = new StaffController();
+      $staffController->dosen();
       break;
     case 'about':
       include_once 'view/about-view.php';

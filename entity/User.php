@@ -78,6 +78,9 @@ class User
      */
     public function getRole(): Role
     {
+        if (!isset($this->role)) {
+            $this->role = new Role();
+        }
         return $this->role;
     }
 
@@ -108,5 +111,19 @@ class User
     public function __toString()
     {
         return $this->getIdUser() . ' - ' . $this->getNama();
+    }
+
+    public function __set($name, $value)
+    {
+        if(!isset($this->role)) {
+            $this->role = new Role();
+        }
+        switch ($name) {
+            case 'idRole':
+                $this->role->setIdRole($value);
+                break;
+            case 'nama_role':
+                $this->role->setNama($value);
+        }
     }
 }

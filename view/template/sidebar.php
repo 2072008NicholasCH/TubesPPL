@@ -56,6 +56,9 @@
                     <a href="index.php?ahref=staff-semester">Semester</a>
                 </li>
                 <li>
+                    <a href="index.php?ahref=staff-dosen">Dosen</a>
+                </li>
+                <li>
                     <a href="index.php?ahref=staff-asisten">Asisten</a>
                 </li>
             </ul>

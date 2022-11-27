@@ -5,6 +5,7 @@ require 'utility/spreadsheet/vendor/autoload.php';
 //include the classes needed to create and write .xlsx file
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class StaffController
 {
 
@@ -123,7 +124,7 @@ class StaffController
             }
         }
         $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
-        $dataDosen = $this->userDao->readAllDosen("3");
+        $dataDosen = $this->userDao->readAllDosen("3", "1");
         $dataMataKuliah = $this->mataKuliahDao->readAll();
         $dataRuangan = $this->ruanganDao->read();
         $dataJadwal = $this->jadwalDao->readBySemester($_SESSION['semester_aktif']);
@@ -159,7 +160,7 @@ class StaffController
                 $existsMataKuliah = $this->mataKuliahDao->readOne($mataKuliah);
                 if ($existsMataKuliah) {
                     $message = '<i class="fa-solid fa-circle-exclamation"></i> Mata Kuliah exists';
-                        echo "<script> bootoast.toast({
+                    echo "<script> bootoast.toast({
                             message: '" . $message . "',
                             type: 'warning',
                             position: 'rightTop'
@@ -190,14 +191,14 @@ class StaffController
                 $directory = 'uploads/';
                 $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
                 $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
-                
+
                 move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
                 $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
                 $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
                 if ($isRowTitle) {
-                    for ($i=2; $i <= count($data); $i++) { 
+                    for ($i = 2; $i <= count($data); $i++) {
                         $newMK = new MataKuliah();
                         $newMK->setIdMataKuliah($data[$i]['A']);
                         $newMK->setNama($data[$i]['B']);
@@ -249,7 +250,7 @@ class StaffController
             $trimNama = trim($nama);
             if (empty($trimId) || empty($trimNama)) {
                 $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
-                        echo "<script> bootoast.toast({
+                echo "<script> bootoast.toast({
                             message: '" . $message . "',
                             type: 'warning',
                             position: 'rightTop'
@@ -258,7 +259,7 @@ class StaffController
                 $existsRuangan = $this->ruanganDao->readOne($trimId, $trimNama);
                 if ($existsRuangan) {
                     $message = '<i class="fa-solid fa-circle-exclamation"></i> Ruangan exists';
-                        echo "<script> bootoast.toast({
+                    echo "<script> bootoast.toast({
                             message: '" . $message . "',
                             type: 'warning',
                             position: 'rightTop'
@@ -291,14 +292,14 @@ class StaffController
                 $directory = 'uploads/';
                 $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
                 $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
-                
+
                 move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
                 $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
                 $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
                 if ($isRowTitle) {
-                    for ($i=2; $i <= count($data); $i++) { 
+                    for ($i = 2; $i <= count($data); $i++) {
                         $ruangan = new Ruangan();
                         $ruangan->setIdRuangan($data[$i]['A']);
                         $ruangan->setNama($data[$i]['B']);
@@ -344,7 +345,7 @@ class StaffController
             $trimNama = trim($nama);
             if (empty($trimId) || empty($trimNama)) {
                 $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
-                        echo "<script> bootoast.toast({
+                echo "<script> bootoast.toast({
                             message: '" . $message . "',
                             type: 'warning',
                             position: 'rightTop'
@@ -386,14 +387,14 @@ class StaffController
                 $directory = 'uploads/';
                 $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
                 $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
-                
+
                 move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
                 $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
                 $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
                 if ($isRowTitle) {
-                    for ($i=2; $i <= count($data); $i++) { 
+                    for ($i = 2; $i <= count($data); $i++) {
                         $semester = new Semester();
                         $semester->setIdSemester($data[$i]['A']);
                         $semester->setNama($data[$i]['B']);
@@ -440,7 +441,7 @@ class StaffController
             $trimNoTelp = trim($no_telp);
             if (empty($trimId) || empty($trimNama) || empty($trimNoTelp)) {
                 $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
-                        echo "<script> bootoast.toast({
+                echo "<script> bootoast.toast({
                             message: '" . $message . "',
                             type: 'warning',
                             position: 'rightTop'
@@ -486,5 +487,116 @@ class StaffController
             $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
         }
         include_once 'view/staff/asisten-view.php';
+    }
+
+    public function dosen()
+    {
+        $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        if (isset($btnSubmitted)) {
+            $id = filter_input(INPUT_POST, 'txtIdDosen');
+            $nama = filter_input(INPUT_POST, 'txtNamaDosen');
+            $status = filter_input(INPUT_POST, 'radioStatus');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            $trimStatus = trim($status);
+            if (empty($trimId) || empty($trimNama)) {
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
+            } else {
+                $existsDosen = $this->userDao->readOneDosen($trimId);
+                if ($existsDosen) {
+                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Dosen exists';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'warning',
+                        position: 'rightTop'
+                    }); </script>";
+                } else {
+                    $dosen = new User();
+                    $dosen->setIdUser($trimId);
+                    $dosen->setNama($trimNama);
+                    $dosen->setPassword($trimId);
+
+                    $role = new Role();
+                    $role->setIdRole("3");
+                    $dosen->setRole($role);
+
+                    $dosen->setStatus($trimStatus);
+
+                    $result = $this->userDao->create($dosen);
+
+                    if ($result) {
+                        $message = '<i class="fa-solid fa-circle-check"></i> Dosen successfully added';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
+                    } else {
+                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add dosen';
+                        echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
+                    }
+                }
+            }
+        }
+
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        if (isset($btnUpdate)) {
+            $id = filter_input(INPUT_POST, 'txtIdDosen');
+            $nama = filter_input(INPUT_POST, 'txtNamaDosen');
+            $status = filter_input(INPUT_POST, 'radioStatus');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            $trimStatus = trim($status);
+            if (empty($trimId) || empty($trimNama)) {
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
+            } else {
+
+                $dosen = new User();
+                $dosen->setIdUser($trimId);
+                $dosen->setNama($trimNama);
+                $dosen->setPassword($trimId);
+
+                $role = new Role();
+                $role->setIdRole("3");
+                $dosen->setRole($role);
+
+                $dosen->setStatus($trimStatus);
+
+                $result = $this->userDao->updateDosen($dosen);
+
+                if ($result) {
+                    $message = '<i class="fa-solid fa-circle-check"></i> Dosen successfully updated';
+                    echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
+                } else {
+                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on update dosen';
+                    echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
+                }
+            }
+        }
+
+        $dataDosen = $this->userDao->readAllDosen("3", "1");
+        include_once 'view/staff/dosen-view.php';
     }
 }
