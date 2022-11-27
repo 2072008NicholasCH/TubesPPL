@@ -50,8 +50,21 @@ class SemesterDao
 
     }
 
-    public function delete()
+    public function delete($id)
     {
-
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "DELETE FROM semester WHERE idSemester = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $id);
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
     }
 }

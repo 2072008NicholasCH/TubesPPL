@@ -274,6 +274,10 @@ if (!isset($_SESSION['user'])) {
       table.buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
       $('.dataTable').DataTable();
     });
+
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   </script>
 
 </body>

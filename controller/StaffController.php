@@ -336,6 +336,27 @@ class StaffController
 
     public function semester()
     {
+        $deleteCommand = filter_input(INPUT_GET, 'delcom');
+        if (isset($deleteCommand) && $deleteCommand == 1) {
+            $idSemester = filter_input(INPUT_GET, 'sid');
+            $result = $this->semesterDao->delete($idSemester);
+            if ($result) {
+                $message = '<i class="fa-solid fa-circle-check"></i> Semester successfully deleted';
+                echo "<script> bootoast.toast({
+            message: '" . $message . "',
+            type: 'success',
+            position: 'rightTop'
+        }); </script>";
+            } else {
+                $message = '<i class="fa-solid fa-circle-xmark"></i> Error on delete semester';
+                echo "<script> bootoast.toast({
+                    message: '" . $message . "',
+                    type: 'danger',
+                    position: 'rightTop'
+                }); </script>";
+            }
+        }
+
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {

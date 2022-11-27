@@ -53,7 +53,7 @@
                     echo "<td>" . $item->getIdUser() . "</td>";
                     echo "<td>" . $item->getNama() . "</td>";
                     echo "<td>" . $item->getStatus() . "</td>";
-                    echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#dosen-$index'>Edit</button></td>";
+                    echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#dosen-$index'><i class='fa-solid fa-pen-to-square'></i></button></td>";
                     echo "</tr>";
                 }
                 ?>
