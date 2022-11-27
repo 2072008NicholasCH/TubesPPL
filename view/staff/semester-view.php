@@ -5,6 +5,18 @@
     <div class="container">
         <h2>Semester</h2>
 
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3 col-4">
+                <label class="form-label">Upload File</label>
+                <input type="file" class="form-control" name="fileImport" accept=".xls, .xlsx">
+            </div>
+            <div class="mb-3 col-4">
+                <input type="checkbox" name="rowTitle" id="rowTitle">
+                <label for="rowTitle" class="form-label">First Row is Heading</label>
+            </div>
+            <input type="submit" class="btn btn-primary mb-5" name="btnImport" value="Import data">
+        </form>
+
         <form method="post">
 
             <div class="mb-3 col-2">

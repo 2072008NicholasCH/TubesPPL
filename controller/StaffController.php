@@ -1,5 +1,10 @@
 <?php
 
+require 'utility/spreadsheet/vendor/autoload.php';
+
+//include the classes needed to create and write .xlsx file
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class StaffController
 {
 
@@ -11,6 +16,7 @@ class StaffController
     private ProgramStudiDao $programStudiDao;
     private UserDao $userDao;
     private AsistenDao $asistenDao;
+
 
     public function __construct()
     {
@@ -127,6 +133,7 @@ class StaffController
     public function mataKuliah()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdMataKuliah');
             $nama = filter_input(INPUT_POST, 'txtNamaMataKuliah');
@@ -178,7 +185,54 @@ class StaffController
                     }
                 }
             }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+                
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i=2; $i <= count($data); $i++) { 
+                        $newMK = new MataKuliah();
+                        $newMK->setIdMataKuliah($data[$i]['A']);
+                        $newMK->setNama($data[$i]['B']);
+                        $newMK->setSks($data[$i]['C']);
+                        $newMK->getProgramStudi()->setIdProgramStudi($data[$i]['D']);
+                        $result = $this->mataKuliahDao->create($newMK);
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $newMK = new MataKuliah();
+                        $newMK->setIdMataKuliah($value['A']);
+                        $newMK->setNama($value['B']);
+                        $newMK->setSks($value['C']);
+                        $newMK->getProgramStudi()->setIdProgramStudi($value['D']);
+                        $result = $this->mataKuliahDao->create($newMK);
+                    }
+                }
+                if ($result) {
+                    $message = '<i class="fa-solid fa-circle-check"></i> Mata kuliah successfully added';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'success',
+                        position: 'rightTop'
+                        }); </script>";
+                } else {
+                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add mata kuliah';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'danger',
+                        position: 'rightTop'
+                    }); </script>";
+                }
+            }
         }
+
         $dataProgramStudi = $this->programStudiDao->readAll();
         $dataMataKuliah = $this->mataKuliahDao->readAll();
         include_once 'view/staff/mata-kuliah-view.php';
@@ -187,6 +241,7 @@ class StaffController
     public function ruangan()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdRuangan');
             $nama = filter_input(INPUT_POST, 'txtNamaRuangan');
@@ -231,6 +286,48 @@ class StaffController
                     }
                 }
             }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+                
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i=2; $i <= count($data); $i++) { 
+                        $ruangan = new Ruangan();
+                        $ruangan->setIdRuangan($data[$i]['A']);
+                        $ruangan->setNama($data[$i]['B']);
+                        $result = $this->ruanganDao->create($ruangan);
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $ruangan = new Ruangan();
+                        $ruangan->setIdRuangan($value['A']);
+                        $ruangan->setNama($value['B']);
+                        $result = $this->ruanganDao->create($ruangan);
+                    }
+                }
+                if ($result) {
+                    $message = '<i class="fa-solid fa-circle-check"></i> Ruangan successfully added';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'success',
+                        position: 'rightTop'
+                        }); </script>";
+                } else {
+                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add Ruangan';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'danger',
+                        position: 'rightTop'
+                    }); </script>";
+                }
+            }
         }
         $dataRuangan = $this->ruanganDao->read();
         include_once 'view/staff/ruangan-view.php';
@@ -239,6 +336,7 @@ class StaffController
     public function semester()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdSemester');
             $nama = filter_input(INPUT_POST, 'txtNamaSemester');
@@ -281,6 +379,48 @@ class StaffController
                             position: 'rightTop'
                         }); </script>";
                     }
+                }
+            }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+                
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i=2; $i <= count($data); $i++) { 
+                        $semester = new Semester();
+                        $semester->setIdSemester($data[$i]['A']);
+                        $semester->setNama($data[$i]['B']);
+                        $result = $this->semesterDao->create($semester);
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $semester = new Semester();
+                        $semester->setIdSemester($value['A']);
+                        $semester->setNama($value['B']);
+                        $result = $this->semesterDao->create($semester);
+                    }
+                }
+                if ($result) {
+                    $message = '<i class="fa-solid fa-circle-check"></i> Semester successfully added';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'success',
+                        position: 'rightTop'
+                        }); </script>";
+                } else {
+                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add Semester';
+                    echo "<script> bootoast.toast({
+                        message: '" . $message . "',
+                        type: 'danger',
+                        position: 'rightTop'
+                    }); </script>";
                 }
             }
         }
