@@ -5,6 +5,7 @@ class Asisten
     private $idAsistenDosen;
     private $nama;
     private $no_telp;
+    private $status;
 
     /**
      * @return mixed
@@ -52,6 +53,22 @@ class Asisten
     public function setNoTelp($no_telp): void
     {
         $this->no_telp = $no_telp;
+    }
+
+        /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
     }
 
 

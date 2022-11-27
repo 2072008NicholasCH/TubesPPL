@@ -7,6 +7,7 @@ class User
     private $password;
     private Role $role;
     private $rememberToken;
+    private $status;
 
     /**
      * @return mixed
@@ -57,6 +58,22 @@ class User
     }
 
     /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
      * @return Role
      */
     public function getRole(): Role
@@ -92,5 +109,4 @@ class User
     {
         return $this->getIdUser() . ' - ' . $this->getNama();
     }
-
 }
