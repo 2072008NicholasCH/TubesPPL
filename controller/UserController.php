@@ -28,7 +28,7 @@ class UserController
             } else if ($result->getIdUser() == $username) {
                 $_SESSION['user'] = $result;
                 $_SESSION['web_user_full_name'] = $result->getNama();
-                $_SESSION['user_role_id'] = $result->role_idRole;
+                $_SESSION['user_role_id'] = $result->getRole()->getIdRole();
                 $_SESSION['semester_aktif'] = 1;
                 header('location:index.php');
             } else {

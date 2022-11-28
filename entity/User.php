@@ -122,6 +122,9 @@ class User
             case 'idRole':
                 $this->role->setIdRole($value);
                 break;
+            case 'role_idRole':
+                $this->role->setIdRole($value);
+                break;
             case 'nama_role':
                 $this->role->setNama($value);
         }

@@ -8,6 +8,7 @@ class UserDao
         $conn = Connection::createConnection();
         $query = 'SELECT * FROM user WHERE idUser = ? AND password = MD5(?)';
         $stmt = $conn->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->bindValue(1, $idUser);
         $stmt->bindValue(2, $password);
         $stmt->execute();
