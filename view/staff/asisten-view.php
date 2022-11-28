@@ -59,7 +59,7 @@
                     echo "<td>" . $item->getidAsistenDosen() . "</td>";
                     echo "<td>" . $item->getNama() . "</td>";
                     echo "<td>" . $item->getNoTelp() . "</td>";
-                    echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#asisten-$index'>Detail</button></td>";
+                    echo "<td><button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#asisten-$index'><i class='fa-solid fa-info'></i></button></td>";
                     echo "</tr>";
                 }
                 ?>
