@@ -67,7 +67,7 @@
             <select class="form-select" aria-label="Default select example" id="select-asisten" disabled name="asisten">
                 <option value="" disabled selected>Select your option</option>
                 <?php foreach($dataAsisten as $asisten) { ?>    
-                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
+                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getidAsistenDosen() . ' - ' . $asisten->getNama() ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -89,7 +89,7 @@
             <select class="form-select" aria-label="Default select example" id="select-asisten2" disabled name="asisten2">
                 <option value="" disabled selected>Select your option</option>
                 <?php foreach($dataAsisten as $asisten) { ?>    
-                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
+                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getidAsistenDosen() . ' - ' . $asisten->getNama() ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -111,7 +111,7 @@
             <select class="form-select" aria-label="Default select example" id="select-asisten3" disabled name="asisten3">
                 <option value="" disabled selected>Select your option</option>
                 <?php foreach($dataAsisten as $asisten) { ?>    
-                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getNama() ?></option>
+                    <option value="<?= $asisten->getidAsistenDosen() ?>"><?= $asisten->getidAsistenDosen() . ' - ' . $asisten->getNama() ?></option>
                 <?php } ?>
             </select>
         </div>

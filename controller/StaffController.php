@@ -457,6 +457,7 @@ class StaffController
             $id = filter_input(INPUT_POST, 'txtIdAsisten');
             $nama = filter_input(INPUT_POST, 'txtNamaAsisten');
             $no_telp = filter_input(INPUT_POST, 'txtNoTelpAsisten');
+            $status = filter_input(INPUT_POST, 'radioStatus');
             $trimId = trim($id);
             $trimNama = trim($nama);
             $trimNoTelp = trim($no_telp);
@@ -481,6 +482,7 @@ class StaffController
                     $asisten->setidAsistenDosen($trimId);
                     $asisten->setNama($trimNama);
                     $asisten->setNoTelp($trimNoTelp);
+                    $asisten->setStatus($status);
                     $result = $this->asistenDao->create($asisten);
 
                     if ($result) {
@@ -504,8 +506,16 @@ class StaffController
 
         $asisten = $this->asistenDao->readAll();
         $detailAsisten = [];
+        $detailJadwalAsisten = [];
+        
         foreach ($asisten as $index => $a) {
             $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
+        }
+        
+        foreach ($detailAsisten as $i => $item) {
+            foreach ($item as $j => $value) {
+                $detailJadwalAsisten[$i][$j] = $this->asistenDao->getAsistenJadwalDetail($value['nrp'], $value['kode_mata_kuliah'], $value['dosen'], $value['semester'], $value['kelas'], $value['tipe_kelas']);
+            }
         }
         include_once 'view/staff/asisten-view.php';
     }

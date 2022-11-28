@@ -29,11 +29,12 @@ class AsistenDao
     {
         $result = false;
         $link = Connection::createConnection();
-        $query = "INSERT INTO asistendosen VALUES (?, ?, ?)";
+        $query = "INSERT INTO asistendosen VALUES (?, ?, ?, ?)";
         $stmt = $link->prepare($query);
         $stmt->bindValue(1, $asisten->getidAsistenDosen());
         $stmt->bindValue(2, $asisten->getNama());
         $stmt->bindValue(3, $asisten->getNoTelp());
+        $stmt->bindValue(4, $asisten->getStatus());
         $link->beginTransaction();
         if ($stmt->execute()) {
             $link->commit();
@@ -73,9 +74,39 @@ class AsistenDao
     public function getAsistenDetail(Asisten $asisten)
     {
         $conn = Connection::createConnection();
-        $query = "SELECT asistenDosen_idAsistenDosen AS nrp, jadwal_mata_kuliah_idMataKuliah AS kode_mata_kuliah, nama ,jadwal_kelas AS kelas, jadwal_tipe_kelas AS tipe_kelas, SUM(lama_asistensi) AS total_jam FROM asistendosen_has_jadwal JOIN mata_kuliah ON idMataKuliah = jadwal_mata_kuliah_idMataKuliah WHERE asistenDosen_idAsistenDosen = ? GROUP BY jadwal_mata_kuliah_idMataKuliah";
+        $query = "SELECT asistenDosen_idAsistenDosen AS nrp, jadwal_mata_kuliah_idMataKuliah AS kode_mata_kuliah, nama ,jadwal_user_idUser AS dosen, jadwal_semester_idSemester AS semester , jadwal_kelas AS kelas, jadwal_tipe_kelas AS tipe_kelas, SUM(lama_asistensi) AS total_jam FROM asistendosen_has_jadwal JOIN mata_kuliah ON idMataKuliah = jadwal_mata_kuliah_idMataKuliah WHERE asistenDosen_idAsistenDosen = ? GROUP BY jadwal_mata_kuliah_idMataKuliah";
         $stmt = $conn->prepare($query);
         $stmt->bindValue(1, $asisten->getidAsistenDosen());
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
+    
+    public function getAsistenJadwalDetail($asisten, $matkul, $dosen, $semester, $kelas, $tipe_kelas)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT beritaacara.waktu_mulai, beritaacara.waktu_selesai, beritaacara.pertemuan, lama_asistensi 
+                  FROM asistendosen_has_jadwal 
+                  JOIN beritaacara 
+                  ON asistendosen_has_jadwal.jadwal_mata_kuliah_idMataKuliah = beritaacara.jadwal_mata_kuliah_idMataKuliah
+                  AND asistendosen_has_jadwal.jadwal_user_idUser = beritaacara.jadwal_user_idUser
+                  AND asistendosen_has_jadwal.jadwal_semester_idSemester = beritaacara.jadwal_semester_idSemester
+                  AND asistendosen_has_jadwal.jadwal_kelas = beritaacara.jadwal_kelas
+                  AND asistendosen_has_jadwal.jadwal_tipe_kelas = beritaacara.jadwal_tipe_kelas
+                  AND asistendosen_has_jadwal.pertemuan = beritaacara.pertemuan
+                  WHERE asistenDosen_idAsistenDosen = ?
+                  AND asistendosen_has_jadwal.jadwal_mata_kuliah_idMataKuliah = ?
+                  AND asistendosen_has_jadwal.jadwal_user_idUser = ?
+                  AND asistendosen_has_jadwal.jadwal_semester_idSemester = ?
+                  AND asistendosen_has_jadwal.jadwal_kelas = ?
+                  AND asistendosen_has_jadwal.jadwal_tipe_kelas = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $asisten);
+        $stmt->bindParam(2, $matkul);
+        $stmt->bindParam(3, $dosen);
+        $stmt->bindParam(4, $semester);
+        $stmt->bindParam(5, $kelas);
+        $stmt->bindParam(6, $tipe_kelas);
         $stmt->execute();
         $conn = Connection::close($conn);
         return $stmt->fetchAll();
