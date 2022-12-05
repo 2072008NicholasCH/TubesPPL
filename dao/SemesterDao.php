@@ -45,8 +45,23 @@ class SemesterDao
         return $stmt->fetchObject('Semester');
     }
 
-    public function update()
+    public function update(Semester $semester)
     {
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "UPDATE semester SET nama = ? WHERE idSemester = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $semester->getNama());
+        $stmt->bindValue(2, $semester->getIdSemester());
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
 
     }
 

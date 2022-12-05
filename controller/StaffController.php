@@ -39,6 +39,8 @@ class StaffController
     public function beritaAcara()
     {
         $dataBeritaAcara = $this->beritaAcaraDao->read();
+        $dataDosen = $this->userDao->readAllDosen("3", 1);
+        $dataJadwal = $this->jadwalDao->read("72022");
         include_once 'view/staff/berita-acara-view.php';
     }
 
@@ -357,6 +359,45 @@ class StaffController
             }
         }
 
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        if (isset($btnUpdate)) {
+            $id = filter_input(INPUT_POST, 'uptIdSemester');
+            $nama = filter_input(INPUT_POST, 'uptNamaSemester');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            if (empty($trimId) || empty($trimNama)) {
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
+                echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'warning',
+                            position: 'rightTop'
+                        }); </script>";
+            } else {
+
+                $semester = new Semester();
+                $semester->setIdSemester($trimId);
+                $semester->setNama($trimNama);
+
+                $result = $this->semesterDao->update($semester);
+
+                if ($result) {
+                    $message = '<i class="fa-solid fa-circle-check"></i> Semester successfully updated';
+                    echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'success',
+                            position: 'rightTop'
+                            }); </script>";
+                } else {
+                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on update semester';
+                    echo "<script> bootoast.toast({
+                            message: '" . $message . "',
+                            type: 'danger',
+                            position: 'rightTop'
+                        }); </script>";
+                }
+            }
+        }
+
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
@@ -507,11 +548,11 @@ class StaffController
         $asisten = $this->asistenDao->readAll();
         $detailAsisten = [];
         $detailJadwalAsisten = [];
-        
+
         foreach ($asisten as $index => $a) {
             $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
         }
-        
+
         foreach ($detailAsisten as $i => $item) {
             foreach ($item as $j => $value) {
                 $detailJadwalAsisten[$i][$j] = $this->asistenDao->getAsistenJadwalDetail($value['nrp'], $value['kode_mata_kuliah'], $value['dosen'], $value['semester'], $value['kelas'], $value['tipe_kelas']);
@@ -627,7 +668,7 @@ class StaffController
             }
         }
 
-        $dataDosen = $this->userDao->readAllDosen("3", "1");
+        $dataDosen = $this->userDao->readAllDosen("3");
         include_once 'view/staff/dosen-view.php';
     }
 }
