@@ -1,6 +1,6 @@
 <?php
 
-class Ruangan
+class Ruangan implements JsonSerializable
 {
     private $idRuangan;
     private $nama;
@@ -37,5 +37,10 @@ class Ruangan
         $this->nama = $nama;
     }
 
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 }

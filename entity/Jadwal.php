@@ -1,6 +1,6 @@
 <?php
 
-class Jadwal
+class Jadwal implements JsonSerializable
 {
     private $kelas;
     private $hari;
@@ -197,6 +197,11 @@ class Jadwal
             default:
                 $this->$name = $value;
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 

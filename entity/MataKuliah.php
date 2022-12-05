@@ -1,6 +1,6 @@
 <?php
 
-class MataKuliah
+class MataKuliah implements JsonSerializable
 {
     private $idMataKuliah;
     private $nama;
@@ -91,6 +91,11 @@ class MataKuliah
     public function __toString()
     {
         return $this->getIdMataKuliah() . ' - ' . $this->getNama();
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 

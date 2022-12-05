@@ -1,6 +1,6 @@
 <?php
 
-class Semester
+class Semester implements JsonSerializable
 {
     private $idSemester;
     private $nama;
@@ -37,5 +37,9 @@ class Semester
         $this->nama = $nama;
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 }

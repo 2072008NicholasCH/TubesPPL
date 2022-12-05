@@ -1,6 +1,6 @@
 <?php
 
-class ProgramStudi
+class ProgramStudi implements JsonSerializable
 {
     private $idProgramStudi;
     private $nama;
@@ -37,5 +37,9 @@ class ProgramStudi
         $this->nama = $nama;
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 }

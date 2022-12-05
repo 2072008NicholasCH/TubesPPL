@@ -1,6 +1,6 @@
 <?php
 
-class User
+class User implements JsonSerializable
 {
     private $idUser;
     private $nama;
@@ -128,5 +128,10 @@ class User
             case 'nama_role':
                 $this->role->setNama($value);
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

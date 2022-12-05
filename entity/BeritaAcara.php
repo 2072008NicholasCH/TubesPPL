@@ -1,6 +1,6 @@
 <?php
 
-class BeritaAcara
+class BeritaAcara implements JsonSerializable
 {
     private $idBeritaAcara;
     private User $user;
@@ -241,6 +241,10 @@ class BeritaAcara
         $this->jadwal = $jadwal;
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 
 }
