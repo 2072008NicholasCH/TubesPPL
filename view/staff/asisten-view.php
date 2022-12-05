@@ -138,8 +138,8 @@
                                 <?php
                                 foreach ($matkul as $index => $item) {
                                     echo "<tr>";
-                                    echo "<td>" . $item["waktu_mulai"] . "</td>";
-                                    echo "<td>" . $item["waktu_selesai"] . "</td>";
+                                    echo "<td>" . date_format(date_create($item["waktu_mulai"]), "d F Y") . "</td>";
+                                    echo "<td>" . date_format(date_create($item["waktu_selesai"]), "d F Y") . "</td>";
                                     echo "<td>" . $item["pertemuan"] . "</td>";
                                     echo "<td>" . $item["lama_asistensi"] . "</td>";
                                     echo "</tr>";
