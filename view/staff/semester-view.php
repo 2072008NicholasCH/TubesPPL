@@ -60,7 +60,6 @@
                     echo "</tr>";
                 }
                 ?>
-
             </tbody>
         </table>
 
@@ -80,12 +79,12 @@
 
                         <div class="mb-3">
                             <label for="idSemester" class="form-label">ID Semester</label>
-                            <input type="number" class="form-control" id="idSemester" name="txtIdSemester" value="<?php echo $semester->getIdSemester() ?>">
+                            <input type="number" class="form-control" id="idSemester" name="uptIdSemester" value="<?php echo $semester->getIdSemester() ?>" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="namaSemester" class="form-label">Nama Semester</label>
-                            <input type="text" class="form-control" id="namaSemester" name="txtNamaSemester" value="<?php echo $semester->getNama() ?>">
+                            <input type="text" class="form-control" id="namaSemester" name="uptNamaSemester" value="<?php echo $semester->getNama() ?>">
                         </div>
 
                     </div>
@@ -108,7 +107,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <span>Are you sure want to delete this data?</span>
+                    <span>Are you sure want to delete this data?</span>
                 </div>
                 <div class="modal-footer">
                     <button id="deleteConfirm" class="btn btn-primary" name="btnDelete">Delete Semester</button>
