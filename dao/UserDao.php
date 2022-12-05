@@ -15,13 +15,12 @@ class UserDao
         return $stmt->fetchObject('User');
     }
 
-    public function readAllDosen($id, $status)
+    public function readAllDosen($id)
     {
         $conn = Connection::createConnection();
-        $query = "SELECT user.*, role.nama as 'nama_role' FROM user JOIN role ON role_idRole = role.idRole WHERE role_idRole = ? AND status = ?";
+        $query = "SELECT user.*, role.nama as 'nama_role' FROM user JOIN role ON role_idRole = role.idRole WHERE role_idRole = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $id);
-        $stmt->bindParam(2, $status);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         $stmt->execute();
         $conn = Connection::close($conn);
