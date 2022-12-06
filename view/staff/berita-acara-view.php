@@ -17,7 +17,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Jadwal</label>
             <select class="form-select" name="jadwal" id="optJadwal" required>
-                
+
             </select>
         </div>
 
@@ -36,27 +36,6 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                foreach ($dataBeritaAcara as $index => $item) {
-                    echo "<tr>";
-                    echo "<td>" . $item->getPertemuan() . "</td>";
-                    echo "<td>" . date('h:i', strtotime($item->getWaktuMulai())) . "</td>";
-                    echo "<td>" . date('h:i', strtotime($item->getWaktuSelesai())) . "</td>";
-                    echo "<td>" . $item->getPembahasanMateri() . "</td>";
-                    echo "<td>" . $item->getRangkuman() . "</td>";
-                    echo "<td>" . ($item->getJumlahMahasiswa() ? $item->getJumlahMahasiswa() : 0) . "</td>";
-                    if (substr($item->getFotoPresensi(), -3) == 'pdf') {
-                        echo "<td><form method='post' action='view/pdf-view.php' target='_blank'>";
-                        echo "<input type='hidden' value='" . $item->getFotoPresensi() . "' name='url'>";
-                        echo "<button class='btn btn-success' type='submit'>Show</button>";
-                        echo "</form></td>";
-                    } else {
-                        echo "<td><img width='100px' src='" . $item->getFotoPresensi() . "'></td>";
-                    }
-                    echo "<td>" . $item->getTglBeritaAcara() . "</td>";
-                    echo "</tr>";
-                }
-                ?>
 
             </tbody>
         </table>
@@ -112,12 +91,31 @@
                     var waktu_mulai = new Date(response[i].waktu_mulai);
                     var waktu_selesai = new Date(response[i].waktu_selesai);
 
+                    const date = new Date(response[i].tgl_berita_acara);
+                    const yyyy = date.getFullYear();
+                    let mm = date.getMonth() + 1; // Months start at 0!
+                    let dd = date.getDate();
+
+                    let hh = date.getHours();
+
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+                    if (hh < 10) hh = '0' + hh;
+
+                    const formattedDate = dd + '-' + mm + '-' + yyyy + ' ' + hh+ ':' + date.getMinutes() + ':' + date.getSeconds();
+ 
                     var foto_presensi = response[i].foto_presensi;
 
                     $output.append('<tr>');
                     $output.append('<td>' + response[i].pertemuan + '</td>');
-                    $output.append('<td>' + waktu_mulai.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + '</td>');
-                    $output.append('<td>' + waktu_selesai.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + '</td>');
+                    $output.append('<td>' + waktu_mulai.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) + '</td>');
+                    $output.append('<td>' + waktu_selesai.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) + '</td>');
                     $output.append('<td>' + response[i].pembahasan_materi + '</td>');
                     $output.append('<td>' + response[i].rangkuman + '</td>');
                     $output.append('<td>' + response[i].jumlah_mahasiswa + '</td>');
@@ -129,7 +127,7 @@
                     } else {
                         $output.append("<td><img width='100px' src='" + response[i].foto_presensi + "'></td>");
                     }
-                    $output.append('<td>' + response[i].tgl_berita_acara);
+                    $output.append('<td>' + formattedDate + '</td>');
                     $output.append('</tr>');
                 }
             }
