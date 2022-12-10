@@ -39,6 +39,7 @@ class StaffController
     public function beritaAcara()
     {
         $dataBeritaAcara = $this->beritaAcaraDao->read();
+        $dataSemester = $this->semesterDao->read();
         $dataDosen = $this->userDao->readAllDosen("3", 1);
         $dataJadwal = $this->jadwalDao->read("72022");
         include_once 'view/staff/berita-acara-view.php';

@@ -268,7 +268,6 @@ if (!isset($_SESSION['user'])) {
   <script>
     $(document).ready(function() {
       var table = $('#dataTable').DataTable({
-        lengthChange: false,
         buttons: ['copy', 'csv', 'pdf', 'colvis']
       });
       table.buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
