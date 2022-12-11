@@ -1,100 +1,187 @@
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>Tubes PPL</h3>
-    </div>
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="index.php?ahref=home" class="nav-link">Home</a>
+        </li>
+    </ul>
 
-    <ul class="list-unstyled components">
-        <p>Dummy Heading</p>
-        <li class="active">
-            <a href="index.php?ahref=home" >Home</a>
-            <!-- <a href="#" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a> -->
-            <!-- <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">Home 1</a>
-                </li>
-                <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
-                </li>
-            </ul> -->
-        </li>
-        <?php if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 3 || $_SESSION['user_role_id'] == 1)) { ?>
-        <li>
-            <a href="#dosenSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dosen</a>
-            <ul class="collapse list-unstyled" id="dosenSubmenu">
-                <li>
-                    <a href="index.php?ahref=dosen">Dashboard</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=dosen-berita-acara">Berita Acara</a>
-                </li>
-            </ul>
-        </li>
-        <?php } ?>
-        <?php  if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
-        <li>
-            <a href="#staffSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Staff</a>
-            <ul class="collapse list-unstyled" id="staffSubmenu">
-                <li>
-                    <a href="index.php?ahref=staff">Dashboard</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-berita-acara">Berita Acara</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-jadwal">Jadwal</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-mata-kuliah">Mata Kuliah</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-ruangan">Ruangan</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-semester">Semester</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-dosen">Dosen</a>
-                </li>
-                <li>
-                    <a href="index.php?ahref=staff-asisten">Asisten</a>
-                </li>
-            </ul>
-        </li>
-        <?php  } ?>
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
         <?php
         if ($_SESSION['user']) {
-            echo '<li>
-							<a onclick="logOut()"> Log Out</a>
-							<script>
-							  function logOut() {
-								const confirm = window.confirm("Are you sure want to sign out?");
-								if (confirm) {
-								  window.location = "index.php?ahref=logout";
-								}
-							  }
-							</script>
-						  </li>';
+        ?>
+            <!-- Navbar Search -->
+            <li class="nav-item">
+                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                    <i class="fas fa-search"></i>
+                </a>
+                <div class="navbar-search-block">
+                    <form class="form-inline">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-navbar" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                    <i class="fas fa-th-large"></i>
+                </a>
+            </li>
+        <?php
+        } else {
+        ?>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="index.php?ahref=login" class="nav-link">Login</a>
+            </li>
+
+        <?php
         }
         ?>
     </ul>
 </nav>
+<!-- /.navbar -->
 
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<!-- Popper.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
 
-<script>
-	$(document).ready(function() {
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <?php
+        if ($_SESSION['user']) {
+        ?>
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="dist/img/user1-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"><?= $_SESSION['web_user_full_name'] ?></a>
+                </div>
+            </div>
+            <!-- SidebarSearch Form -->
+            <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <?php
+        } else {
+        ?>
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
-		$('#sidebarCollapse').on('click', function() {
-			$('#sidebar').toggleClass('active');
-		});
+                <div class="info">
+                    <a href="#" class="d-block">You need to login first</a>
+                </div>
+            </div>
+        <?php
+        } ?>
 
-	});
-</script>
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <?php if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 3 || $_SESSION['user_role_id'] == 1)) { ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-solid fa-user"></i>
+                            <p>
+                                Dosen
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="index.php?ahref=dosen" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=dosen-berita-acara" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-file-circle-plus"></i>
+                                    <p>Berita Acara</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-default">
+
+                            <script>
+                                function signOut() {
+                                    window.location = "index.php?ahref=logout";
+                                }
+                            </script>
+                            <i class="nav-icon fas fa-solid fa-right-from-bracket"></i>
+                            <p>
+                                Sign Out
+
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
+
+                <?php  } ?>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+<!-- ./wrapper -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to sign out?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="signOut()">Sign Out</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

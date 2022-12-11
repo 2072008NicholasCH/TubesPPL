@@ -1,38 +1,88 @@
-<div class="wrapper">
-	
-	<?php include_once 'view/template/sidebar.php'; ?>
+<?php include_once 'view/template/sidebar.php'; ?>
 
-	<div class="container">
-
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container-fluid">
-
-				<button type="button" id="sidebarCollapse" class="btn btn-info">
-					<i class="fas fa-align-left"></i>
-					<span>Toggle Sidebar</span>
-				</button>
-
-
-			</div>
-		</nav>
-		<h2>Berita Acara PBM Ganjil 2022/2023</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et tempor eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc mollis lectus vel massa fermentum accumsan. In hac habitasse platea dictumst. Maecenas vitae gravida sapien, et accumsan orci. Sed condimentum quam sed erat vehicula, ac lacinia ligula bibendum. Ut tristique, est sit amet porta sagittis, ante quam cursus neque, ut semper eros ligula vitae neque. Maecenas mollis sem ac nulla consequat congue non sit amet dui. In nec nulla dapibus enim varius blandit a et augue. Nunc non leo vel ex semper imperdiet. Pellentesque sit amet magna luctus orci lacinia maximus. Quisque pretium vulputate ante. Suspendisse feugiat velit a nunc varius interdum. Quisque sed pharetra nisl, semper porttitor augue. Cras ultrices arcu neque, eu sollicitudin velit suscipit non. Pellentesque in nisi vehicula, scelerisque ligula eget, tincidunt leo.</p>
-
-		<!-- <input type="text" class="form-control" /> -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<div class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1 class="m-0">Starter Page</h1>
+				</div><!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item active">Starter Page</li>
+					</ol>
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container-fluid -->
 	</div>
+	<!-- /.content-header -->
 
-	<?php
-	if (!$_SESSION['user']) {
-	?>
-		<div class="row">
-			<div class="col-2 text-right m-3">
-				<a href="?ahref=login"><button type="button" class="btn btn-primary">Login</button></a>
+	<!-- Main content -->
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Card title</h5>
+
+							<p class="card-text">
+								Some quick example text to build on the card title and make up the bulk of the card's
+								content.
+							</p>
+
+							<a href="#" class="card-link">Card link</a>
+							<a href="#" class="card-link">Another link</a>
+						</div>
+					</div>
+
+					<div class="card card-primary card-outline">
+						<div class="card-body">
+							<h5 class="card-title">Card title</h5>
+
+							<p class="card-text">
+								Some quick example text to build on the card title and make up the bulk of the card's
+								content.
+							</p>
+							<a href="#" class="card-link">Card link</a>
+							<a href="#" class="card-link">Another link</a>
+						</div>
+					</div><!-- /.card -->
+				</div>
+				<!-- /.col-md-6 -->
+				<div class="col-lg-6">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="m-0">Featured</h5>
+						</div>
+						<div class="card-body">
+							<h6 class="card-title">Special title treatment</h6>
+
+							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+					</div>
+
+					<div class="card card-primary card-outline">
+						<div class="card-header">
+							<h5 class="m-0">Featured</h5>
+						</div>
+						<div class="card-body">
+							<h6 class="card-title">Special title treatment</h6>
+
+							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+					</div>
+				</div>
+				<!-- /.col-md-6 -->
 			</div>
-		</div>
-
-	<?php
-
-	}
-	?>
+			<!-- /.row -->
+		</div><!-- /.container-fluid -->
+	</div>
+	<!-- /.content -->
 </div>
-
+<!-- /.content-wrapper -->

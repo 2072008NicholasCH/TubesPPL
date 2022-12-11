@@ -19,12 +19,11 @@ class UserController
 
             $result = $this->userDao->read($username, $password);
             if ($result == false) {
-                $message = '<i class="fa-solid fa-circle-xmark"></i> Invalid username or password';
-                echo "<script> bootoast.toast({
-                    message: '" . $message . "',
-                    type: 'danger',
-                    position: 'rightTop'
-                }); </script>";
+                echo "<script> 
+                $(function() {
+                    toastr.error('Invalid username or password');
+                });
+                 </script>";
             } else if ($result->getIdUser() == $username) {
                 $_SESSION['user'] = $result;
                 $_SESSION['web_user_full_name'] = $result->getNama();
@@ -32,22 +31,20 @@ class UserController
                 $_SESSION['semester_aktif'] = 1;
                 header('location:index.php');
             } else {
-                $message = '<i class="fa-solid fa-circle-xmark"></i> Invalid username or password';
-                echo "<script> bootoast.toast({
-                    message: '" . $message . "',
-                    type: 'danger',
-                    position: 'rightTop'
-                }); </script>";
+                echo "<script> 
+                $(function() {
+                    toastr.error('Invalid username or password');
+                });
+                 </script>";
             }
         }
         include_once 'view/login-view.php';
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_unset();
         session_destroy();
         header('location:index.php');
     }
 }
-
-?>
