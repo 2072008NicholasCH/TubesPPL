@@ -161,6 +161,7 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
+    
 </aside>
 <!-- ./wrapper -->
 <div class="modal fade" id="modal-default">
