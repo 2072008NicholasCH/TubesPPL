@@ -1,58 +1,72 @@
-<div class="wrapper">
+<?php include_once 'view/template/sidebar.php' ?>
 
-    <?php include_once 'view/template/sidebar.php' ?>
+<div class="content-wrapper p-3">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Berita Acara</h3>
 
-    <div class="container">
-        <h2>Berita Acara</h2>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
 
-        <div class="mb-3">
-            <label for="" class="form-label">Semester</label>
-            <select class="form-select" name="semester" id="optSemester">
-                <option selected disabled>Select Semester</option>
-                <?php foreach ($dataSemester as $semester) { ?>
-                    <option value="<?= $semester->getIdSemester() ?>"><?= $semester->getNama() ?></option>
-                <?php } ?>
-            </select>
         </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="" class="form-label">Semester</label>
+                <select class="form-select" name="semester" id="optSemester">
+                    <option selected disabled>Select Semester</option>
+                    <?php foreach ($dataSemester as $semester) { ?>
+                        <option value="<?= $semester->getIdSemester() ?>"><?= $semester->getNama() ?></option>
+                    <?php } ?>
+                </select>
+            </div>
 
-        <div class="mb-3">
-            <label for="" class="form-label">Nama Dosen</label>
-            <select class="form-select" name="dosen" id="optDosen" disabled>
-                <option selected disabled>Select Dosen</option>
-                <?php foreach ($dataDosen as $dosen) { ?>
-                    <option value="<?= $dosen->getIdUser() ?>"><?= $dosen ?></option>
-                <?php } ?>
-            </select>
+            <div class="form-group">
+                <label for="" class="form-label">Nama Dosen</label>
+                <select class="form-select" name="dosen" id="optDosen" disabled>
+                    <option selected disabled>Select Dosen</option>
+                    <?php foreach ($dataDosen as $dosen) { ?>
+                        <option value="<?= $dosen->getIdUser() ?>"><?= $dosen ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="" class="form-label">Jadwal</label>
+                <select class="form-select" name="jadwal" id="optJadwal" disabled>
+
+                </select>
+            </div>
+
+
+            <table id="example1" class="table table-striped dataTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Pertemuan Ke</th>
+                        <th>Waktu Mulai</th>
+                        <th>Waktu Selesai</th>
+                        <th>Pembahasan Materi</th>
+                        <th>Catatan</th>
+                        <th>Jumlah Mahasiswa</th>
+                        <th>Foto Presensi</th>
+                        <th>Waktu Submit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
-
-
-        <div class="mb-3">
-            <label for="" class="form-label">Jadwal</label>
-            <select class="form-select" name="jadwal" id="optJadwal" disabled>
-
-            </select>
-        </div>
-
-
-        <table id="dataTable" class="table table-striped dataTable" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Pertemuan Ke</th>
-                    <th>Waktu Mulai</th>
-                    <th>Waktu Selesai</th>
-                    <th>Pembahasan Materi</th>
-                    <th>Catatan</th>
-                    <th>Jumlah Mahasiswa</th>
-                    <th>Foto Presensi</th>
-                    <th>Waktu Submit</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-
     </div>
+
+
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -89,7 +103,7 @@
     $("#optJadwal").change(function() {
         var selectJadwal = $('#optJadwal :selected').val();
 
-        var table = $('#dataTable').DataTable();
+        var table = $('#example1').DataTable();
         table.clear().draw();
 
         $.ajax({

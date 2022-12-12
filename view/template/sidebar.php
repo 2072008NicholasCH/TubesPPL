@@ -44,7 +44,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
+                    <i class="fas fa-solid fa-gear"></i>
                 </a>
             </li>
         <?php
@@ -64,9 +64,9 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php?ahref=home-view" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Berita Acara</span>
     </a>
 
     <!-- Sidebar -->
@@ -137,6 +137,65 @@
                             </li>
                         </ul>
                     </li>
+
+                <?php }
+                if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-solid fa-user-tie"></i>
+                            <p>
+                                Staff
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-berita-acara" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-list"></i>
+                                    <p>Berita Acara</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-jadwal" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-calendar-days"></i>
+                                    <p>Jadwal</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-mata-kuliah" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-book"></i>
+                                    <p>Mata Kuliah</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-ruangan" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-house"></i>
+                                    <p>Ruangan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-semester" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-graduation-cap"></i>
+                                    <p>Semester</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-dosen" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-chalkboard-user"></i>
+                                    <p>Dosen</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.php?ahref=staff-asisten" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-user-group"></i>
+                                    <p>Asisten</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                <?php  }
+                if ($_SESSION['user']) { ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-default">
 
@@ -153,15 +212,12 @@
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($_SESSION['user'] && ($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 1)) { ?>
-
-                <?php  } ?>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-    
+
 </aside>
 <!-- ./wrapper -->
 <div class="modal fade" id="modal-default">

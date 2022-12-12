@@ -170,13 +170,8 @@
                     min: 1,
                     max: 16
                 },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                terms: {
-                    required: true
-                },
+                
+                
             },
             messages: {
                 pertemuan: {
@@ -184,11 +179,8 @@
                     min: "Please enter between 1-16",
                     max: "Please enter between 1-16",
                 },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                terms: "Please accept our terms"
+                
+                
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
