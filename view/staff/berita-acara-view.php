@@ -71,8 +71,13 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
+    var selectSemester = $('#optSemester :selected').val();
     $("#optSemester").change(function() {
         $('#optDosen').attr('disabled', false);
+        selectSemester = $('#optSemester :selected').val();
+        if ($("#optJadwal").prop("disabled") == false) {
+            fetchBeritaAcara();
+        }
     });
 
     var selectDosen = $('#optDosen :selected').val();
@@ -91,16 +96,21 @@
             success: function(responsedata) {
                 var response = $.parseJSON(responsedata);
                 $('#optJadwal').attr('disabled', false);
+                var table = $('#example1').DataTable();
+                table.clear().draw();
                 $output.append("<option selected disabled>Select Jadwal</option>");
                 for (var i in response) {
                     $output.append("<option value='" + response[i].mataKuliah.idMataKuliah + "-" + response[i].kelas + "-" + response[i].tipe_kelas + "'>" + response[i].mataKuliah.idMataKuliah + " - " + response[i].mataKuliah.nama + " - " + response[i].kelas + " - " + response[i].tipe_kelas + "</option>");
                 }
             }
         })
-
     });
 
     $("#optJadwal").change(function() {
+        fetchBeritaAcara();
+    });
+
+    function fetchBeritaAcara() {
         var selectJadwal = $('#optJadwal :selected').val();
 
         var table = $('#example1').DataTable();
@@ -113,7 +123,7 @@
                 method: "fetchBeritaAcara",
                 id: selectJadwal,
                 dosen: selectDosen,
-                semester: <?= $_SESSION['semester_aktif'] ?>,
+                semester: selectSemester,
             },
             success: function(responsedata) {
                 var response = $.parseJSON(responsedata);
@@ -169,6 +179,5 @@
                 }
             }
         })
-
-    });
+    }
 </script>
