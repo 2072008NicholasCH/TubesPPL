@@ -486,6 +486,7 @@ class StaffController
     public function asisten()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnDetail = filter_input(INPUT_POST, 'btnDetail');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdAsisten');
             $nama = filter_input(INPUT_POST, 'txtNamaAsisten');
@@ -546,6 +547,22 @@ class StaffController
                 $detailJadwalAsisten[$i][$j] = $this->asistenDao->getAsistenJadwalDetail($value['nrp'], $value['kode_mata_kuliah'], $value['dosen'], $value['semester'], $value['kelas'], $value['tipe_kelas']);
             }
         }
+
+        if (isset($btnDetail)) {
+            $detailId = filter_input(INPUT_POST, 'detailId');
+            $detailIndex = filter_input(INPUT_POST, 'detailIndex');
+            $filter_from = filter_input(INPUT_POST, 'filter-from');
+            $filter_to = filter_input(INPUT_POST, 'filter-to');
+            $dataDetail = $detailJadwalAsisten[$detailId][$detailIndex];
+
+            if (isset($filter_from) && isset($filter_to)) {
+                $dataDetail = array_filter($dataDetail, function($var) use ($filter_from, $filter_to) {  
+                    $evtime = date_format(date_create($var["waktu_selesai"]), "Y-m-d");  
+                    return $evtime <= $filter_to && $evtime >= $filter_from;  
+                });
+            }
+        }
+
         include_once 'view/staff/asisten-view.php';
     }
 

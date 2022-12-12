@@ -195,6 +195,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
           "autoWidth": false,
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+
+        $('.dataTableAsisten').DataTable({
+          "responsive": true,
+          "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('.dataTable_wrapper .col-md-6:eq(0)');
       });
 
       $(function() {

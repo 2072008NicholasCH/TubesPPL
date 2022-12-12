@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="card card-primary">
+    <div class="card card-primary <?= $dataDetail ? 'collapsed-card' : '' ?>">
         <div class="card-header">
             <h3 class="card-title">
                 List Asisten Dosen
@@ -101,7 +101,60 @@
         </div>
     </div>
 
+    <?php if (isset($dataDetail)) { ?>
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Detail <?= $asisten[$detailId]->getNama() . ' - ' . $detailAsisten[$detailId][$detailIndex]["kode_mata_kuliah"] ?>
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize" title="Full Screen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="form-group col-4">
+                        <form method="post">
+                            <input type='hidden' name='detailId' value='<?= $detailId ?>'>
+                            <input type='hidden' name='detailIndex' value='<?= $detailIndex ?>'>
+                            <label>Date From:</label>
+                            <input type="date" class="form-control" name="filter-from" required>
+                            <label>Date To:</label>
+                            <input type="date" class="form-control" name="filter-to" required>
+                            <input type="submit" value="Filter" name="btnDetail" class="btn btn-primary my-4">
+                        </form>
+                    </div>
+                </div>
+                <table id="example2" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Pertemuan</th>
+                            <th>Lama Asistensi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($dataDetail as $index => $item) {
+                            echo "<tr>";
+                            echo "<td>" . date_format(date_create($item["waktu_mulai"]), "d F Y") . "</td>";
+                            // echo "<td>" . date_format(date_create($item["waktu_selesai"]), "Y-m-d") . "</td>";
+                            echo "<td>" . $item["pertemuan"] . "</td>";
+                            echo "<td>" . $item["lama_asistensi"] . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php } ?>
 
 
 
@@ -118,7 +171,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table id="example2" class="table table-striped dataTable" style="width:100%">
+                    <table class="table table-striped dataTableAsisten" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Kode Mata Kuliah</th>
@@ -138,7 +191,12 @@
                                 echo "<td>" . $item["kelas"] . "</td>";
                                 echo "<td>" . $item["tipe_kelas"] . "</td>";
                                 echo "<td>" . $item["total_jam"] . "</td>";
-                                echo "<td><button class='btn btn-warning' data-toggle='modal' data-target='#detail-$index$idx' data-dismiss='modal'>Detail</button></td>";
+                                // echo "<td><button class='btn btn-warning' data-toggle='modal' data-target='#detail-$index$idx' data-dismiss='modal'>Detail</button></td>";
+                                echo "<td><form method='post'>
+                                <input type='hidden' name='detailId' value='$index'>
+                                <input type='hidden' name='detailIndex' value='$idx'>
+                                <input class='btn btn-warning' type='submit' name='btnDetail' value='Detail' >
+                                </form></td>";
                                 echo "</tr>";
                             }
                             ?>
@@ -154,9 +212,11 @@
     </div>
 <?php } ?>
 
-<?php foreach ($detailJadwalAsisten as $q => $asisten) { ?>
-    <?php foreach ($asisten as $w => $matkul) { ?>
-        <div class="modal fade" id="detail-<?= $q . $w ?>" tabindex="-1" aria-hidden="true">
+<?php // foreach ($detailJadwalAsisten as $q => $asisten) { 
+?>
+<?php // foreach ($asisten as $w => $matkul) { 
+?>
+<!-- <div class="modal fade" id="detail-<?= $q . $w ?>" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -164,7 +224,7 @@
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <table id="example3" class="table table-striped dataTable" style="width:100%">
+                        <table class="table table-striped dataTableAsisten" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Waktu Mulai</th>
@@ -173,19 +233,19 @@
                                     <th>Lama Asistensi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                foreach ($matkul as $index => $item) {
-                                    echo "<tr>";
-                                    echo "<td>" . date_format(date_create($item["waktu_mulai"]), "d F Y") . "</td>";
-                                    echo "<td>" . date_format(date_create($item["waktu_selesai"]), "d F Y") . "</td>";
-                                    echo "<td>" . $item["pertemuan"] . "</td>";
-                                    echo "<td>" . $item["lama_asistensi"] . "</td>";
-                                    echo "</tr>";
-                                }
-                                ?>
+                            <tbody> -->
+<?php
+// foreach ($matkul as $index => $item) {
+//     echo "<tr>";
+//     echo "<td>" . date_format(date_create($item["waktu_mulai"]), "d F Y") . "</td>";
+//     echo "<td>" . date_format(date_create($item["waktu_selesai"]), "d F Y") . "</td>";
+//     echo "<td>" . $item["pertemuan"] . "</td>";
+//     echo "<td>" . $item["lama_asistensi"] . "</td>";
+//     echo "</tr>";
+// }
+?>
 
-                            </tbody>
+<!-- </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -193,6 +253,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    <?php } ?>
-<?php } ?>
+        </div> -->
+<?php // } 
+?>
+<?php // } 
+?>
