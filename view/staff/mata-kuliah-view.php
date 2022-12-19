@@ -16,14 +16,15 @@
             </div>
         </div>
         <div class="card-body">
+            <a class="btn btn-success mb-4" href="uploads/templates/template_mataKuliah.xlsx"><i class="fa-solid fa-file-arrow-down"></i> Download Template</a>
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group col-4">
                     <label for="idMataKuliah" class="form-label">Upload File</label>
                     <input type="file" class="form-control" id="idMataKuliah" name="fileImport" accept=".xls, .xlsx">
                 </div>
                 <div class="form-group col-4">
-                    <input type="checkbox" name="rowTitle" id="rowTitle">
-                    <label for="rowTitle" class="form-label">First Row is Heading</label>
+                    <input type="checkbox" name="rowTitle" id="rowTitle" checked>
+                    <label for="rowTitle" class="form-label">First Row is Heading (Using Template)</label>
                 </div>
                 <input type="submit" class="btn btn-primary" name="btnImport" value="Import data">
             </form>
