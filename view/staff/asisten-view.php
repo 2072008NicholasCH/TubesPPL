@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="card card-primary <?= $dataDetail ? 'collapsed-card' : '' ?>">
+    <div class="card card-primary <?= $filterRekap ? 'collapsed-card' : '' ?>">
         <div class="card-header">
             <h3 class="card-title">
                 List Asisten Dosen
@@ -92,6 +92,68 @@
                         echo "<td>" . $item->getNama() . "</td>";
                         echo "<td>" . $item->getNoTelp() . "</td>";
                         echo "<td><button class='btn btn-info' data-toggle='modal' data-target='#asisten-$index'><i class='fa-solid fa-info'></i></button></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card card-primary <?= $filterRekap ? '' : 'collapsed-card' ?>">
+        <div class="card-header">
+            <h3 class="card-title">
+                Rekap Asisten
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="maximize" title="Full Screen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <div class="form-group col-4">
+                    <form method="post">
+                        <label>Date From:</label>
+                        <input type="date" class="form-control" name="filter-from-rekap" required>
+                        <label>Date To:</label>
+                        <input type="date" class="form-control" name="filter-to-rekap" required>
+                        <input type="submit" value="Filter" name="filter-rekap" class="btn btn-primary my-4">
+                    </form>
+                </div>
+            </div>
+            <table id="example3" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>NRP</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Kode Mata Kuliah</th>
+                        <th>Nama Mata Kuliah</th>
+                        <th>Kelas</th>
+                        <th>Tipe Kelas</th>
+                        <th>Pertemuan</th>
+                        <th>Lama Asistensi (Jam)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($rekapAsisten as $index => $item) {
+                        echo "<tr>";
+                        echo "<td>" . date_format(date_create($item["tanggal"]), "d F Y") . "</td>";
+                        echo "<td>" . $item["nrp"] . "</td>";
+                        echo "<td>" . $item["nama_asisten"] . "</td>";
+                        echo "<td>" . $item["kode_mata_kuliah"] . "</td>";
+                        echo "<td>" . $item["nama_mata_kuliah"] . "</td>";
+                        echo "<td>" . $item["kelas"] . "</td>";
+                        echo "<td>" . $item["tipe_kelas"] . "</td>";
+                        echo "<td>" . $item["pertemuan"] . "</td>";
+                        echo "<td>" . $item["lama_asistensi"] . "</td>";
                         echo "</tr>";
                     }
                     ?>

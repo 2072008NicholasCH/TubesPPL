@@ -82,6 +82,38 @@ class AsistenDao
         return $stmt->fetchAll();
     }
     
+    public function getRekapAsisten($from, $to)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT 
+                    beritaacara.waktu_mulai AS tanggal,
+                    asistenDosen_idAsistenDosen AS nrp, 
+                    asistendosen.nama AS nama_asisten,
+                    asistendosen_has_jadwal.jadwal_mata_kuliah_idMataKuliah AS kode_mata_kuliah, 
+                    mata_kuliah.nama AS nama_mata_kuliah ,
+                    asistendosen_has_jadwal.jadwal_kelas AS kelas, 
+                    asistendosen_has_jadwal.jadwal_tipe_kelas AS tipe_kelas, 
+                    asistendosen_has_jadwal.pertemuan,
+                    lama_asistensi 
+                    FROM asistendosen_has_jadwal 
+                    JOIN mata_kuliah ON mata_kuliah.idMataKuliah = asistendosen_has_jadwal.jadwal_mata_kuliah_idMataKuliah
+                    JOIN asistendosen ON asistendosen_has_jadwal.asistenDosen_idAsistenDosen = asistendosen.idAsistenDosen
+                    JOIN beritaacara 
+                    ON asistendosen_has_jadwal.jadwal_mata_kuliah_idMataKuliah = beritaacara.jadwal_mata_kuliah_idMataKuliah
+                    AND asistendosen_has_jadwal.jadwal_user_idUser = beritaacara.jadwal_user_idUser
+                    AND asistendosen_has_jadwal.jadwal_semester_idSemester = beritaacara.jadwal_semester_idSemester
+                    AND asistendosen_has_jadwal.jadwal_kelas = beritaacara.jadwal_kelas
+                    AND asistendosen_has_jadwal.jadwal_tipe_kelas = beritaacara.jadwal_tipe_kelas
+                    AND asistendosen_has_jadwal.pertemuan = beritaacara.pertemuan
+                    WHERE beritaacara.waktu_mulai >= ? AND beritaacara.waktu_mulai <= ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $from);
+        $stmt->bindParam(2, $to);
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
+    
     public function getAsistenJadwalDetail($asisten, $matkul, $dosen, $semester, $kelas, $tipe_kelas)
     {
         $conn = Connection::createConnection();

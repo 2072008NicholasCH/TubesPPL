@@ -535,6 +535,15 @@ class StaffController
         }
 
         $asisten = $this->asistenDao->readAll();
+        $filterRekap = filter_input(INPUT_POST, 'filter-rekap');
+        if (isset($filterRekap)) {
+            $filter_from_rekap = filter_input(INPUT_POST, 'filter-from-rekap');
+            $filter_to_rekap = filter_input(INPUT_POST, 'filter-to-rekap');
+            
+            $rekapAsisten = $this->asistenDao->getRekapAsisten($filter_from_rekap, $filter_to_rekap);
+        } else {
+            $rekapAsisten = $this->asistenDao->getRekapAsisten('1970-01-01', '2100-01-01');
+        }
         $detailAsisten = [];
         $detailJadwalAsisten = [];
 
