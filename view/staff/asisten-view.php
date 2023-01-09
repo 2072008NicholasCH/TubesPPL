@@ -130,29 +130,17 @@
             <table id="example3" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Tanggal</th>
                         <th>NRP</th>
                         <th>Nama Mahasiswa</th>
-                        <th>Kode Mata Kuliah</th>
-                        <th>Nama Mata Kuliah</th>
-                        <th>Kelas</th>
-                        <th>Tipe Kelas</th>
-                        <th>Pertemuan</th>
-                        <th>Lama Asistensi (Jam)</th>
+                        <th>Total Lama Asistensi (Jam)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($rekapAsisten as $index => $item) {
                         echo "<tr>";
-                        echo "<td>" . date_format(date_create($item["tanggal"]), "d F Y") . "</td>";
                         echo "<td>" . $item["nrp"] . "</td>";
                         echo "<td>" . $item["nama_asisten"] . "</td>";
-                        echo "<td>" . $item["kode_mata_kuliah"] . "</td>";
-                        echo "<td>" . $item["nama_mata_kuliah"] . "</td>";
-                        echo "<td>" . $item["kelas"] . "</td>";
-                        echo "<td>" . $item["tipe_kelas"] . "</td>";
-                        echo "<td>" . $item["pertemuan"] . "</td>";
                         echo "<td>" . $item["lama_asistensi"] . "</td>";
                         echo "</tr>";
                     }
