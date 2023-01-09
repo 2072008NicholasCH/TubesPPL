@@ -44,6 +44,10 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <p id="pertemuan">Total pertemuan: -</p>
+            </div>
+
 
             <table id="example1" class="table table-striped dataTable" style="width:100%">
                 <thead>
@@ -127,7 +131,13 @@
             },
             success: function(responsedata) {
                 var response = $.parseJSON(responsedata);
-
+                var jadwal = selectJadwal.split("-");
+                if (jadwal[jadwal.length - 1] == "Teori") {
+                    $('#pertemuan').text("Total pertemuan: " + response.length + " / 16");
+                } else {
+                    $('#pertemuan').text("Total pertemuan: " + response.length + " / 14");
+                }
+                
                 for (var i in response) {
                     var waktu_mulai = new Date(response[i].waktu_mulai);
                     var waktu_selesai = new Date(response[i].waktu_selesai);

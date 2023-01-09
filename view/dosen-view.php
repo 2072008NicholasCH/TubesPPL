@@ -56,7 +56,9 @@
 
 
 
-<?php foreach ($jadwalDosen as $index => $jadwal) { ?>
+<?php foreach ($jadwalDosen as $index => $jadwal) { 
+
+    ?>
     <div class="modal fade" id="jadwal-<?= $index ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
@@ -65,6 +67,15 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <?php 
+                    $tipeKelas = explode("-", $jadwal)[3];
+                    if (trim($tipeKelas) == "Teori") {
+                        echo "Total pertemuan: " . count($jadwal->array_berita_acara) . " / 16";
+                    } else {
+                        echo "Total pertemuan: " . count($jadwal->array_berita_acara) . " / 14";
+                    }
+                    
+                    ?>
                     <table id="example2" class="table table-bordered table-striped dataTable" style="width:100%">
                         <thead>
                             <tr>
@@ -79,8 +90,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             <?php
                             foreach ($jadwal->array_berita_acara as $index => $item) {
+
                                 echo "<tr>";
                                 echo "<td>" . $item->getPertemuan() . "</td>";
                                 echo "<td>" . date('h:i', strtotime($item->getWaktuMulai())) . "</td>";
