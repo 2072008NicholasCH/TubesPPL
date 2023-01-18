@@ -64,6 +64,19 @@
         </div>
 
         <div class="card-body">
+            <p class="mb-2">Filter Status by:</p>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="activeCheck" checked>
+                <label class="form-check-label" for="activeCheck">
+                    Aktif
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="inactiveCheck" checked>
+                <label class="form-check-label" for="inactiveCheck">
+                    Tidak Aktif
+                </label>
+            </div>
             <table id="example1" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -84,7 +97,7 @@
                         } else {
                             echo "<td>Tidak aktif</td>";
                         }
-                        echo "<td><button class='btn btn-warning' data-toggle='modal' data-target='#dosen-$index'><i class='fa-solid fa-pen-to-square'></i></button></td>";
+                        echo "<td><button class='btn btn-warning' data-toggle='modal' data-target='#dosen-" . $item->getIdUser() . "'><i class='fa-solid fa-pen-to-square'></i></button></td>";
                         echo "</tr>";
                     }
                     ?>
@@ -94,14 +107,10 @@
         </div>
     </div>
 
-
-
-
-
 </div>
 
 <?php foreach ($dataDosen as $index => $dosen) { ?>
-    <div class="modal fade" id="dosen-<?= $index ?>" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="dosen-<?= $dosen->getIdUser() ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form method="post">
                 <div class=" modal-content">
@@ -147,5 +156,95 @@
             </form>
         </div>
     </div>
-    </div>
+</div>
 <?php } ?>
+
+<script>
+    var activeCheck = 1;
+    var inactiveCheck = 0;
+
+    $("#activeCheck").change(function() {
+        if ($("#activeCheck").prop('checked') == true) {
+            activeCheck = 1;
+        } else {
+            activeCheck = 10;
+        }
+        $.ajax({
+            url: 'controller/AjaxController.php',
+            type: 'post',
+            data: {
+                method: "fetchDosenStatus",
+                statusActive: activeCheck,
+                statusInactive: inactiveCheck
+            },
+            success: function(responsedata) {
+                var table = $('#example1').DataTable();
+                table.clear().draw();
+                var response = $.parseJSON(responsedata);
+                for (var i in response) {
+                    var status;
+                    if (response[i].status == 1) {
+                        status = "Aktif"
+                    } else {
+                        status = "Tidak aktif"
+                    }
+
+                    table.row.add([
+                        response[i].idUser,
+                        response[i].nama,
+                        status,
+                        "<button class='btn btn-warning' data-toggle='modal' data-target='#dosen-" + response[i].idUser + "'><i class='fa-solid fa-pen-to-square'></i></button>"
+                    ]).draw(false);
+
+
+
+
+                }
+
+            }
+        })
+    });
+
+    $("#inactiveCheck").change(function() {
+        if ($("#inactiveCheck").prop('checked') == true) {
+            inactiveCheck = 0;
+        } else {
+            inactiveCheck = 10;
+        }
+        $.ajax({
+            url: 'controller/AjaxController.php',
+            type: 'post',
+            data: {
+                method: "fetchDosenStatus",
+                statusActive: activeCheck,
+                statusInactive: inactiveCheck
+            },
+            success: function(responsedata) {
+                var table = $('#example1').DataTable();
+                table.clear().draw();
+                var response = $.parseJSON(responsedata);
+                for (var i in response) {
+                    var status;
+                    if (response[i].status == 1) {
+                        status = "Aktif"
+                    } else {
+                        status = "Tidak aktif"
+                    }
+
+                    table.row.add([
+                        response[i].idUser,
+                        response[i].nama,
+                        status,
+                        "<button class='btn btn-warning' data-toggle='modal' data-target='#dosen-" + response[i].idUser + "'><i class='fa-solid fa-pen-to-square'></i></button>"
+                    ]).draw(false);
+
+
+
+
+                }
+
+
+            }
+        })
+    });
+</script>

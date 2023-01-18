@@ -39,6 +39,19 @@ class UserDao
         return $stmt->fetchObject('User');
     }
 
+    public function readDosenByStatus($statusActive, $statusInactive)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT * FROM user WHERE status in (?,?) AND role_idRole = 3";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $statusActive);
+        $stmt->bindParam(2, $statusInactive);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
+
     public function create(User $user)
     {
         $result = false;
