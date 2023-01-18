@@ -82,6 +82,7 @@
                     <tr>
                         <th>ID Ruangan</th>
                         <th>Nama</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +91,9 @@
                         echo "<tr>";
                         echo "<td>" . $item->getIdRuangan() . "</td>";
                         echo "<td>" . $item->getNama() . "</td>";
+                        echo '<td><button class="btn btn-warning" data-toggle="modal" data-target="#dosen-' . $item->getIdRuangan() . '"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteRuangan(\'' . $item->getIdRuangan() . '\')" class="btn btn-danger" data-toggle="modal" data-target="#deleteRuanganModal"><i class="fa-solid fa-trash"></i></button>
+                        </td>';
                         echo "</tr>";
                     }
                     ?>
@@ -98,12 +102,64 @@
             </table>
         </div>
     </div>
-
-
-
-
-
-
-
-
 </div>
+
+<?php foreach ($dataRuangan as $index => $ruangan) { ?>
+    <div class="modal fade" id="dosen-<?= $ruangan->getIdRuangan() ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post">
+                <div class=" modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Edit ruangan</h1>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="idRuangan" class="form-label">ID Ruangan</label>
+                            <input type="text" class="form-control" id="idRuangan" name="updIdRuangan" value="<?php echo $ruangan->getIdRuangan() ?>" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="namaRuangan" class="form-label">Nama Ruangan</label>
+                            <input type="text" class="form-control" id="namaRuangan" name="updNamaRuangan" value="<?php echo $ruangan->getNama() ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Update Ruangan" name="btnUpdate">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php } ?>
+
+<div class="modal fade" id="deleteRuanganModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post">
+            <div class=" modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete Ruangan</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>Are you sure want to delete this data?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="deleteConfirm" class="btn btn-primary" name="btnDelete">Delete Ruangan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function deleteRuangan(id) {
+        $('#deleteConfirm').click(function() {
+            console.log(id);
+            window.location = "index.php?ahref=staff-ruangan&delcom=1&rid=" + id;
+        })
+    }
+</script>

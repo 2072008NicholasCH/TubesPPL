@@ -332,6 +332,25 @@ class StaffController
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        $deleteCommand = filter_input(INPUT_GET, 'delcom');
+        if (isset($deleteCommand) && $deleteCommand == 1) {
+            $idRuangan = filter_input(INPUT_GET, 'rid');
+            $result = $this->ruanganDao->delete($idRuangan);
+            if ($result) {
+                echo "<script> 
+                $(function() {
+                    toastr.success('Semester successfully deleted');
+                });
+                 </script>";
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.error('Error on delete Semester');
+                });
+                 </script>";
+            }
+        }
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdRuangan');
             $nama = filter_input(INPUT_POST, 'txtNamaRuangan');
@@ -366,7 +385,7 @@ class StaffController
                     } else {
                         echo "<script> 
                 $(function() {
-                    toastr.error('Error on add Mata Kuliah');
+                    toastr.error('Error on add Ruangan');
                 });
                  </script>";
                     }
@@ -418,7 +437,41 @@ class StaffController
                 });
                 </script>";
             }
+        } else if (isset($btnUpdate)) {
+            $id = filter_input(INPUT_POST, 'updIdRuangan');
+            $nama = filter_input(INPUT_POST, 'updNamaRuangan');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            if (empty($trimId) || empty($trimNama)) {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
+            } else {
+
+                $ruangan = new Ruangan();
+                $ruangan->setIdRuangan($trimId);
+                $ruangan->setNama($trimNama);
+                $result = $this->ruanganDao->update($ruangan);
+
+                if ($result) {
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Ruangan successfully updated');
+                });
+                 </script>";
+                } else {
+                    echo "<script> 
+                $(function() {
+                    toastr.error('Error on add Ruangan');
+                });
+                 </script>";
+                }
+            }
         }
+
+
         $dataRuangan = $this->ruanganDao->read();
         include_once 'view/staff/ruangan-view.php';
     }
@@ -748,7 +801,7 @@ class StaffController
             $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
             $detailAsisten[$index][0]['nrp'] = $a->getidAsistenDosen();
         }
-        
+
         foreach ($detailAsisten as $i => $item) {
             if (!isset($item[0]["kode_mata_kuliah "])) {
                 continue;

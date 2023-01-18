@@ -45,13 +45,40 @@ class RuanganDao
         return $stmt->fetchObject('Ruangan');
     }
 
-    public function update()
+    public function update($ruangan)
     {
-
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "UPDATE ruangan SET nama = ? WHERE idRuangan = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $ruangan->getNama());
+        $stmt->bindValue(2, $ruangan->getIdRuangan());
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
     }
 
-    public function delete()
+    public function delete($ruangan)
     {
-
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "DELETE FROM ruangan WHERE idRuangan = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $ruangan);
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
     }
 }
