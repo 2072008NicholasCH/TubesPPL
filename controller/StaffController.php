@@ -224,6 +224,7 @@ class StaffController
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdMataKuliah');
             $nama = filter_input(INPUT_POST, 'txtNamaMataKuliah');
@@ -242,7 +243,7 @@ class StaffController
             } else {
                 $mataKuliah = new MataKuliah();
                 $mataKuliah->setIdMataKuliah($trimId);
-                $mataKuliah->setNama($nama);
+                $mataKuliah->setNama($trimNama);
                 $mataKuliah->setSks($trimSKS);
                 $mataKuliah->getProgramStudi()->setIdProgramStudi($trimProgramStudi);
                 $existsMataKuliah = $this->mataKuliahDao->readOne($mataKuliah);
@@ -320,6 +321,44 @@ class StaffController
                     toastr.warning('File upload is empty');
                 });
                 </script>";
+            }
+        } else if (isset($btnUpdate)) {
+            $id = filter_input(INPUT_POST, 'updIdMataKuliah');
+            $nama = filter_input(INPUT_POST, 'updNamaMataKuliah');
+            $sks = filter_input(INPUT_POST, 'updSksMataKuliah');
+            $programStudi = filter_input(INPUT_POST, 'updProdi');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            $trimSKS = trim($sks);
+            $trimProgramStudi = trim($programStudi);
+            if (empty($trimId) || empty($trimNama) || empty($trimSKS) || empty($trimProgramStudi)) {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
+            } else {
+                $mataKuliah = new MataKuliah();
+                $mataKuliah->setIdMataKuliah($trimId);
+                $mataKuliah->setNama($trimNama);
+                $mataKuliah->setSks($trimSKS);
+                $mataKuliah->getProgramStudi()->setIdProgramStudi($trimProgramStudi);
+
+                $result = $this->mataKuliahDao->update($mataKuliah);
+
+                if ($result) {
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Mata Kuliah successfully added');
+                });
+                 </script>";
+                } else {
+                    echo "<script> 
+                $(function() {
+                    toastr.warning('Error on add Mata Kuliah');
+                });
+                 </script>";
+                }
             }
         }
 

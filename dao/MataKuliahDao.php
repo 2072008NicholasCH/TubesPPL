@@ -71,9 +71,25 @@ class MataKuliahDao
         return $stmt->fetchAll();
     }
 
-    public function update()
+    public function update($mataKuliah)
     {
-
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "UPDATE mata_kuliah SET nama = ?, sks = ?, program_studi_idProgramStudi = ? WHERE idMataKuliah = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $mataKuliah->getNama());
+        $stmt->bindValue(2, $mataKuliah->getSks());
+        $stmt->bindValue(3, $mataKuliah->getProgramStudi()->getIdProgramStudi());
+        $stmt->bindValue(4, $mataKuliah->getIdMataKuliah());
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
     }
 
     public function delete()

@@ -102,6 +102,7 @@
                         <th>Nama</th>
                         <th>SKS</th>
                         <th>Program Studi</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,6 +113,8 @@
                         echo "<td>" . $item->getNama() . "</td>";
                         echo "<td>" . $item->getSks() . "</td>";
                         echo "<td>" . $item->getProgramStudi()->getNama() . "</td>";
+                        echo '<td><button class="btn btn-warning" data-toggle="modal" data-target="#mataKuliah-' . $item->getIdMataKuliah() . '"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>';
                         echo "</tr>";
                     }
                     ?>
@@ -121,6 +124,61 @@
         </div>
     </div>
 </div>
+
+<?php foreach ($dataMataKuliah as $index => $mataKuliah) { ?>
+    <div class="modal fade" id="mataKuliah-<?= $mataKuliah->getIdMataKuliah() ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post">
+                <div class=" modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Edit mata kuliah</h1>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="idMataKuliah" class="form-label">ID Mata Kuliah</label>
+                            <input type="text" class="form-control" id="idMataKuliah" name="updIdMataKuliah" value="<?php echo $mataKuliah->getIdMataKuliah() ?>" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="namaMataKuliah" class="form-label">Nama Mata Kuliah</label>
+                            <input type="text" class="form-control" id="namaMataKuliah" name="updNamaMataKuliah" value="<?php echo $mataKuliah->getNama() ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sksMataKuliah" class="form-label">SKS</label>
+                            <input type="text" class="form-control" id="sksMataKuliah" name="updSksMataKuliah" value="<?php echo $mataKuliah->getSks() ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prodiMataKuliah" class="form-label">Program Studi</label>
+                            <select class="form-select" name="updProdi">
+                                <?php foreach ($dataProgramStudi as $programStudi) {
+                                    if ($programStudi->getIdProgramStudi() == $mataKuliah->getProgramStudi()->getIdProgramStudi()) {
+                                ?>
+                                        <option value="<?= $programStudi->getIdProgramStudi() ?>" selected><?= $programStudi->getNama() ?></option>
+
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <option value="<?= $programStudi->getIdProgramStudi() ?>"><?= $programStudi->getNama() ?></option>
+                                <?php
+                                    }
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Update Mata Kuliah" name="btnUpdate">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php } ?>
+
 <script>
     $(function() {
         $('#form').validate({
