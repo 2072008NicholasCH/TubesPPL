@@ -48,6 +48,7 @@ class StaffController
     public function jadwal()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $mataKuliah = filter_input(INPUT_POST, 'optMataKuliah');
             $dosen = filter_input(INPUT_POST, 'optDosen');
@@ -121,7 +122,96 @@ class StaffController
                     }
                 }
             }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i = 2; $i <= count($data); $i++) {
+                        $jadwal = new Jadwal();
+                        $jadwal->setKelas($data[$i]['C']);
+                        $jadwal->setTipeKelas($data[$i]['D']);
+                        $jadwal->setHari($data[$i]['E']);
+                        $jadwal->setWaktuMulai($data[$i]['F']);
+                        $jadwal->setWaktuSelesai($data[$i]['G']);
+
+                        $mataKuliah = new MataKuliah();
+                        $mataKuliah->setIdMataKuliah($data[$i]['A']);
+                        $jadwal->setMataKuliah($mataKuliah);
+
+                        $ruangan = new Ruangan();
+                        $ruangan->setIdRuangan($data[$i]['H']);
+                        $jadwal->setRuangan($ruangan);
+
+                        $semester = new Semester();
+                        $semester->setIdSemester($_SESSION['semester_aktif']);
+                        $jadwal->setSemester($semester);
+
+                        $dosen = new User();
+                        $dosen->setIdUser($data[$i]['B']);
+
+                        $jadwal->setUser($dosen);
+
+                        $result = $this->jadwalDao->create($jadwal);
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $jadwal = new Jadwal();
+                        $jadwal->setKelas($value["C"]);
+                        $jadwal->setTipeKelas($value["D"]);
+                        $jadwal->setHari($value["E"]);
+                        $jadwal->setWaktuMulai($value["F"]);
+                        $jadwal->setWaktuSelesai($value["G"]);
+
+                        $mataKuliah = new MataKuliah();
+                        $mataKuliah->setIdMataKuliah($value["A"]);
+                        $jadwal->setMataKuliah($mataKuliah);
+
+                        $ruangan = new Ruangan();
+                        $ruangan->setIdRuangan($value["H"]);
+                        $jadwal->setRuangan($ruangan);
+
+                        $semester = new Semester();
+                        $semester->setIdSemester($_SESSION['semester_aktif']);
+                        $jadwal->setSemester($semester);
+
+                        $dosen = new User();
+                        $dosen->setIdUser($value["B"]);
+
+                        $jadwal->setUser($dosen);
+
+                        $result = $this->jadwalDao->create($jadwal);
+                    }
+                }
+                if ($result) {
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Jadwal successfully added');
+                });
+                 </script>";
+                } else {
+                    echo "<script> 
+                $(function() {
+                    toastr.error('Error on add Jadwal');
+                });
+                 </script>";
+                }
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('File upload is empty');
+                });
+                </script>";
+            }
         }
+
         $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
         $dataDosen = $this->userDao->readAllDosen("3", "1");
         $dataMataKuliah = $this->mataKuliahDao->readAll();
@@ -488,6 +578,7 @@ class StaffController
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnDetail = filter_input(INPUT_POST, 'btnDetail');
         $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdAsisten');
             $nama = filter_input(INPUT_POST, 'txtNamaAsisten');
@@ -532,6 +623,71 @@ class StaffController
                  </script>";
                     }
                 }
+            }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i = 2; $i <= count($data); $i++) {
+                        $asisten = new Asisten();
+                        $asisten->setidAsistenDosen($data[$i]["A"]);
+                        $asisten->setNama($data[$i]["B"]);
+                        $asisten->setNoTelp($data[$i]["C"]);
+                        $asisten->setStatus($data[$i]["D"]);
+                        $result = $this->asistenDao->create($asisten);
+
+                        if ($result) {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.success('Asisten Dosen successfully added');
+                                });
+                                </script>";
+                        } else {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.error('Error on add Asisten Dosen');
+                                });
+                            </script>";
+                        }
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $asisten = new Asisten();
+                        $asisten->setidAsistenDosen($value["A"]);
+                        $asisten->setNama($value["B"]);
+                        $asisten->setNoTelp($value["C"]);
+                        $asisten->setStatus($value["D"]);
+                        $result = $this->asistenDao->create($asisten);
+
+                        if ($result) {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.success('Asisten Dosen successfully added');
+                                });
+                                </script>";
+                        } else {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.error('Error on add Asisten Dosen');
+                                });
+                            </script>";
+                        }
+                    }
+                }
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('File upload is empty');
+                });
+                </script>";
             }
         }
         if (isset($btnUpdate)) {
@@ -590,11 +746,15 @@ class StaffController
 
         foreach ($asisten as $index => $a) {
             $detailAsisten[$index] = $this->asistenDao->getAsistenDetail($a);
+            $detailAsisten[$index][0]['nrp'] = $a->getidAsistenDosen();
         }
-
+        
         foreach ($detailAsisten as $i => $item) {
+            if (!isset($item[0]["kode_mata_kuliah "])) {
+                continue;
+            }
             foreach ($item as $j => $value) {
-                $detailJadwalAsisten[$i][$j] = $this->asistenDao->getAsistenJadwalDetail($value['nrp'], $value['kode_mata_kuliah'], $value['dosen'], $value['semester'], $value['kelas'], $value['tipe_kelas']);
+                $detaiJadwalAsisten[$i][$j] = $this->asistenDao->getAsistenJadwalDetail($value['nrp'], $value['kode_mata_kuliah'], $value['dosen'], $value['semester'], $value['kelas'], $value['tipe_kelas']);
             }
         }
 
@@ -619,6 +779,7 @@ class StaffController
     public function dosen()
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
+        $btnImport = filter_input(INPUT_POST, 'btnImport');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdDosen');
             $nama = filter_input(INPUT_POST, 'txtNamaDosen');
@@ -668,6 +829,83 @@ class StaffController
                  </script>";
                     }
                 }
+            }
+        } else if (isset($btnImport)) {
+            if (isset($_FILES['fileImport']['name']) && $_FILES['fileImport']['name'] != '') {
+                $directory = 'uploads/';
+                $extension = pathinfo($_FILES['fileImport']['name'], PATHINFO_EXTENSION);
+                $new_name = $directory . $_SESSION['user']->getIdUser() . '-' . date('d-M-Y-H-i-s') . '.' . $extension;
+
+                move_uploaded_file($_FILES['fileImport']['tmp_name'], $new_name);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($new_name);
+                $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+                $isRowTitle = filter_input(INPUT_POST, 'rowTitle');
+                if ($isRowTitle) {
+                    for ($i = 2; $i <= count($data); $i++) {
+                        $dosen = new User();
+                        $dosen->setIdUser($data[$i]["A"]);
+                        $dosen->setNama($data[$i]["B"]);
+                        $dosen->setPassword(md5($data[$i]["C"]));
+
+                        $role = new Role();
+                        $role->setIdRole("3");
+                        $dosen->setRole($role);
+
+                        $dosen->setStatus($data[$i]["D"]);
+
+                        $result = $this->userDao->create($dosen);
+
+                        if ($result) {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.success('Dosen successfully added');
+                                });
+                                 </script>";
+                        } else {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.error('Error on add Dosen');
+                                });
+                            </script>";
+                        }
+                    }
+                } else {
+                    foreach ($data as $index => $value) {
+                        $dosen = new User();
+                        $dosen->setIdUser($value["A"]);
+                        $dosen->setNama($value["B"]);
+                        $dosen->setPassword(md5($value["C"]));
+
+                        $role = new Role();
+                        $role->setIdRole("3");
+                        $dosen->setRole($role);
+
+                        $dosen->setStatus($value["D"]);
+
+                        $result = $this->userDao->create($dosen);
+
+                        if ($result) {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.success('Dosen successfully added');
+                                });
+                                </script>";
+                        } else {
+                            echo "<script> 
+                                $(function() {
+                                    toastr.error('Error on add Dosen');
+                                });
+                            </script>";
+                        }
+                    }
+                }
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('File upload is empty');
+                });
+                </script>";
             }
         }
 

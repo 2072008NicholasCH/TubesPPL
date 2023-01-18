@@ -1,6 +1,37 @@
 <?php include_once 'view/template/sidebar.php' ?>
 
 <div class="content-wrapper p-3">
+    
+    <div class="card card-primary collapsed-card">
+        <div class="card-header">
+            <h3 class="card-title">Import data Dosen</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="maximize" title="Full Screen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="btn btn-success mb-4" href="uploads/templates/template_dosen.xlsx"><i class="fa-solid fa-file-arrow-down"></i> Download Template</a>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group col-4">
+                    <label for="idMataKuliah" class="form-label">Upload File</label>
+                    <input type="file" class="form-control" id="idMataKuliah" name="fileImport" accept=".xls, .xlsx">
+                </div>
+                <div class="form-group col-4">
+                    <input type="checkbox" name="rowTitle" id="rowTitle" checked>
+                    <label for="rowTitle" class="form-label">First Row is Heading (Using Template)</label>
+                </div>
+                <input type="submit" class="btn btn-primary" name="btnImport" value="Import data">
+            </form>
+
+        </div>
+    </div>
+
     <div class="card card-primary collapsed-card">
         <div class="card-header">
             <h3 class="card-title">Add Dosen</h3>

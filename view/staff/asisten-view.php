@@ -3,6 +3,36 @@
 <div class="content-wrapper p-3">
     <div class="card card-primary collapsed-card">
         <div class="card-header">
+            <h3 class="card-title">Import data Asisten</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="maximize" title="Full Screen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="btn btn-success mb-4" href="uploads/templates/template_asisten.xlsx"><i class="fa-solid fa-file-arrow-down"></i> Download Template</a>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group col-4">
+                    <label for="idMataKuliah" class="form-label">Upload File</label>
+                    <input type="file" class="form-control" id="idMataKuliah" name="fileImport" accept=".xls, .xlsx">
+                </div>
+                <div class="form-group col-4">
+                    <input type="checkbox" name="rowTitle" id="rowTitle" checked>
+                    <label for="rowTitle" class="form-label">First Row is Heading (Using Template)</label>
+                </div>
+                <input type="submit" class="btn btn-primary" name="btnImport" value="Import data">
+            </form>
+
+        </div>
+    </div>
+
+    <div class="card card-primary collapsed-card">
+        <div class="card-header">
 
             <h3 class="card-title">
                 Asisten Dosen
@@ -236,7 +266,7 @@
 foreach ($detailAsisten as $index => $asisten) {
     
 ?>
-    <div class="modal fade" id="asisten-<?= ($asisten != null) ? $asisten[0]["nrp"] : 0 ?>" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="asisten-<?= $asisten[0]["nrp"] ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -258,6 +288,9 @@ foreach ($detailAsisten as $index => $asisten) {
                         <tbody>
                             <?php
                             foreach ($asisten as $idx => $item) {
+                                if (!isset($item["kode_mata_kuliah"])) {
+                                    continue;
+                                }
                                 echo "<tr>";
                                 echo "<td>" . $item["kode_mata_kuliah"] . "</td>";
                                 echo "<td>" . $item["nama"] . "</td>";
