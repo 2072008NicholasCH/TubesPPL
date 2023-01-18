@@ -487,6 +487,7 @@ class StaffController
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnDetail = filter_input(INPUT_POST, 'btnDetail');
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdAsisten');
             $nama = filter_input(INPUT_POST, 'txtNamaAsisten');
@@ -533,13 +534,53 @@ class StaffController
                 }
             }
         }
+        if (isset($btnUpdate)) {
+            $id = filter_input(INPUT_POST, 'updIdAsisten');
+            $nama = filter_input(INPUT_POST, 'updNamaAsisten');
+            $no_telp = filter_input(INPUT_POST, 'updTelp');
+            $status = filter_input(INPUT_POST, 'updRadioStatus');
+            $trimId = trim($id);
+            $trimNama = trim($nama);
+            $trimNoTelp = trim($no_telp);
+            if (empty($trimId) || empty($trimNama) || empty($trimNoTelp)) {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
+            } else {
+
+                $asisten = new Asisten();
+                $asisten->setidAsistenDosen($trimId);
+                $asisten->setNama($trimNama);
+                $asisten->setNoTelp($trimNoTelp);
+                $asisten->setStatus($status);
+                $result = $this->asistenDao->update($asisten);
+
+                if ($result) {
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Asisten Dosen successfully updated');
+                });
+                 </script>";
+                } else {
+                    echo "<script> 
+                $(function() {
+                    toastr.error('Error on update Asisten Dosen');
+                });
+                 </script>";
+                }
+            }
+        }
+
+        $dataAsisten = $this->asistenDao->readAll();
 
         $asisten = $this->asistenDao->readAll();
         $filterRekap = filter_input(INPUT_POST, 'filter-rekap');
         if (isset($filterRekap)) {
             $filter_from_rekap = filter_input(INPUT_POST, 'filter-from-rekap');
             $filter_to_rekap = filter_input(INPUT_POST, 'filter-to-rekap');
-            
+
             $rekapAsisten = $this->asistenDao->getRekapAsisten($filter_from_rekap, $filter_to_rekap);
         } else {
             $rekapAsisten = $this->asistenDao->getRekapAsisten('1970-01-01', '2100-01-01');
@@ -565,9 +606,9 @@ class StaffController
             $dataDetail = $detailJadwalAsisten[$detailId][$detailIndex];
 
             if (isset($filter_from) && isset($filter_to)) {
-                $dataDetail = array_filter($dataDetail, function($var) use ($filter_from, $filter_to) {  
-                    $evtime = date_format(date_create($var["waktu_selesai"]), "Y-m-d");  
-                    return $evtime <= $filter_to && $evtime >= $filter_from;  
+                $dataDetail = array_filter($dataDetail, function ($var) use ($filter_from, $filter_to) {
+                    $evtime = date_format(date_create($var["waktu_selesai"]), "Y-m-d");
+                    return $evtime <= $filter_to && $evtime >= $filter_from;
                 });
             }
         }

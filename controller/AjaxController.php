@@ -73,6 +73,13 @@ class AjaxController
         $dosen = $this->userDao->readDosenByStatus($statusActive, $statusInactive);
         echo json_encode($dosen);
     }
+
+    public function fetchAsistenStatus($statusActive, $statusInactive)
+    {
+    
+        $asisten = $this->asistenDao->readAsistenByStatus($statusActive, $statusInactive);
+        echo json_encode($asisten);
+    }
 }
 
 if (isset($_POST['method']) && $_POST['method'] == "fetchJadwalDosen") {
@@ -119,6 +126,29 @@ if (isset($_POST['method']) && $_POST['method'] == "fetchDosenStatus") {
     include_once '../entity/User.php';
     $test = new AjaxController();
     $test->fetchDosenStatus($_POST['statusActive'], $_POST['statusInactive']);
+}
+
+if (isset($_POST['method']) && $_POST['method'] == "fetchAsistenStatus") {
+    include_once '../utility/Connection.php';
+    include_once '../dao/AsistenDao.php';
+    include_once '../dao/UserDao.php';
+    include_once '../dao/JadwalDao.php';
+    include_once '../dao/BeritaAcaraDao.php';
+    include_once '../dao/MataKuliahDao.php';
+    include_once '../dao/RuanganDao.php';
+    include_once '../dao/SemesterDao.php';
+    include_once '../dao/ProgramStudiDao.php';
+    include_once '../entity/Asisten.php';
+    include_once '../entity/BeritaAcara.php';
+    include_once '../entity/Jadwal.php';
+    include_once '../entity/MataKuliah.php';
+    include_once '../entity/ProgramStudi.php';
+    include_once '../entity/Role.php';
+    include_once '../entity/Ruangan.php';
+    include_once '../entity/Semester.php';
+    include_once '../entity/User.php';
+    $test = new AjaxController();
+    $test->fetchAsistenStatus($_POST['statusActive'], $_POST['statusInactive']);
 }
 
 if (isset($_POST['method']) && $_POST['method'] == "fetchBeritaAcara") {

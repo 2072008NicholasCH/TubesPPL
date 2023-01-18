@@ -75,12 +75,26 @@
         </div>
 
         <div class="card-body">
+            <p class="mb-2">Filter Status by:</p>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="activeCheck" checked>
+                <label class="form-check-label" for="activeCheck">
+                    Aktif
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="inactiveCheck" checked>
+                <label class="form-check-label" for="inactiveCheck">
+                    Tidak Aktif
+                </label>
+            </div>
             <table id="example1" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th>NRP</th>
                         <th>Nama</th>
                         <th>No Telp</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -91,7 +105,13 @@
                         echo "<td>" . $item->getidAsistenDosen() . "</td>";
                         echo "<td>" . $item->getNama() . "</td>";
                         echo "<td>" . $item->getNoTelp() . "</td>";
-                        echo "<td><button class='btn btn-info' data-toggle='modal' data-target='#asisten-$index'><i class='fa-solid fa-info'></i></button></td>";
+                        if ($item->getStatus() == "1") {
+                            echo "<td>Aktif</td>";
+                        } else {
+                            echo "<td>Tidak aktif</td>";
+                        }
+                        echo "<td><button class='btn btn-info' data-toggle='modal' data-target='#asisten-" . $item->getidAsistenDosen() . "'><i class='fa-solid fa-info'></i></button>
+                        <button class='btn btn-warning' data-toggle='modal' data-target='#editAsisten-" . $item->getidAsistenDosen() . "'><i class='fa-solid fa-pen-to-square'></i></button></td>";
                         echo "</tr>";
                     }
                     ?>
@@ -212,8 +232,11 @@
 
 </div>
 
-<?php foreach ($detailAsisten as $index => $asisten) { ?>
-    <div class="modal fade" id="asisten-<?= $index ?>" tabindex="-1" aria-hidden="true">
+<?php 
+foreach ($detailAsisten as $index => $asisten) {
+    
+?>
+    <div class="modal fade" id="asisten-<?= ($asisten != null) ? $asisten[0]["nrp"] : 0 ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -261,6 +284,141 @@
         </div>
     </div>
 <?php } ?>
+
+<?php foreach ($dataAsisten as $idx => $item) { ?>
+    <div class="modal fade" id="editAsisten-<?= $item->getidAsistenDosen() ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post">
+                <div class=" modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Edit Asisten Dosen</h1>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="idAsisten" class="form-label">ID Asisten Dosen</label>
+                            <input type="text" class="form-control" id="idAsisten" name="updIdAsisten" value="<?php echo $item->getidAsistenDosen() ?>" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="namaAsisten" class="form-label">Nama Asisten Dosen</label>
+                            <input type="text" class="form-control" id="namaAsisten" name="updNamaAsisten" value="<?php echo $item->getNama() ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="noTelp" class="form-label">No. Telp</label>
+                            <input type="text" class="form-control" id="noTelp" name="updTelp" value="<?php echo $item->getNoTelp() ?>">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="" class="form-label">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="updRadioStatus" id="radioAktif" value="1" <?php echo ($item->getStatus() == '1') ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="radioAktif">
+                                    Aktif
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="updRadioStatus" id="radioTidakAktif" value="0" <?php echo ($item->getStatus() == '0') ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="radioTidakAktif">
+                                    Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Update Asisten" name="btnUpdate">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php } ?>
+
+<script>
+    var activeCheck = 1;
+    var inactiveCheck = 0;
+
+    $("#activeCheck").change(function() {
+        if ($("#activeCheck").prop('checked') == true) {
+            activeCheck = 1;
+        } else {
+            activeCheck = 10;
+        }
+        $.ajax({
+            url: 'controller/AjaxController.php',
+            type: 'post',
+            data: {
+                method: "fetchAsistenStatus",
+                statusActive: activeCheck,
+                statusInactive: inactiveCheck
+            },
+            success: function(responsedata) {
+                var table = $('#example1').DataTable();
+                table.clear().draw();
+                var response = $.parseJSON(responsedata);
+                console.log(response);
+                for (var i in response) {
+                    var status;
+                    if (response[i].status == 1) {
+                        status = "Aktif"
+                    } else {
+                        status = "Tidak aktif"
+                    }
+
+                    table.row.add([
+                        response[i].idAsistenDosen,
+                        response[i].nama,
+                        response[i].no_telp,
+                        status,
+                        "<button class='btn btn-info' data-toggle='modal' data-target='#asisten-" + response[i].idAsistenDosen + "'><i class='fa-solid fa-info'></i></button></td>"
+                    ]).draw(false);
+                }
+            }
+        })
+    });
+
+    $("#inactiveCheck").change(function() {
+        if ($("#inactiveCheck").prop('checked') == true) {
+            inactiveCheck = 0;
+        } else {
+            inactiveCheck = 10;
+        }
+        $.ajax({
+            url: 'controller/AjaxController.php',
+            type: 'post',
+            data: {
+                method: "fetchAsistenStatus",
+                statusActive: activeCheck,
+                statusInactive: inactiveCheck
+            },
+            success: function(responsedata) {
+                var table = $('#example1').DataTable();
+                table.clear().draw();
+                var response = $.parseJSON(responsedata);
+                for (var i in response) {
+                    var status;
+                    if (response[i].status == 1) {
+                        status = "Aktif"
+                    } else {
+                        status = "Tidak aktif"
+                    }
+
+                    table.row.add([
+                        response[i].idAsistenDosen,
+                        response[i].nama,
+                        response[i].no_telp,
+                        status,
+                        "<button class='btn btn-info' data-toggle='modal' data-target='#asisten-" + response[i].idAsistenDosen + "'><i class='fa-solid fa-info'></i></button></td>"
+                    ]).draw(false);
+                }
+            }
+        })
+    });
+</script>
 
 <?php // foreach ($detailJadwalAsisten as $q => $asisten) { 
 ?>

@@ -13,6 +13,19 @@ class AsistenDao
         return $stmt->fetchAll();
     }
 
+    public function readAsistenByStatus($statusActive, $statusInactive)
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT * FROM asistendosen WHERE status = ? OR status = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $statusActive);
+        $stmt->bindParam(2, $statusInactive);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Asisten");
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
+
     public function readOne($id)
     {
         $conn = Connection::createConnection();
@@ -35,6 +48,27 @@ class AsistenDao
         $stmt->bindValue(2, $asisten->getNama());
         $stmt->bindValue(3, $asisten->getNoTelp());
         $stmt->bindValue(4, $asisten->getStatus());
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
+    }
+
+    public function update(Asisten $asisten)
+    {
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "UPDATE asistendosen SET nama = ?, no_telp = ?, status = ? WHERE idAsistenDosen = ? ";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $asisten->getNama());
+        $stmt->bindValue(2, $asisten->getNoTelp());
+        $stmt->bindValue(3, $asisten->getStatus());
+        $stmt->bindValue(4, $asisten->getidAsistenDosen());
         $link->beginTransaction();
         if ($stmt->execute()) {
             $link->commit();

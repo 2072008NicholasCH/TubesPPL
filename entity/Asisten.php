@@ -1,6 +1,6 @@
 <?php
 
-class Asisten
+class Asisten implements JsonSerializable
 {
     private $idAsistenDosen;
     private $nama;
@@ -69,6 +69,11 @@ class Asisten
     public function setStatus($status): void
     {
         $this->status = $status;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 
