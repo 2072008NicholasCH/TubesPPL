@@ -145,7 +145,7 @@
 
                 <div class="form-group">
                     <label for="formFile" class="form-label">Upload Bukti Foto</label>
-                    <input class="form-control" type="file" id="foto-presensi" name="foto-presensi" accept="image/png, image/jpeg, .pdf">
+                    <input class="form-control" type="file" id="foto-presensi" name="foto-presensi">
                 </div>
 
                 <div class="form-group">
