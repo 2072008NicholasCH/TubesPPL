@@ -220,4 +220,10 @@
         $('#lama-asisten3').prop("disabled", !state_select3);
         $('#lama-asisten3').prop("required", state_select3);
     });
+
+    $(document).ready(function() {
+        $('#select-asisten').select2();
+        $('#select-asisten2').select2();
+        $('#select-asisten3').select2();
+    });
 </script>
