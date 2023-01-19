@@ -51,8 +51,6 @@ class SemesterDao
         $query = "SELECT * FROM semester WHERE status = 1";
         $stmt = $conn->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
-        $stmt->bindParam(1, $id);
-        $stmt->bindParam(2, $name);
         $stmt->execute();
         $conn = Connection::close($conn);
         return $stmt->fetchObject('Semester');
