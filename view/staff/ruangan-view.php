@@ -158,7 +158,6 @@
 <script>
     function deleteRuangan(id) {
         $('#deleteConfirm').click(function() {
-            console.log(id);
             window.location = "index.php?ahref=staff-ruangan&delcom=1&rid=" + id;
         })
     }

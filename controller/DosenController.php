@@ -26,6 +26,26 @@ class DosenController
             $selectedSemester = $_SESSION['semester_aktif'];
         }
 
+        $deleteCommand = filter_input(INPUT_GET, 'delcom');
+        if (isset($deleteCommand) && $deleteCommand == 1) {
+            $idBeritaAcara = filter_input(INPUT_GET, 'bid');
+            $result = $this->beritaAcaraDao->delete($idBeritaAcara);
+            if ($result) {
+                echo "<script> 
+                $(function() {
+                    toastr.success('Berita acara successfully deleted');
+                });
+                 </script>";
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.error('Error on delete berita acara');
+                });
+                 </script>";
+            }
+        }
+
+
         if (isset($btnUpdate)) {
 
             $pertemuan = trim(filter_input(INPUT_POST, 'pertemuan'));
@@ -37,29 +57,28 @@ class DosenController
             $pembahasan_materi = trim(filter_input(INPUT_POST, 'pembahasan-materi'));
 
             if (empty($pertemuan) || empty($jumlah_mahasiswa) || empty($tanggal) || empty($waktu_mulai) || empty($waktu_selesai) || empty($rangkuman) || empty($pembahasan_materi)) {
-                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
-                echo "<script> bootoast.toast({
-                    message: '" . $message . "',
-                    type: 'warning',
-                    position: 'rightTop'
-                }); </script>";
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
             } else {
 
                 $newBeritaAcara = new BeritaAcara();
-                $newBeritaAcara->setIdBeritaAcara(filter_input(INPUT_POST, 'pertemuan'));
+                $newBeritaAcara->setIdBeritaAcara(filter_input(INPUT_POST, 'idBeritaAcara'));
 
                 $tanggal = filter_input(INPUT_POST, 'tanggal');
                 $waktu_mulai = $tanggal . ' ' . filter_input(INPUT_POST, 'waktu-mulai');
                 $waktu_selesai = $tanggal . ' ' . filter_input(INPUT_POST, 'waktu-selesai');
-                $newBeritaAcara->setWaktuMulai(date('Y/m/d h:i:s', strtotime($waktu_mulai)));
-                $newBeritaAcara->setWaktuSelesai(date('Y/m/d h:i:s', strtotime($waktu_selesai)));
+                $newBeritaAcara->setWaktuMulai(date('Y/m/d H:i:s', strtotime($waktu_mulai)));
+                $newBeritaAcara->setWaktuSelesai(date('Y/m/d H:i:s', strtotime($waktu_selesai)));
                 $newBeritaAcara->setRangkuman(filter_input(INPUT_POST, 'rangkuman'));
                 $newBeritaAcara->setPembahasanMateri(filter_input(INPUT_POST, 'pembahasan-materi'));
                 $newBeritaAcara->setPertemuan(filter_input(INPUT_POST, 'pertemuan'));
                 $newBeritaAcara->setJumlahMahasiswa(filter_input(INPUT_POST, 'jumlah-mahasiswa'));
 
                 $newBeritaAcara->setIsAsisten(filter_input(INPUT_POST, 'isAsisten') ? 1 : 0);
-                $newBeritaAcara->setTglBeritaAcara(date("Y/m/d h:i:s a"));
+                $newBeritaAcara->setTglBeritaAcara(date("Y/m/d H:i:s a"));
 
                 $jadwalSelect = explode('-', filter_input(INPUT_POST, 'jadwal'));
                 $kodeMatkul = $jadwalSelect[0];
@@ -76,12 +95,11 @@ class DosenController
                     $new_name = $_SESSION['user']->getIdUser() . '-' . $kodeMatkul . '-' . $kelas . '-' . $tipeKelas . '-' . filter_input(INPUT_POST, 'pertemuan') . '.' . $extension;
                     $foto_pertemuan = $directory . $new_name;
                     if ($_FILES['foto-presensi']['size'] > 1024 * 25600) {
-                        $message = '<i class="fa-solid fa-circle-exclamation"></i> File size is too large';
-                        echo "<script> bootoast.toast({
-                            message: '" . $message . "',
-                            type: 'warning',
-                            position: 'rightTop'
-                        }); </script>";
+                        echo "<script> 
+                $(function() {
+                    toastr.warning('File size is too large');
+                });
+                 </script>";
                     } else {
                         var_dump(move_uploaded_file($_FILES['foto-presensi']['tmp_name'], $foto_pertemuan));
                     }
@@ -112,7 +130,7 @@ class DosenController
                 $asistenDosen3->setidAsistenDosen(filter_input(INPUT_POST, 'asisten3'));
 
 
-                if ($this->beritaAcaraDao->create($newBeritaAcara)) {
+                if ($this->beritaAcaraDao->update($newBeritaAcara)) {
                     if (filter_input(INPUT_POST, 'isAsisten')) {
                         $this->asistenDao->assignAsisten($asistenDosen, $jadwal, filter_input(INPUT_POST, 'lama-asistensi'), filter_input(INPUT_POST, 'pertemuan'));
                     }
@@ -122,14 +140,17 @@ class DosenController
                     if (filter_input(INPUT_POST, 'isAsisten3')) {
                         $this->asistenDao->assignAsisten($asistenDosen3, $jadwal, filter_input(INPUT_POST, 'lama-asistensi3'), filter_input(INPUT_POST, 'pertemuan'));
                     }
-                    header('Location: index.php?ahref=dosen');
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Berita Acara updated successfully');
+                });
+                 </script>";
                 } else {
-                    $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add berita acara';
-                    echo "<script> bootoast.toast({
-                            message: '" . $message . "',
-                            type: 'danger',
-                            position: 'rightTop'
-                        }); </script>";
+                    echo "<script> 
+                $(function() {
+                    toastr.error('Error on update berita acara');
+                });
+                 </script>";
                 }
             }
         }
@@ -164,22 +185,21 @@ class DosenController
             $pembahasan_materi = trim(filter_input(INPUT_POST, 'pembahasan-materi'));
 
             if (empty($pertemuan) || empty($jumlah_mahasiswa) || empty($tanggal) || empty($waktu_mulai) || empty($waktu_selesai) || empty($rangkuman) || empty($pembahasan_materi)) {
-                $message = '<i class="fa-solid fa-circle-exclamation"></i> Please fill the field properly';
-                echo "<script> bootoast.toast({
-                    message: '" . $message . "',
-                    type: 'warning',
-                    position: 'rightTop'
-                }); </script>";
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
             } else {
 
                 $newBeritaAcara = new BeritaAcara();
-                $newBeritaAcara->setIdBeritaAcara(filter_input(INPUT_POST, 'pertemuan'));
+                $newBeritaAcara->setIdBeritaAcara(0);
 
                 $tanggal = filter_input(INPUT_POST, 'tanggal');
                 $waktu_mulai = $tanggal . ' ' . filter_input(INPUT_POST, 'waktu-mulai');
                 $waktu_selesai = $tanggal . ' ' . filter_input(INPUT_POST, 'waktu-selesai');
-                $newBeritaAcara->setWaktuMulai(date('Y/m/d h:i:s', strtotime($waktu_mulai)));
-                $newBeritaAcara->setWaktuSelesai(date('Y/m/d h:i:s', strtotime($waktu_selesai)));
+                $newBeritaAcara->setWaktuMulai(date('Y/m/d H:i:s', strtotime($waktu_mulai)));
+                $newBeritaAcara->setWaktuSelesai(date('Y/m/d H:i:s', strtotime($waktu_selesai)));
                 $newBeritaAcara->setRangkuman(filter_input(INPUT_POST, 'rangkuman'));
                 $newBeritaAcara->setPembahasanMateri(filter_input(INPUT_POST, 'pembahasan-materi'));
                 $newBeritaAcara->setPertemuan(filter_input(INPUT_POST, 'pertemuan'));
@@ -203,12 +223,11 @@ class DosenController
                     $new_name = $_SESSION['user']->getIdUser() . '-' . $kodeMatkul . '-' . $kelas . '-' . $tipeKelas . '-' . filter_input(INPUT_POST, 'pertemuan') . '.' . $extension;
                     $foto_pertemuan = $directory . $new_name;
                     if ($_FILES['foto-presensi']['size'] > 1024 * 25600) {
-                        $message = '<i class="fa-solid fa-circle-exclamation"></i> File size is too large';
-                        echo "<script> bootoast.toast({
-                            message: '" . $message . "',
-                            type: 'warning',
-                            position: 'rightTop'
-                        }); </script>";
+                        echo "<script> 
+                $(function() {
+                    toastr.warning('File size is too large');
+                });
+                 </script>";
                     } else {
                         var_dump(move_uploaded_file($_FILES['foto-presensi']['tmp_name'], $foto_pertemuan));
                     }
@@ -240,12 +259,11 @@ class DosenController
 
                 $existBeritaAcara = $this->beritaAcaraDao->readOne($jadwal, $newBeritaAcara->getPertemuan());
                 if ($existBeritaAcara) {
-                    $message = '<i class="fa-solid fa-circle-exclamation"></i> Berita Acara exists';
-                    echo "<script> bootoast.toast({
-                        message: '" . $message . "',
-                        type: 'warning',
-                        position: 'rightTop'
-                    }); </script>";
+                    echo "<script> 
+                $(function() {
+                    toastr.warning('Berita Acara exists');
+                });
+                 </script>";
                 } else {
                     if ($this->beritaAcaraDao->create($newBeritaAcara)) {
                         if (filter_input(INPUT_POST, 'isAsisten')) {
@@ -257,14 +275,18 @@ class DosenController
                         if (filter_input(INPUT_POST, 'isAsisten3')) {
                             $this->asistenDao->assignAsisten($asistenDosen3, $jadwal, filter_input(INPUT_POST, 'lama-asistensi3'), filter_input(INPUT_POST, 'pertemuan'));
                         }
+                        echo "<script> 
+                $(function() {
+                    toastr.success('Berita Acara added successfully');
+                });
+                 </script>";
                         header('Location: index.php?ahref=dosen');
                     } else {
-                        $message = '<i class="fa-solid fa-circle-xmark"></i> Error on add berita acara';
-                        echo "<script> bootoast.toast({
-                            message: '" . $message . "',
-                            type: 'danger',
-                            position: 'rightTop'
-                        }); </script>";
+                        echo "<script> 
+                $(function() {
+                    toastr.error('Error on add berita acara');
+                });
+                 </script>";
                     }
                 }
             }
