@@ -12,6 +12,17 @@ class AsistenDao
         $conn = Connection::close($conn);
         return $stmt->fetchAll();
     }
+    
+    public function readAllActive()
+    {
+        $conn = Connection::createConnection();
+        $query = "SELECT * FROM asistendosen WHERE status = 1";
+        $stmt = $conn->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Asisten");
+        $stmt->execute();
+        $conn = Connection::close($conn);
+        return $stmt->fetchAll();
+    }
 
     public function readAsistenByStatus($statusActive, $statusInactive)
     {
