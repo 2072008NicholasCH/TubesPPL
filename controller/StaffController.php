@@ -780,6 +780,27 @@ class StaffController
                 </script>";
             }
         }
+
+        $btnChange = filter_input(INPUT_POST, 'btnChange');
+        if (isset($btnChange)) {
+            $semester = filter_input(INPUT_POST, 'semester');
+            $result = $this->semesterDao->changeCurrentSemester($semester);
+            if ($result) {
+                echo "<script>
+                $(function() {
+                    toastr.success('Semester successfully updated');
+                });
+                 </script>";
+            } else {
+                echo "<script>
+                $(function() {
+                    toastr.error('Error on update Semester');
+                });
+                 </script>";
+            }
+        }
+
+        $currentSemester = $this->semesterDao->readCurrentActive();
         $dataSemester = $this->semesterDao->read();
         include_once 'view/staff/semester-view.php';
     }
