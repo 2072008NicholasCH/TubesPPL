@@ -17,7 +17,14 @@ class DosenController
 
     public function index()
     {
-        $jadwalDosen = $this->jadwalDao->read($_SESSION['user']->getIdUser());
+        $dataSemester = $this->semesterDao->read();
+        $filterSemester = filter_input(INPUT_POST, 'filter-semester');
+        if (isset($filterSemester)) {
+            $selectedSemester = $filterSemester;
+        } else {
+            $selectedSemester = $_SESSION['semester_aktif'];
+        }
+        $jadwalDosen = $this->jadwalDao->read($_SESSION['user']->getIdUser(),  $selectedSemester);
         foreach ($jadwalDosen as $jadwal) {
             $jadwal->array_berita_acara = $this->beritaAcaraDao->readByUserJadwal($jadwal);
         }

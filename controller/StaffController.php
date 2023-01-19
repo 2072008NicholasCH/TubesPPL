@@ -216,7 +216,14 @@ class StaffController
         $dataDosen = $this->userDao->readAllDosen("3", "1");
         $dataMataKuliah = $this->mataKuliahDao->readAll();
         $dataRuangan = $this->ruanganDao->read();
-        $dataJadwal = $this->jadwalDao->readBySemester($_SESSION['semester_aktif']);
+        $dataSemester = $this->semesterDao->read();
+        $filterSemester = filter_input(INPUT_POST, 'filter-semester');
+        if (isset($filterSemester)) {
+            $selectedSemester = $filterSemester;
+        } else {
+            $selectedSemester = $_SESSION['semester_aktif'];
+        }
+        $dataJadwal = $this->jadwalDao->readBySemester($selectedSemester);
         include_once 'view/staff/jadwal-view.php';
     }
 

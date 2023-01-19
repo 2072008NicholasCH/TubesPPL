@@ -154,6 +154,20 @@
 
         </div>
         <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label for="" class="form-label">Semester</label>
+                    <select class="form-select" name="filter-semester" id="optSemester">
+                        <option selected disabled>Select Semester</option>
+                        <?php foreach ($dataSemester as $semester) { ?>
+                            <option value="<?= $semester->getIdSemester() ?>" <?= $selectedSemester == $semester->getIdSemester() ? 'selected' : '' ?> ><?= $semester->getNama() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button id="btnSubmit" class="btn btn-primary" type="submit" name="btnFilter">Filter</button>
+                </div>
+            </form>
             <table id="example1" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
