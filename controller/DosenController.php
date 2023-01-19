@@ -33,7 +33,7 @@ class DosenController
 
     public function beritaAcara()
     {
-        $jadwalDosen = $this->jadwalDao->read($_SESSION['user']->getIdUser());
+        $jadwalDosen = $this->jadwalDao->readAll($_SESSION['user']->getIdUser());
         $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
         $dataAsisten = $this->asistenDao->readAll();
         $btnSubmit = filter_input(INPUT_POST, 'btnSubmit');
