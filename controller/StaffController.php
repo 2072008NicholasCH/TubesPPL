@@ -41,7 +41,7 @@ class StaffController
         $dataBeritaAcara = $this->beritaAcaraDao->read();
         $dataSemester = $this->semesterDao->read();
         $dataDosen = $this->userDao->readAllDosen("3", 1);
-        $dataJadwal = $this->jadwalDao->read("72022");
+        $dataJadwal = $this->jadwalDao->readAll("720307");
         include_once 'view/staff/berita-acara-view.php';
     }
 

@@ -29,7 +29,7 @@ class AjaxController
     {
 
         if (isset($idDosen) && $idDosen != '') {
-            $jadwal = $this->jadwalDao->read($idDosen);
+            $jadwal = $this->jadwalDao->readAll($idDosen);
             echo json_encode($jadwal);
         }
     }
