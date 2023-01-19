@@ -172,7 +172,7 @@ class DosenController
     {
         $jadwalDosen = $this->jadwalDao->readAll($_SESSION['user']->getIdUser());
         $semesterAktif = $this->semesterDao->readOne($_SESSION['semester_aktif']);
-        $dataAsisten = $this->asistenDao->readAll();
+        $dataAsisten = $this->asistenDao->readAllActive();
         $btnSubmit = filter_input(INPUT_POST, 'btnSubmit');
         if (isset($btnSubmit)) {
 
