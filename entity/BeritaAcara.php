@@ -246,5 +246,45 @@ class BeritaAcara implements JsonSerializable
         return get_object_vars($this);
     }
 
+    // public function __set($name, $value)
+    // {
+    //     if (!isset($this->jadwal)) {
+    //         $this->jadwal = new Jadwal();
+    //     }
+    //     if(!isset($this->jadwal->getMataKuliah())) {
+    //         $this->jadwal->setMataKuliah( new MataKuliah());
+    //     }
+    //     if (!isset($this->jadwal->getUser())) {
+    //         $this->jadwal->setUser(new User());
+    //     }
+    //     if (!isset($this->jadwal->getSemester())) {
+    //         $this->jadwal->setSemester(new Semester());
+    //     }
+    //     if (!isset($this->jadwal->getKelas())) {
+    //         $this->jadwal->setKelas("A");
+    //     }
+    //     if (!isset($this->jadwal->getTipeKelas())) {
+    //         $this->jadwal->setTipeKelas("Teori");
+    //     }
+    //     switch ($name) {
+    //         case 'idMataKuliah':
+    //             $this->jadwal->getMataKuliah()->setIdMataKuliah($value);
+    //             break;
+    //         case 'idUser':
+    //             $this->jadwal->getUser()->setIdUser($value);
+    //             break;
+    //         case 'idSemester':
+    //             $this->jadwal->getSemester()->setIdSemester($value);
+    //             break;
+    //         case 'kelas':
+    //             $this->jadwal->setKelas($value);
+    //             break;
+    //         case 'tipeKelas':
+    //             $this->jadwal->setTipeKelas($value);
+    //         default:
+    //             $this->$name = $value;
+    //     }
+    // }
+
 
 }

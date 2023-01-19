@@ -77,6 +77,8 @@
         </div>
 
         <div class="card-body">
+            <h2>Current Semester : <?= $currentSemester->getNama() ?></h2>
+            <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#changeSemesterModal">Change Current Semester</button>
             <table id="example1" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -156,6 +158,40 @@
                 </div>
                 <div class="modal-footer">
                     <button id="deleteConfirm" class="btn btn-primary" name="btnDelete">Delete Semester</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="changeSemesterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post">
+            <div class=" modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Edit Semester</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+                        Segera <strong>logout</strong>, lalu login kembali setelah merubah Current Semester
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="form-label">Semester</label>
+                        <select class="form-select" name="semester" id="optSemester">
+                            <option selected disabled>Select Semester</option>
+                            <?php foreach ($dataSemester as $semester) { ?>
+                                <option value="<?= $semester->getIdSemester() ?>" <?= $currentSemester->getIdSemester() == $semester->getIdSemester() ? 'selected' : '' ?>><?= $semester->getNama() ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Update Semester" name="btnChange">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>

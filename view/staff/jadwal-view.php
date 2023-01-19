@@ -178,6 +178,7 @@
                         <th>Ruangan</th>
                         <th>Waktu</th>
                         <th>Semester</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -191,6 +192,9 @@
                         echo "<td>" . $item->getRuangan()->getNama() . "</td>";
                         echo "<td>" . $item->getHari() . ', ' . date('H:i', strtotime($item->getWaktuMulai())) . ' - ' . date('H:i', strtotime($item->getWaktuSelesai())) . "</td>";
                         echo "<td>" . $item->getSemester()->getNama() . "</td>";
+                        echo '<td><button onclick="editJadwal(\'' . $item->getMataKuliah()->getIdMataKuliah() . '-' . $item->getUser()->getIdUser() . '-' .  $item->getSemester()->getIdSemester() . '-' . $item->getKelas() . '-' . $item->getTipeKelas() .'\')" class="btn btn-warning" data-toggle="modal" data-target="#editJadwalModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteJadwal(\'' . $item->getMataKuliah()->getIdMataKuliah() . '-' . $item->getUser()->getIdUser() . '-' .  $item->getSemester()->getIdSemester() . '-' . $item->getKelas() . '-' . $item->getTipeKelas() .'\')" class="btn btn-danger" data-toggle="modal" data-target="#deleteJadwalModal"><i class="fa-solid fa-trash"></i></button>
+                        </td>';
                         echo "</tr>";
                     }
                     ?>
@@ -200,6 +204,85 @@
         </div>
 
 
+    </div>
+</div>
+<div class="modal fade" id="editJadwalModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post">
+                <input type="hidden" name="editMataKuliah" id="editMataKuliah">
+                <input type="hidden" name="editDosen" id="editDosen">
+                <input type="hidden" name="editSemester" id="editSemester">
+                <input type="hidden" name="editKelas" id="editKelas">
+                <input type="hidden" name="editTipeKelas" id="editTipeKelas">
+                <div class=" modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Edit jadwal</h1>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="editHari" class="form-label">Hari</label>
+                    <select name="editHari" id="editHari" class="form-select" required>
+                        <option selected disabled>Select Hari</option>
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jumat">Jumat</option>
+                        <option value="Sabtu">Sabtu</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">Waktu Mulai</label>
+                    <input type="time" class="form-control" id="editWaktuMulai" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="edit-waktu-mulai" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">Waktu Selesai</label>
+                    <input type="time" class="form-control" id="editWaktuSelesai" value="<?php echo date("Y/m/d h:i:s a"); ?>" name="edit-waktu-selesai" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editRuangan" class="form-label">Ruangan</label>
+                    <select class="form-select" id="editRuangan" name="editRuangan">
+                        <?php foreach ($dataRuangan as $ruangan) { ?>
+                            <option value="<?= $ruangan->getIdRuangan() ?>"><?= $ruangan->getNama() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Update Jadwal" name="btnUpdate">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="modal fade" id="deleteJadwalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post">
+            <input type="hidden" name="deleteMataKuliah" id="deleteMataKuliah">
+            <input type="hidden" name="deleteDosen" id="deleteDosen">
+            <input type="hidden" name="deleteSemester" id="deleteSemester">
+            <input type="hidden" name="deleteKelas" id="deleteKelas">
+            <input type="hidden" name="deleteTipeKelas" id="deleteTipeKelas">
+            <div class=" modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete Jadwal</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>Are you sure want to delete this data?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="deleteConfirm" class="btn btn-primary" name="btnDelete">Delete Jadwal</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <script>
@@ -227,4 +310,22 @@
         });
 
     });
+
+    function editJadwal(jadwal) {
+        let array_jadwal = jadwal.split("-");
+        $('#editMataKuliah').val(array_jadwal[0]);
+        $('#editDosen').val(array_jadwal[1]);
+        $('#editSemester').val(array_jadwal[2]);
+        $('#editKelas').val(array_jadwal[3]);
+        $('#editTipeKelas').val(array_jadwal[4]);
+    }
+
+    function deleteJadwal(jadwal) {
+        let array_jadwal = jadwal.split("-");
+        $('#deleteMataKuliah').val(array_jadwal[0]);
+        $('#deleteDosen').val(array_jadwal[1]);
+        $('#deleteSemester').val(array_jadwal[2]);
+        $('#deleteKelas').val(array_jadwal[3]);
+        $('#deleteTipeKelas').val(array_jadwal[4]);
+    }
 </script>

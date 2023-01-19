@@ -49,6 +49,8 @@ class StaffController
     {
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
+        $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        $btnDelete = filter_input(INPUT_POST, 'btnDelete');
         if (isset($btnSubmitted)) {
             $mataKuliah = filter_input(INPUT_POST, 'optMataKuliah');
             $dosen = filter_input(INPUT_POST, 'optDosen');
@@ -209,6 +211,116 @@ class StaffController
                     toastr.warning('File upload is empty');
                 });
                 </script>";
+            }
+        } else if (isset($btnUpdate)) {
+            $mataKuliah = filter_input(INPUT_POST, 'editMataKuliah');
+            $dosen = filter_input(INPUT_POST, 'editDosen');
+            $semester = filter_input(INPUT_POST, 'editSemester');
+            $kelas = filter_input(INPUT_POST, 'editKelas');
+            $tipeKelas = filter_input(INPUT_POST, 'editTipeKelas');
+            $hari = filter_input(INPUT_POST, 'editHari');
+            $waktu_mulai = filter_input(INPUT_POST, 'edit-waktu-mulai');
+            $waktu_selesai = filter_input(INPUT_POST, 'edit-waktu-selesai');
+            $ruangan = filter_input(INPUT_POST, 'editRuangan');
+            $trimMataKuliah = trim($mataKuliah);
+            $trimSemester = trim($semester);
+            $trimDosen = trim($dosen);
+            $trimKelas = trim($kelas);
+            $trimTipeKelas = trim($tipeKelas);
+            $trimHari = trim($hari);
+            $trimWaktuMulai = trim($waktu_mulai);
+            $trimWaktuSelesai = trim($waktu_selesai);
+            $trimRuangan = trim($ruangan);
+            if (empty($trimMataKuliah) || empty($trimDosen) || empty($trimKelas) || empty($trimTipeKelas) || empty($trimHari) || empty($trimWaktuMulai) || empty($trimWaktuSelesai) || empty($trimRuangan)) {
+                echo "<script> 
+                $(function() {
+                    toastr.warning('Please fill the field properly');
+                });
+                 </script>";
+            } else {
+                $jadwal = new Jadwal();
+                $jadwal->setKelas($trimKelas);
+                $jadwal->setTipeKelas($trimTipeKelas);
+                $jadwal->setHari($trimHari);
+                $jadwal->setWaktuMulai($trimWaktuMulai);
+                $jadwal->setWaktuSelesai($trimWaktuSelesai);
+
+                $mataKuliah = new MataKuliah();
+                $mataKuliah->setIdMataKuliah($trimMataKuliah);
+                $jadwal->setMataKuliah($mataKuliah);
+
+                $ruangan = new Ruangan();
+                $ruangan->setIdRuangan($trimRuangan);
+                $jadwal->setRuangan($ruangan);
+
+                $semester = new Semester();
+                $semester->setIdSemester($trimSemester);
+                $jadwal->setSemester($semester);
+
+                $dosen = new User();
+                $dosen->setIdUser($trimDosen);
+
+                $jadwal->setUser($dosen);
+
+                $result = $this->jadwalDao->update($jadwal);
+
+                if ($result) {
+                    echo "<script> 
+                $(function() {
+                    toastr.success('Jadwal updated successfully');
+                });
+                 </script>";
+                } else {
+                    echo "<script> 
+                $(function() {
+                    toastr.error('Error on update jadwal');
+                });
+                 </script>";
+                }
+            }
+        } else if (isset($btnDelete)) {
+            $mataKuliah = filter_input(INPUT_POST, 'deleteMataKuliah');
+            $semester = filter_input(INPUT_POST, 'deleteSemester');
+            $dosen = filter_input(INPUT_POST, 'deleteDosen');
+            $kelas = filter_input(INPUT_POST, 'deleteKelas');
+            $tipeKelas = filter_input(INPUT_POST, 'deleteTipeKelas');
+            $trimMataKuliah = trim($mataKuliah);
+            $trimSemester = trim($semester);
+            $trimDosen = trim($dosen);
+            $trimKelas = trim($kelas);
+            $trimTipeKelas = trim($tipeKelas);
+
+            $jadwal = new Jadwal();
+            $jadwal->setKelas($trimKelas);
+            $jadwal->setTipeKelas($trimTipeKelas);
+
+            $mataKuliah = new MataKuliah();
+            $mataKuliah->setIdMataKuliah($trimMataKuliah);
+            $jadwal->setMataKuliah($mataKuliah);
+
+            $semester = new Semester();
+            $semester->setIdSemester($trimSemester);
+            $jadwal->setSemester($semester);
+
+            $dosen = new User();
+            $dosen->setIdUser($trimDosen);
+
+            $jadwal->setUser($dosen);
+
+            $result = $this->jadwalDao->delete($jadwal);
+
+            if ($result) {
+                echo "<script> 
+                $(function() {
+                    toastr.success('Jadwal deleted successfully');
+                });
+                 </script>";
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.error('Error on delete jadwal');
+                });
+                 </script>";
             }
         }
 
@@ -668,6 +780,27 @@ class StaffController
                 </script>";
             }
         }
+
+        $btnChange = filter_input(INPUT_POST, 'btnChange');
+        if (isset($btnChange)) {
+            $semester = filter_input(INPUT_POST, 'semester');
+            $result = $this->semesterDao->changeCurrentSemester($semester);
+            if ($result) {
+                echo "<script>
+                $(function() {
+                    toastr.success('Semester successfully updated');
+                });
+                 </script>";
+            } else {
+                echo "<script>
+                $(function() {
+                    toastr.error('Error on update Semester');
+                });
+                 </script>";
+            }
+        }
+
+        $currentSemester = $this->semesterDao->readCurrentActive();
         $dataSemester = $this->semesterDao->read();
         include_once 'view/staff/semester-view.php';
     }

@@ -4,6 +4,7 @@ class Semester implements JsonSerializable
 {
     private $idSemester;
     private $nama;
+    private $status;
 
     /**
      * @return mixed
@@ -36,6 +37,24 @@ class Semester implements JsonSerializable
     {
         $this->nama = $nama;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+
 
     public function jsonSerialize()
     {

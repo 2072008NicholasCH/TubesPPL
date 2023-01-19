@@ -115,6 +115,22 @@ class AsistenDao
         $conn = Connection::close($conn);
         return $stmt->fetchAll();
     }
+
+    // public function getAsistenBeritaAcara(BeritaAcara $beritaAcara)
+    // {
+    //     $conn = Connection::createConnection();
+    //     $query = "SELECT * FROM beritaacaraperkuliahan.asistendosen_has_jadwal WHERE jadwal_mata_kuliah_idMataKuliah = ? AND jadwal_user_idUser = ? AND jadwal_semester_idSemester = ? AND jadwal_kelas = ? AND jadwal_tipe_kelas = ? AND pertemuan = ?";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bindValue(1, $beritaAcara->getJadwal()->getMataKuliah()->getIdMataKuliah());
+    //     $stmt->bindValue(2, $beritaAcara->getJadwal()->getUser()->getIdUser());
+    //     $stmt->bindValue(3, $beritaAcara->getJadwal()->getSemester()->getIdSemester());
+    //     $stmt->bindValue(4, $beritaAcara->getJadwal()->getKelas());
+    //     $stmt->bindValue(5, $beritaAcara->getJadwal()->getTipeKelas());
+    //     $stmt->bindValue(6, $beritaAcara->getPertemuan());
+    //     $stmt->execute();
+    //     $conn = Connection::close($conn);
+    //     return $stmt->fetchAll();
+    // }
     
     public function getRekapAsisten($from, $to)
     {
