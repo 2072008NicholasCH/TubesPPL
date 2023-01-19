@@ -11,3 +11,5 @@ https://drive.google.com/drive/folders/1T2eEZWnr3pv1Ai4vckSycA1vxhFMSy9Z?usp=sha
 
 Link GDrive Diagram:
 https://drive.google.com/file/d/1PcqLuJwo7TN374Y4mjQG9dIlf3D-xSMF/view
+
+Untuk hasil foto atau screenshoot, kami masukan kedalam GDrive atau pada folder Dokumentasi karena gambarnya terlalu banyak sehingga file wordnya terlalu besar utk dapat diupload kedalam Morning
