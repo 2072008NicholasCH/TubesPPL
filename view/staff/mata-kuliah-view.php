@@ -114,6 +114,8 @@
                         echo "<td>" . $item->getSks() . "</td>";
                         echo "<td>" . $item->getProgramStudi()->getNama() . "</td>";
                         echo '<td><button class="btn btn-warning" data-toggle="modal" data-target="#mataKuliah-' . $item->getIdMataKuliah() . '"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteMataKuliah(\'' . $item->getIdMataKuliah() . '\')" class="btn btn-danger" data-toggle="modal" data-target="#deleteMataKuliahModal"><i class="fa-solid fa-trash"></i></button>
+                        
                         </td>';
                         echo "</tr>";
                     }
@@ -179,6 +181,26 @@
     </div>
 <?php } ?>
 
+<div class="modal fade" id="deleteMataKuliahModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post">
+            <div class=" modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete Mata Kuliah</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>Are you sure want to delete this data?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="deleteConfirm" class="btn btn-primary" name="btnDelete">Delete Mata Kuliah</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     $(function() {
         $('#form').validate({
@@ -204,4 +226,12 @@
         });
 
     });
+</script>
+
+<script>
+    function deleteMataKuliah(id) {
+        $('#deleteConfirm').click(function() {
+            window.location = "index.php?ahref=staff-mata-kuliah&delcom=1&mid=" + id;
+        })
+    }
 </script>

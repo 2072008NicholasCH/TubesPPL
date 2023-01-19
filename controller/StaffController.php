@@ -344,6 +344,24 @@ class StaffController
         $btnSubmitted = filter_input(INPUT_POST, 'btnSubmit');
         $btnImport = filter_input(INPUT_POST, 'btnImport');
         $btnUpdate = filter_input(INPUT_POST, 'btnUpdate');
+        $deleteCommand = filter_input(INPUT_GET, 'delcom');
+        if (isset($deleteCommand) && $deleteCommand == 1) {
+            $idMataKuliah = filter_input(INPUT_GET, 'mid');
+            $result = $this->mataKuliahDao->delete($idMataKuliah);
+            if ($result) {
+                echo "<script> 
+                $(function() {
+                    toastr.success('Mata Kuliah successfully deleted');
+                });
+                 </script>";
+            } else {
+                echo "<script> 
+                $(function() {
+                    toastr.error('Error on delete Mata Kuliah');
+                });
+                 </script>";
+            }
+        }
         if (isset($btnSubmitted)) {
             $id = filter_input(INPUT_POST, 'txtIdMataKuliah');
             $nama = filter_input(INPUT_POST, 'txtNamaMataKuliah');

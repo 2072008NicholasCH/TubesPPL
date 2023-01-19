@@ -92,8 +92,21 @@ class MataKuliahDao
         return $result;
     }
 
-    public function delete()
+    public function delete($mataKuliah)
     {
-
+        $result = false;
+        $link = Connection::createConnection();
+        $query = "DELETE FROM mata_kuliah WHERE idMataKuliah = ?";
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(1, $mataKuliah);
+        $link->beginTransaction();
+        if ($stmt->execute()) {
+            $link->commit();
+            $result = true;
+        } else {
+            $link->rollBack();
+        }
+        $link = Connection::close($link);
+        return $result;
     }
 }
