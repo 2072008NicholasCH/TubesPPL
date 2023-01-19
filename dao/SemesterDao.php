@@ -6,7 +6,7 @@ class SemesterDao
     {
         $result = false;
         $link = Connection::createConnection();
-        $query = "INSERT INTO semester VALUES (?, ?)";
+        $query = "INSERT INTO semester VALUES (?, ?, 0)";
         $stmt = $link->prepare($query);
         $stmt->bindValue(1, $semester->getIdSemester());
         $stmt->bindValue(2, $semester->getNama());
